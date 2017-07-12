@@ -829,11 +829,6 @@
 (use-package multiple-cursors
   :bind ("C->" . mc/mark-next-like-this))
 
-;; persistent-scratch
-(use-package persistent-scratch
-  :config
-  (persistent-scratch-setup-default))
-
 ;; projectile
 (use-package projectile
   :config
