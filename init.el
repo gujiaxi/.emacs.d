@@ -54,7 +54,7 @@
 (setq create-lockfiles nil)
 
 ;; backup and autosave
-(setq backup-directory-alist `((".*" . ,(concat user-emacs-directory "backup"))))
+(setq backup-directory-alist `((".*" . ,(expand-file-name "backup" user-emacs-directory))))
 (setq version-control t)
 (setq delete-old-versions t)
 
@@ -137,7 +137,7 @@
 
 ;; custom directory
 (setq org-directory "~/Dropbox/Documents/EmacsFiles/")
-(setq custom-file (concat user-emacs-directory "custom.el"))
+(setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (load custom-file)
 
 
@@ -148,7 +148,7 @@
 ;; ----- plugin settings -----
 
 ;; abbrev [built-in]
-(setq abbrev-file-name (concat user-emacs-directory "snippets/abbrev.el"))
+(setq abbrev-file-name (expand-file-name "snippets/abbrev.el" user-emacs-directory))
 
 ;; calendar [built-in]
 (setq calendar-location-name "Beijing, China")
@@ -156,8 +156,8 @@
 (setq calendar-longitude 116.40)
 (setq mark-diary-entries-in-calendar t)
 (setq mark-holidays-in-calendar t)
-(setq cal-html-directory (concat org-directory "calendar"))
-(setq diary-file (concat org-directory "org/diary.org"))
+(setq cal-html-directory (expand-file-name "calendar" org-directory))
+(setq diary-file (expand-file-name "org/diary.org" org-directory))
 (global-set-key (kbd "C-c k") 'calendar)
 
 ;; compile [built-in]
@@ -225,7 +225,7 @@
 
 ;; reftex [built-in]
 (setq reftex-plug-into-AUCTeX t)
-(setq reftex-default-bibliography (list (concat org-directory "org/bib/main.bib")))
+(setq reftex-default-bibliography (list (expand-file-name "org/bib/main.bib" org-directory)))
 
 ;; saveplace [built-in]
 (save-place-mode t)
@@ -299,23 +299,23 @@
               "%s\n"))
 ;; directories
 (setq gnus-use-dribble-file nil)
-(setq gnus-startup-file (concat user-emacs-directory "gnus/.newsrc"))
-(setq gnus-default-directory (concat user-emacs-directory "gnus"))
-(setq gnus-home-directory (concat user-emacs-directory "gnus"))
-(setq gnus-dribble-directory (concat user-emacs-directory "gnus"))
-(setq gnus-directory (concat user-emacs-directory "gnus/news"))
-(setq gnus-article-save-directory (concat user-emacs-directory "gnus/news"))
-(setq gnus-kill-files-directory (concat user-emacs-directory "gnus/news"))
-(setq gnus-agent-directory (concat user-emacs-directory "gnus/news/agent"))
-(setq gnus-cache-directory (concat user-emacs-directory "gnus/news/cache"))
-(setq gnus-cache-active-file (concat user-emacs-directory "gnus/news/cache/active"))
-(setq message-directory (concat user-emacs-directory "gnus/mail"))
-(setq message-auto-save-directory (concat user-emacs-directory "gnus/mail/drafts"))
-(setq mail-source-directory (concat user-emacs-directory "gnus/mail/incoming"))
-(setq nnfolder-directory (concat user-emacs-directory "gnus/mail/archive"))
-(setq nnmail-message-id-cache-file (concat user-emacs-directory "gnus/.nnmail-cache"))
-(setq nntp-marks-directory (concat user-emacs-directory "gnus/news/marks"))
-(setq mml-default-directory (concat user-emacs-directory "gnus/attachments"))
+(setq gnus-startup-file (expand-file-name "gnus/.newsrc" user-emacs-directory))
+(setq gnus-default-directory (expand-file-name "gnus" user-emacs-directory))
+(setq gnus-home-directory (expand-file-name "gnus" user-emacs-directory))
+(setq gnus-dribble-directory (expand-file-name "gnus" user-emacs-directory))
+(setq gnus-directory (expand-file-name "gnus/news" user-emacs-directory))
+(setq gnus-article-save-directory (expand-file-name "gnus/news" user-emacs-directory))
+(setq gnus-kill-files-directory (expand-file-name "gnus/news" user-emacs-directory))
+(setq gnus-agent-directory (expand-file-name "gnus/news/agent" user-emacs-directory))
+(setq gnus-cache-directory (expand-file-name "gnus/news/cache" user-emacs-directory))
+(setq gnus-cache-active-file (expand-file-name "gnus/news/cache/active" user-emacs-directory))
+(setq message-directory (expand-file-name "gnus/mail" user-emacs-directory))
+(setq message-auto-save-directory (expand-file-name "gnus/mail/drafts" user-emacs-directory))
+(setq mail-source-directory (expand-file-name "gnus/mail/incoming" user-emacs-directory))
+(setq nnfolder-directory (expand-file-name "gnus/mail/archive" user-emacs-directory))
+(setq nnmail-message-id-cache-file (expand-file-name "gnus/.nnmail-cache" user-emacs-directory))
+(setq nntp-marks-directory (expand-file-name "gnus/news/marks" user-emacs-directory))
+(setq mml-default-directory (expand-file-name "gnus/attachments" user-emacs-directory))
 ;; gpg
 (setq mm-verify-option 'always)
 (setq mm-decrypt-option 'always)
@@ -359,18 +359,18 @@
 (setq org-export-html-style-include-scripts nil)
 (setq org-export-html-style-include-default nil)
 (setq org-html-postamble t)
-(setq org-archive-location (concat org-directory "org/archive.org::"))
+(setq org-archive-location (expand-file-name "org/archive.org::" org-directory))
 (setq org-html-postamble-format '(("en" "&copy; %a / %C")))
 (setq org-priority-faces '((?A . (:foreground "red" :weight bold))
                            (?B . (:foreground "orange" :weight bold))
                            (?C . (:foreground "yellow" :wegith bold))))
 
 ;; org-agenda
-(setq org-agenda-files (list (concat org-directory "org/agenda.org")))
+(setq org-agenda-files (list (expand-file-name "org/agenda.org" org-directory)))
 (setq org-agenda-include-diary nil)
 
 ;; org-capture
-(setq org-default-notes-file (concat org-directory "org/agenda.org"))
+(setq org-default-notes-file (expand-file-name "org/agenda.org" org-directory))
 (setq org-capture-templates
       '(("a" "Appt" entry (file+headline "org/agenda.org" "Appointments")
          "* %?\n%t")
@@ -401,13 +401,13 @@
   ;; org-publish
   (defun org-html-publish-index (prop)
     "Generate index.html."
-    (let ((index-org (concat org-directory "org/index.org"))
+    (let ((index-org (expand-file-name "org/index.org" org-directory))
           (export-dir "/ssh:jiaxi@sdf.org:~/html/"))
       (org-html-publish-to-html nil index-org export-dir)))
   (setq org-publish-timestamp-directory user-emacs-directory)
   (setq org-publish-project-alist
         `(("org"
-           :base-directory ,(concat org-directory "org/")
+           :base-directory ,(expand-file-name "org/" org-directory)
            :base-extension "org"
            :publishing-directory "/ssh:jiaxi@sdf.org:~/html/"
            :publishing-function org-html-publish-to-html
@@ -427,7 +427,7 @@
            :sitemap-sort-files anti-chronologically
            :sitemap-file-entry-format "%d  »  %t")
           ("static"
-           :base-directory ,(concat org-directory "static/")
+           :base-directory ,(expand-file-name "static/" org-directory)
            :base-extension "css\\|js\\|pdf"
            :publishing-directory "/ssh:jiaxi@sdf.org:~/html/static/"
            :publishing-function org-publish-attachment)
@@ -611,11 +611,11 @@
 (use-package helm-bibtex
   :after helm
   :config
-  (setq bibtex-completion-bibliography (list (concat org-directory "org/bib/main.bib")))
+  (setq bibtex-completion-bibliography (list (expand-file-name "org/bib/main.bib" org-directory)))
   (setq bibtex-completion-notes-symbol "✎")
-  (setq bibtex-completion-notes-path (concat org-directory "org/research-notes.org"))
+  (setq bibtex-completion-notes-path (expand-file-name "org/research-notes.org" org-directory))
   (setq bibtex-completion-pdf-symbol "⌘")
-  (setq bibtex-completion-library-path (list (concat org-directory "pdf")))
+  (setq bibtex-completion-library-path (list (expand-file-name "pdf" org-directory)))
   (setq bibtex-completion-pdf-open-function 'helm-open-file-with-default-tool)
   (setq bibtex-completion-cite-prompt-for-optional-arguments nil)
   (setq bibtex-completion-notes-template-one-file "\n* ${title} (${year})\n:PROPERTIES:\n:Custom_ID: ${=key=}\n:END:\n")
@@ -656,7 +656,7 @@
 
 (use-package deft
   :config
-  (setq deft-directory (concat org-directory "org"))
+  (setq deft-directory (expand-file-name "org" org-directory))
   (setq deft-extensions '("org" "md" "tex"))
   (setq deft-default-extension "org")
   (setq deft-recursive t)
