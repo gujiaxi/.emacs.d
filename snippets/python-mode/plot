@@ -1,0 +1,12 @@
+# -*- mode: snippet -*-
+# name: plot
+# key: plot_
+# --
+plt.style.use('seaborn-paper')
+plt.rc('font', **{'family': 'sans-serif', 'size': 12})
+plt.rc('xtick', **{'direction': 'in', 'labelsize': 10, 'major.size': 3.5})
+plt.rc('ytick', **{'direction': 'in', 'labelsize': 10, 'major.size': 3.5})
+plt.rc('axes', **{'labelsize': 10})
+plt.rc('grid', **{'linestyle': 'dashed'})
+plt.rc('figure', **{'figsize': (3.5, 2.2), 'autolayout': True})
+plt.rc('savefig', **{'bbox': 'tight'})
