@@ -1,13 +1,16 @@
 # -*- mode: snippet -*-
 # name: theme_iz
-# key: theme_
+# key: theme
 # --
 theme_iz <- function(base_size = 12, base_family = 'Helvetica') {
     theme_classic(base_size = base_size, base_family = base_family) %+replace%
         theme(
             panel.background = element_rect(fill = FALSE),
             panel.border = element_rect(fill = FALSE, size = 0.5),
-            panel.grid.major = element_line(colour = 'grey87', linetype = 'dotted', size = 0.25),
-            panel.grid.minor = element_line(colour = 'grey87', linetype = 'dotted', size = 0.125)
+            panel.grid.major = element_line(colour = 'grey60', linetype = 'dotted', size = 0.32),
+            panel.grid.minor = element_line(colour = 'grey60', linetype = 'dotted', size = 0.16),
+            axis.ticks.length = unit(-0.2, "cm"),
+            axis.text.x = element_text(margin = margin(t = 12)),
+            axis.text.y = element_text(margin = margin(r = 12))
         )
 }

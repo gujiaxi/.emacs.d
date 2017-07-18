@@ -442,6 +442,7 @@
      (latex . t)
      (ledger . t)
      (python . t)
+     (ruby . t)
      (R . t)
      (shell . t))))
 
@@ -804,6 +805,7 @@
 
 ;; flycheck
 (use-package flycheck
+  :defer 2
   :config
   (add-hook 'after-init-hook 'global-flycheck-mode))
 
@@ -831,6 +833,7 @@
 
 ;; projectile
 (use-package projectile
+  :defer 2
   :config
   (projectile-global-mode))
 
@@ -886,6 +889,7 @@
 
 ;; yasnippet
 (use-package yasnippet
+  :defer 2
   :config (yas-global-mode t))
 
 

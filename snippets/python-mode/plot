@@ -1,6 +1,6 @@
 # -*- mode: snippet -*-
 # name: plot
-# key: plot_
+# key: plot
 # --
 plt.style.use('seaborn-paper')
 plt.rc('font', **{'family': 'sans-serif', 'size': 12})
