@@ -719,29 +719,6 @@
 
 
 ;; -------------------------------------------------------------------
-;; Web
-;; -------------------------------------------------------------------
-
-;; web-mode
-(use-package web-mode
-  :mode ("\\.phtml\\'" "\\.wp\\'" "\\.tmpl\\'" "\\.php\\'"
-         "\\.module\\'" "\\.inc\\'" "\\.hbs\\'" "\\.tpl\\'"
-         "\\.[gj]sp\\'" "\\.as[cp]x\\'" "\\.erb\\'" "\\.ftl\\'" 
-         "\\.mustache\\'" "\\.djhtml\\'" "\\.html?\\'"
-         "\\.xul?\\'")
-  :config 
-  (setq web-mode-markup-indent-offset 2)
-  (setq web-mode-css-indent-offset 2)
-  (setq web-mode-code-indent-offset 2))
-
-;; js2-mode
-(use-package js2-mode
-  :mode ("\\.js\\'" "\\.jsx?\\'")
-  :config
-  (setq js2-basic-offset 2))
-
-
-;; -------------------------------------------------------------------
 ;; Markdown
 ;; -------------------------------------------------------------------
 
