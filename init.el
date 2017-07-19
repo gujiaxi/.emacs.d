@@ -440,7 +440,6 @@
      (calc . t)
      (emacs-lisp . t)
      (latex . t)
-     (ledger . t)
      (python . t)
      (ruby . t)
      (R . t)
@@ -791,12 +790,6 @@
   :config
   (add-hook 'prog-mode-hook 'indent-guide-mode)
   (setq indent-guide-char "¦"))
-
-;; ledger-mode
-(use-package ledger-mode
-  :mode "\\.ldg\\'"
-  :config
-  (setq ledger-binary-path "hledger"))
 
 ;; linum-relative
 (use-package linum-relative
