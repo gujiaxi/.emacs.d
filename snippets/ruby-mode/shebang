@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: shebang_ruby
+# key: #!
+# --
+#!/usr/bin/env ruby

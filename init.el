@@ -126,9 +126,6 @@
 ;; dodge the mouse from cursor
 (mouse-avoidance-mode 'animate)
 
-;; suppress adding newline
-(setq mode-require-final-newline nil)
-
 ;; confirm before quit
 (setq confirm-kill-emacs 'yes-or-no-p)
 
@@ -208,6 +205,12 @@
 (setq newsticker-retrieval-interval 0)
 (setq newsticker-url-list '(("湾区日报" "http://wanqu.co/feed/" nil nil nil)
                             ("一天世界" "https://blog.yitianshijie.net/feed/" nil nil nil)))
+
+;; rcirc [built-in]
+(setq rcirc-server-alist
+      '(("irc.freenode.net"
+         :nick "caasi"
+         :channels ("#archlinux-cn" "#ubuntu-cn"))))
 
 ;; org [built-in]
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -439,6 +442,8 @@
    '((awk . t)
      (calc . t)
      (emacs-lisp . t)
+     (haskell . t)
+     (julia . t)
      (latex . t)
      (python . t)
      (ruby . t)
@@ -458,6 +463,8 @@
 (use-package tex-site
   :ensure auctex
   :config
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'TeX-output-mode 'emacs))
   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
   (add-hook 'LaTeX-mode-hook 'visual-line-mode)
   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
@@ -538,14 +545,12 @@
   (evil-mode t)
   (mapc (lambda (my-mode) (evil-set-initial-state my-mode 'emacs))
         (list 'calendar-mode 'comint-mode 'completion-mode
-              'deft-mode 'dired-mode 'epa-key-list-mode
-              'eshell-mode 'eww-mode 'eww-bookmark-mode
-              'flycheck-error-list-mode 'helm-grep-mode
-              'help-mode 'inferior-ess-mode 'inferior-python-mode
-              'Info-mode 'message-mode 'newsticker-treeview-mode
-              'process-menu-mode 'profiler-report-mode
-              'quickrun--mode 'shell-mode 'speedbar-mode
-              'special-mode 'TeX-output-mode))
+              'dired-mode 'epa-key-list-mode 'eshell-mode
+              'eww-mode 'eww-bookmark-mode 'help-mode
+              'inferior-python-mode 'Info-mode 'message-mode
+              'newsticker-treeview-mode 'process-menu-mode
+              'profiler-report-mode 'shell-mode 'speedbar-mode
+              'special-mode))
   :bind
   (("<f5>" . evil-make)
    :map evil-normal-state-map
@@ -587,6 +592,8 @@
 ;; helm
 (use-package helm
   :config
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'helm-grep-mode 'emacs))
   (require 'helm-config)
   (helm-mode)
   (helm-autoresize-mode t)
@@ -654,8 +661,10 @@
 ;; Deft
 ;; -------------------------------------------------------------------
 
-(use-package deft
+(use-package deft 
   :config
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'deft-mode 'emacs))
   (setq deft-directory (expand-file-name "org" org-directory))
   (setq deft-extensions '("org" "md" "tex"))
   (setq deft-default-extension "org")
@@ -706,12 +715,33 @@
 
 
 ;; -------------------------------------------------------------------
-;; R
+;; Haskell
 ;; -------------------------------------------------------------------
 
-(use-package ess
-  :mode ("\\.[rR]\\'" . R-mode)
+;; haskell-mode
+(use-package haskell-mode
+  :after (evil haskell-mode)
   :config
+  (with-eval-after-load 'evil
+    (progn (evil-set-initial-state 'haskell-interactive-mode 'emacs)
+           (evil-set-initial-state 'haskell-error-mode 'emacs)))
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  (add-hook 'haskell-mode-hook 'turn-on-haskell-doc))
+
+
+;; -------------------------------------------------------------------
+;; R & Julia
+;; -------------------------------------------------------------------
+
+;; ess
+(use-package ess
+  :after (evil julia-mode)
+  :init
+  (setq inferior-julia-program-name "julia")
+  :config
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'inferior-ess-mode 'emacs))
+  (require 'ess-site)
   (setq ess-ask-for-ess-directory nil)
   (setq ess-eval-visibly nil)
   (setq ess-history-file nil))
@@ -721,11 +751,12 @@
 ;; Markdown
 ;; -------------------------------------------------------------------
 
+;; markdown-mode
 (use-package markdown-mode
   :mode ("\\.md\\'" "\\.markdown\\'")
   :config
   (setq markdown-enable-math t)
-  (setq markdown-command "pandoc")
+  (setq markdown-command "pandoc --mathml")
   (setq markdown-css-paths '("http://tilde.works/~isaac/static/md.css"))
   (add-hook 'markdown-mode-hook 'flyspell-mode))
 
@@ -783,6 +814,8 @@
 (use-package flycheck
   :defer 2
   :config
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'flycheck-error-list-mode 'emacs))
   (add-hook 'after-init-hook 'global-flycheck-mode))
 
 ;; indent-guide
@@ -809,6 +842,9 @@
 
 ;; quickrun
 (use-package quickrun
+  :config
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'quickrun--mode 'emacs))
   :bind ("C-c q" . quickrun))
 
 ;; rainbow-delimiters
