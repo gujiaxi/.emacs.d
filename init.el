@@ -584,6 +584,11 @@
   :config
   (global-evil-search-highlight-persist t))
 
+;; evil-mc
+(use-package evil-mc
+  :config
+  (global-evil-mc-mode t))
+
 
 ;; -------------------------------------------------------------------
 ;; Helm
@@ -726,6 +731,7 @@
     (progn (evil-set-initial-state 'haskell-interactive-mode 'emacs)
            (evil-set-initial-state 'haskell-error-mode 'emacs)))
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
   (add-hook 'haskell-mode-hook 'turn-on-haskell-doc))
 
 
@@ -775,8 +781,7 @@
   :config
   (global-aggressive-indent-mode t)
   (add-to-list 'aggressive-indent-excluded-modes 'latex-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'org-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'python-mode))
+  (add-to-list 'aggressive-indent-excluded-modes 'org-mode))
 
 ;; avy
 (use-package avy
@@ -829,10 +834,6 @@
   :config
   (linum-relative-mode)
   (setq linum-relative-current-symbol ""))
-
-;; multiple-cursors
-(use-package multiple-cursors
-  :bind ("C->" . mc/mark-next-like-this))
 
 ;; projectile
 (use-package projectile
