@@ -5,7 +5,7 @@
 ;; Author: Jiaxi Gu <imjiaxi@gmail.com>
 ;; Version: 0.2.0
 ;; Keywords: emacs, dotfile
-;; Package-Requires: ((emacs "25.1"))
+;; Package-Requires: ((emacs "25.2"))
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -135,7 +135,7 @@
 ;; custom directory
 (setq org-directory "~/Dropbox/Documents/EmacsFiles/")
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
-(load custom-file)
+(when (file-exists-p custom-file) (load custom-file))
 
 
 ;; -------------------------------------------------------------------
@@ -460,25 +460,21 @@
 ;; -------------------------------------------------------------------
 
 ;; auctex
-(use-package tex-site
+(use-package tex
+  :defer t
   :ensure auctex
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'TeX-output-mode 'emacs))
+  (setq TeX-auto-save t)
+  (setq TeX-parse-self t)
+  (setq TeX-clean-confirm nil)
   (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
   (add-hook 'LaTeX-mode-hook 'visual-line-mode)
   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
   (add-hook 'LaTeX-mode-hook 'TeX-fold-mode)
   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t))
-
-;; auctex-latexmk
-(use-package auctex-latexmk
-  :after tex
-  :config
-  (auctex-latexmk-setup)
-  (setq auctex-latexmk-inherit-TeX-PDF-mode t))
+  (add-to-list 'TeX-command-list '("Latexmk" "latexmk -pdf -quiet %s" TeX-run-command nil t :help "Run latexmk")))
 
 ;; company-math
 (use-package company-math
@@ -579,13 +575,9 @@
   :config
   (global-evil-matchit-mode t))
 
-;; evil-search-highlight-persist
-(use-package evil-search-highlight-persist
-  :config
-  (global-evil-search-highlight-persist t))
-
 ;; evil-mc
 (use-package evil-mc
+  :defer 5
   :config
   (global-evil-mc-mode t))
 
@@ -596,6 +588,7 @@
 
 ;; helm
 (use-package helm
+  :defer 3
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'helm-grep-mode 'emacs))
@@ -771,11 +764,6 @@
 ;; Other packages
 ;; -------------------------------------------------------------------
 
-;; anzu
-(use-package anzu
-  :config
-  (global-anzu-mode t))
-
 ;; aggressive-indent
 (use-package aggressive-indent
   :config
@@ -791,6 +779,7 @@
 
 ;; bbdb
 (use-package bbdb
+  :defer 5
   :config
   (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus))
 
@@ -800,6 +789,7 @@
 
 ;; dumb-jump
 (use-package dumb-jump
+  :defer 3
   :after prog-mode
   :config
   (add-hook 'prog-mode-hook 'dumb-jump-mode))
@@ -822,12 +812,6 @@
   (with-eval-after-load 'evil
     (evil-set-initial-state 'flycheck-error-list-mode 'emacs))
   (add-hook 'after-init-hook 'global-flycheck-mode))
-
-;; indent-guide
-(use-package indent-guide
-  :config
-  (add-hook 'prog-mode-hook 'indent-guide-mode)
-  (setq indent-guide-char "¦"))
 
 ;; linum-relative
 (use-package linum-relative
@@ -888,7 +872,8 @@
   (symon-mode))
 
 ;; wgrep
-(use-package wgrep)
+(use-package wgrep
+  :after grep)
 
 ;; which-key
 (use-package which-key
