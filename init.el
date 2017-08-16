@@ -891,16 +891,16 @@
 
 ;; ----- Windows -----
 
-(when (memq window-system '(w32 pc))
+(when (eq system-type 'windows-nt)
   ;; set font
   (when (member "Input" (font-family-list))
     (set-face-attribute 'default nil :font "Input-13"))
   (when (member "微软雅黑" (font-family-list))
-    (set-fontset-font t 'unicode "微软雅黑")))
+    (set-fontset-font t 'han "微软雅黑")))
 
 ;; ----- MacOS -----
 
-(when (memq window-system '(ns mac))
+(when (eq system-type 'darwin)
   ;; 1. fix PATH problem
   (use-package exec-path-from-shell
     :config (exec-path-from-shell-copy-env "PATH"))
@@ -908,12 +908,10 @@
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'super)
   ;; 3. set font
-  (when (member "Menlo" (font-family-list))
-    (set-face-attribute 'default nil :font "Menlo-13"))
-  (when (member "Heiti SC" (font-family-list))
-    (set-fontset-font t 'unicode "Heiti SC-16"))
+  (when (member "PragmataPro" (font-family-list))
+    (set-face-attribute 'default nil :font "PragmataPro-14"))
   ;; 4. fix some binareis
-  (custom-set-variables '(python-shell-interpreter "python3"))
+  (setq python-shell-interpreter "python3")
   (setq org-babel-python-command "python3"))
 
 
