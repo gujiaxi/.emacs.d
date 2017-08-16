@@ -499,7 +499,8 @@
 (use-package solarized-theme
   :config
   (setq x-underline-at-descent-line t)
-  (setq solarized-emphasize-indicators nil))
+  (setq solarized-emphasize-indicators nil)
+  (setq solarized-use-more-italic t))
 
 ;; theme-changer
 (use-package theme-changer
@@ -522,7 +523,7 @@
                     '(:propertize " %p/%I " face (:background "gray60" :foreground "#fdf6e3")
                                   help-echo (count-words--buffer-message))
                     '(:eval (propertize (concat " " (eyebrowse-mode-line-indicator) " ")))
-                    '(:eval (propertize (format-time-string "%p·%H:%M ") 'help-echo (format-time-string "%F %a") 'face '(:inherit font-lock-doc-face)))
+                    '(:eval (propertize (format-time-string "%p·%H:%M ") 'help-echo (format-time-string "%F %a") 'face '(:inherit font-lock-doc-face :slant normal)))
                     'battery-mode-line-string
                     '(:propertize (which-func-mode (" " which-func-format)))
                     '(:eval (when (> (window-width) 100) (propertize " {%m}" 'face '(:weight normal))))
