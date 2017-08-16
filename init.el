@@ -910,8 +910,8 @@
   ;; 3. set font
   (when (member "Menlo" (font-family-list))
     (set-face-attribute 'default nil :font "Menlo-13"))
-  (when (member "STFangsong" (font-family-list))
-    (set-fontset-font t 'unicode "STFangsong-16"))
+  (when (member "Heiti SC" (font-family-list))
+    (set-fontset-font t 'unicode "Heiti SC-16"))
   ;; 4. fix some binareis
   (custom-set-variables '(python-shell-interpreter "python3"))
   (setq org-babel-python-command "python3"))
