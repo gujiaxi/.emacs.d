@@ -499,8 +499,7 @@
 (use-package solarized-theme
   :config
   (setq x-underline-at-descent-line t)
-  (setq solarized-emphasize-indicators nil)
-  (setq solarized-use-more-italic t))
+  (setq solarized-emphasize-indicators nil))
 
 ;; theme-changer
 (use-package theme-changer
@@ -726,7 +725,7 @@
            (evil-set-initial-state 'haskell-error-mode 'emacs)))
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-  (add-hook 'haskell-mode-hook 'turn-on-haskell-doc))
+  (add-hook 'haskell-mode-hook 'haskell-doc-mode))
 
 
 ;; -------------------------------------------------------------------
@@ -770,7 +769,8 @@
   :config
   (global-aggressive-indent-mode t)
   (add-to-list 'aggressive-indent-excluded-modes 'latex-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'org-mode))
+  (add-to-list 'aggressive-indent-excluded-modes 'org-mode)
+  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
 
 ;; avy
 (use-package avy
@@ -890,15 +890,6 @@
 ;; Compatibility
 ;; -------------------------------------------------------------------
 
-;; ----- Windows -----
-
-(when (eq system-type 'windows-nt)
-  ;; set font
-  (when (member "Input" (font-family-list))
-    (set-face-attribute 'default nil :font "Input-13"))
-  (when (member "微软雅黑" (font-family-list))
-    (set-fontset-font t 'han "微软雅黑")))
-
 ;; ----- MacOS -----
 
 (when (eq system-type 'darwin)
@@ -909,8 +900,10 @@
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'super)
   ;; 3. set font
+  (when (member "Menlo" (font-family-list))
+    (set-face-attribute 'default nil :font "Menlo-13"))
   (when (member "PragmataPro" (font-family-list))
-    (set-face-attribute 'default nil :font "PragmataPro-14"))
+    (add-hook 'org-mode-hook (lambda () (set-face-attribute 'org-table nil :font "PragmataPro-14"))))
   ;; 4. fix some binareis
   (setq python-shell-interpreter "python3")
   (setq org-babel-python-command "python3"))
