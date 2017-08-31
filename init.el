@@ -363,6 +363,7 @@
 (setq org-export-html-style-include-default nil)
 (setq org-html-postamble t)
 (setq org-archive-location (expand-file-name "org/archive.org::" org-directory))
+(setq org-refile-targets '((org-agenda-files :level . 1)))
 (setq org-html-postamble-format '(("en" "&copy; %a / %C")))
 (setq org-priority-faces '((?A . (:foreground "red" :weight bold))
                            (?B . (:foreground "orange" :weight bold))
@@ -371,6 +372,15 @@
 ;; org-agenda
 (setq org-agenda-files (list (expand-file-name "org/agenda.org" org-directory)))
 (setq org-agenda-include-diary nil)
+(setq org-agenda-custom-commands
+      '(("n" "Agenda and all TODOs"
+         ((tags "PRIORITY={A}"
+                ((org-agenda-overriding-header "High-priority:")))
+          (agenda "" ((org-agenda-span (quote day))))
+          (alltodo ""
+                   ((org-agenda-skip-function '(or (org-agenda-skip-subtree-if 'scheduled)
+                                                   (org-agenda-skip-subtree-if 'regexp "\\[#A\\]")))
+                    (org-agenda-overriding-header "Others:")))))))
 
 ;; org-capture
 (setq org-default-notes-file (expand-file-name "org/agenda.org" org-directory))
@@ -541,12 +551,12 @@
   (evil-mode t)
   (mapc (lambda (my-mode) (evil-set-initial-state my-mode 'emacs))
         (list 'calendar-mode 'comint-mode 'completion-mode
-              'dired-mode 'epa-key-list-mode 'eshell-mode
-              'eww-mode 'eww-bookmark-mode 'help-mode
-              'inferior-python-mode 'Info-mode 'message-mode
-              'newsticker-treeview-mode 'process-menu-mode
-              'profiler-report-mode 'shell-mode 'speedbar-mode
-              'special-mode))
+              'dired-mode 'diary-fancy-display-mode
+              'epa-key-list-mode 'eshell-mode 'eww-mode
+              'eww-bookmark-mode 'help-mode 'inferior-python-mode
+              'Info-mode 'message-mode 'newsticker-treeview-mode
+              'process-menu-mode 'profiler-report-mode
+              'shell-mode 'speedbar-mode 'special-mode))
   :bind
   (("<f5>" . evil-make)
    :map evil-normal-state-map
@@ -716,16 +726,13 @@
 ;; Haskell
 ;; -------------------------------------------------------------------
 
-;; haskell-mode
-(use-package haskell-mode
+;; intero
+(use-package intero
   :after (evil haskell-mode)
   :config
   (with-eval-after-load 'evil
-    (progn (evil-set-initial-state 'haskell-interactive-mode 'emacs)
-           (evil-set-initial-state 'haskell-error-mode 'emacs)))
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
-  (add-hook 'haskell-mode-hook 'haskell-indentation-mode)
-  (add-hook 'haskell-mode-hook 'haskell-doc-mode))
+    (evil-set-initial-state 'intero-repl-mode 'emacs))
+  (add-hook 'haskell-mode-hook 'intero-mode))
 
 
 ;; -------------------------------------------------------------------
@@ -782,6 +789,8 @@
 (use-package bbdb
   :defer 5
   :config
+  (setq bbdb-file (expand-file-name "org/bbdb.org" org-directory))
+  (setq org-bbdb-anniversary-field 'birthday)
   (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus))
 
 ;; bing-dict
@@ -903,7 +912,8 @@
   (when (member "Menlo" (font-family-list))
     (set-face-attribute 'default nil :font "Menlo-13"))
   (when (member "PragmataPro" (font-family-list))
-    (add-hook 'org-mode-hook (lambda () (set-face-attribute 'org-table nil :font "PragmataPro-14"))))
+    (add-hook 'org-mode-hook (lambda () (mapc (lambda (face) (set-face-attribute face nil :font "PragmataPro-14"))
+                                              (list 'org-table 'org-link 'org-date 'org-code 'org-verbatim 'org-formula)))))
   ;; 4. fix some binareis
   (setq python-shell-interpreter "python3")
   (setq org-babel-python-command "python3"))

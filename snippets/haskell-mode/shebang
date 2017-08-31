@@ -2,4 +2,4 @@
 # name: shebang_hs
 # key: #!
 # --
-#!/usr/bin/env runghc
+#!/usr/bin/env stack runghc
