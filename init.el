@@ -151,6 +151,7 @@
 (setq calendar-location-name "Beijing, China")
 (setq calendar-latitude 39.91)
 (setq calendar-longitude 116.40)
+(setq calendar-chinese-all-holidays-flag t)
 (setq mark-diary-entries-in-calendar t)
 (setq mark-holidays-in-calendar t)
 (setq cal-html-directory (expand-file-name "calendar" org-directory))
@@ -375,12 +376,17 @@
 (setq org-agenda-custom-commands
       '(("n" "Agenda and all TODOs"
          ((tags "PRIORITY={A}"
-                ((org-agenda-overriding-header "High-priority:")))
+                ((org-agenda-skip-function '(org-agenda-skip-subtree-if 'todo 'done))
+                 (org-agenda-overriding-header "High-priority:")))
           (agenda "" ((org-agenda-span (quote day))))
           (alltodo ""
                    ((org-agenda-skip-function '(or (org-agenda-skip-subtree-if 'scheduled)
+                                                   (org-agenda-skip-subtree-if 'todo '("WAIT"))
                                                    (org-agenda-skip-subtree-if 'regexp "\\[#A\\]")))
-                    (org-agenda-overriding-header "Others:")))))))
+                    (org-agenda-overriding-header "Others tasks:")))
+          (todo "WAIT"
+                ((org-agenda-skip-function '(org-agenda-skip-subtree-if 'regexp "\\[#A\\]"))
+                 (org-agenda-overriding-header "Postponed tasks:")))))))
 
 ;; org-capture
 (setq org-default-notes-file (expand-file-name "org/agenda.org" org-directory))
