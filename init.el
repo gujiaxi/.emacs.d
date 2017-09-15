@@ -423,6 +423,15 @@
     (let ((index-org (expand-file-name "org/index.org" org-directory))
           (export-dir "/ssh:jiaxi@sdf.org:~/html/"))
       (org-html-publish-to-html nil index-org export-dir)))
+  ;; sitemap generation
+  (defun org-sitemap-format-entry (entry style project)
+    (cond ((not (directory-name-p entry))
+           (format "%s » [[file:%s.html][%s]]"
+                   (format-time-string "%F" (org-publish-find-date entry project))
+                   (file-name-sans-extension entry)
+                   (org-publish-find-title entry project)))
+          ((eq style 'tree) (file-name-nondirectory (directory-file-name entry)))
+          (t entry)))
   (setq org-publish-timestamp-directory user-emacs-directory)
   (setq org-publish-project-alist
         `(("org"
@@ -434,7 +443,6 @@
            :completion-function org-html-publish-index
            :html-head-include-default-style nil
            :html-head-include-scripts nil
-           :html-preamble "<nav><a href='/'>$HOME</a></nav>"
            :html-head "<link rel='stylesheet' type='text/css' href='static/org.css'/>"
            :html-mathjax "path:https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"
            :html-doctype "html5"
@@ -444,7 +452,7 @@
            :sitemap-title ""
            :sitemap-filename "sitemap.org"
            :sitemap-sort-files anti-chronologically
-           :sitemap-file-entry-format "%d  »  %t")
+           :sitemap-format-entry org-sitemap-format-entry)
           ("static"
            :base-directory ,(expand-file-name "static/" org-directory)
            :base-extension "css\\|js\\|pdf"
@@ -558,11 +566,12 @@
   (mapc (lambda (my-mode) (evil-set-initial-state my-mode 'emacs))
         (list 'calendar-mode 'comint-mode 'completion-mode
               'dired-mode 'diary-fancy-display-mode
-              'epa-key-list-mode 'eshell-mode 'eww-mode
-              'eww-bookmark-mode 'help-mode 'inferior-python-mode
-              'Info-mode 'message-mode 'newsticker-treeview-mode
-              'process-menu-mode 'profiler-report-mode
-              'shell-mode 'speedbar-mode 'special-mode))
+              'epa-info-mode 'epa-key-list-mode 'eshell-mode
+              'eww-mode 'eww-bookmark-mode 'help-mode
+              'inferior-python-mode 'Info-mode 'message-mode
+              'newsticker-treeview-mode 'process-menu-mode
+              'profiler-report-mode 'shell-mode 'speedbar-mode
+              'special-mode))
   :bind
   (("<f5>" . evil-make)
    :map evil-normal-state-map
@@ -612,7 +621,6 @@
   (helm-mode)
   (helm-autoresize-mode t)
   (helm-adaptive-mode t)
-  (helm-push-mark-mode t)
   (setq helm-split-window-in-side-p t)
   (setq helm-ff-search-library-in-sexp t)
   (setq helm-ff-file-name-history-use-recentf t)
