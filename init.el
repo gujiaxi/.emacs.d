@@ -183,6 +183,7 @@
 (setq epg-gpg-minimum-version "100")
 
 ;; flyspell [built-in]
+(setq ispell-program-name "aspell")
 (add-hook 'org-mode-hook 'flyspell-mode)
 (add-hook 'message-mode-hook 'flyspell-mode)
 
@@ -399,8 +400,6 @@
          "* %?\n%U\n%a")
         ("j" "Journal" plain (file+datetree "org/journal.org")
          "_%<%H:%M>_ / %?\n")
-        ("w" "Wish" entry (file+headline "org/wish.org" "Wishlist")
-         "* WANT %?\n%U")
         ("p" "Publish" plain (file "org/p-tweets.org")
          "*** %?\n%U\n-----")))
 
@@ -600,12 +599,6 @@
   :config
   (global-evil-matchit-mode t))
 
-;; evil-mc
-(use-package evil-mc
-  :defer 5
-  :config
-  (global-evil-mc-mode t))
-
 
 ;; -------------------------------------------------------------------
 ;; Helm
@@ -779,6 +772,18 @@
   (setq markdown-command "pandoc --mathml")
   (setq markdown-css-paths '("http://tilde.works/~isaac/static/md.css"))
   (add-hook 'markdown-mode-hook 'flyspell-mode))
+
+
+;; -------------------------------------------------------------------
+;; Web
+;; -------------------------------------------------------------------
+
+;; web-mode
+(use-package web-mode
+  :mode (("\\.html?$" . web-mode)
+         ("\\.jsx?$"  . web-mode)
+         ("\\.php$"   . web-mode)
+         ("\\.s?css$"  . web-mode)))
 
 
 ;; -------------------------------------------------------------------
