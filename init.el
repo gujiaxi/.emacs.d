@@ -735,13 +735,13 @@
 ;; Haskell
 ;; -------------------------------------------------------------------
 
-;; intero
-(use-package intero
-  :after (evil haskell-mode)
+;; haskell-mode
+(use-package haskell-mode
   :config
+  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (with-eval-after-load 'evil
-    (evil-set-initial-state 'intero-repl-mode 'emacs))
-  (add-hook 'haskell-mode-hook 'intero-mode))
+    (evil-set-initial-state 'haskell-error-mode 'emacs)
+    (evil-set-initial-state 'haskell-interactive-mode 'emacs)))
 
 
 ;; -------------------------------------------------------------------
