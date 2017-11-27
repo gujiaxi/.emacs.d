@@ -149,8 +149,6 @@
 
 ;; calendar [built-in]
 (setq calendar-location-name "Beijing, China")
-(setq calendar-latitude 39.91)
-(setq calendar-longitude 116.40)
 (setq calendar-chinese-all-holidays-flag t)
 (setq mark-diary-entries-in-calendar t)
 (setq mark-holidays-in-calendar t)
@@ -524,11 +522,15 @@
   (setq x-underline-at-descent-line t)
   (setq solarized-emphasize-indicators nil))
 
-;; theme-changer
-(use-package theme-changer
+;; circadian
+(use-package circadian
   :if window-system
   :config
-  (change-theme 'solarized-light 'solarized-dark))
+  (setq calendar-latitude 39.91)
+  (setq calendar-longitude 116.40)
+  (setq circadian-themes '((:sunrise . solarized-light)
+                           (:sunset  . solarized-dark)))
+  (circadian-setup))
 
 ;; ----- mode-line -----
 
@@ -795,8 +797,7 @@
   :config
   (global-aggressive-indent-mode t)
   (add-to-list 'aggressive-indent-excluded-modes 'latex-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'org-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
+  (add-to-list 'aggressive-indent-excluded-modes 'org-mode))
 
 ;; avy
 (use-package avy
@@ -879,11 +880,6 @@
   (require 'smartparens-config)
   (smartparens-global-mode t)
   (sp-use-smartparens-bindings))
-
-;; smooth-scrolling
-(use-package smooth-scrolling
-  :config
-  (smooth-scrolling-mode t))
 
 ;; sr-speedbar
 (use-package sr-speedbar
