@@ -258,15 +258,16 @@
 ;; ----- package archives -----
 
 (setq package-archives
-      '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-        ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-        ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+      '(("gnu" . "http://elpa.gnu.org/packages/")
+        ("melpa" . "http://melpa.org/packages/")
+        ("org" . "http://orgmode.org/elpa/")))
 
 ;; ----- use-package -----
 
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
+(eval-when-compile (require 'use-package))
 (setq use-package-always-ensure t)
 
 
@@ -750,9 +751,6 @@
 
 ;; ess
 (use-package ess
-  :after (evil julia-mode)
-  :init
-  (setq inferior-julia-program-name "julia")
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'inferior-ess-mode 'emacs))
