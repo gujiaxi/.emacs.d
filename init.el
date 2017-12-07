@@ -144,9 +144,6 @@
 
 ;; ----- plugin settings -----
 
-;; abbrev [built-in]
-(setq abbrev-file-name (expand-file-name "snippets/abbrev.el" user-emacs-directory))
-
 ;; calendar [built-in]
 (setq calendar-location-name "Beijing, China")
 (setq calendar-chinese-all-holidays-flag t)
@@ -258,9 +255,9 @@
 ;; ----- package archives -----
 
 (setq package-archives
-      '(("gnu" . "http://elpa.gnu.org/packages/")
-        ("melpa" . "http://melpa.org/packages/")
-        ("org" . "http://orgmode.org/elpa/")))
+      '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+        ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+        ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 
 ;; ----- use-package -----
 
@@ -465,11 +462,11 @@
      (calc . t)
      (emacs-lisp . t)
      (haskell . t)
-     (julia . t)
      (latex . t)
      (python . t)
      (ruby . t)
      (R . t)
+     (scheme . t)
      (shell . t))))
 
 ;; htmlize
@@ -483,7 +480,7 @@
 
 ;; auctex
 (use-package tex
-  :defer t
+  :defer
   :ensure auctex
   :config
   (with-eval-after-load 'evil
@@ -609,7 +606,7 @@
 
 ;; helm
 (use-package helm
-  :defer 3
+  :defer
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'helm-grep-mode 'emacs))
@@ -738,6 +735,7 @@
 
 ;; haskell-mode
 (use-package haskell-mode
+  :defer
   :config
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (with-eval-after-load 'evil
@@ -746,11 +744,12 @@
 
 
 ;; -------------------------------------------------------------------
-;; R & Julia
+;; R
 ;; -------------------------------------------------------------------
 
 ;; ess
 (use-package ess
+  :defer
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'inferior-ess-mode 'emacs))
@@ -805,7 +804,7 @@
 
 ;; bbdb
 (use-package bbdb
-  :defer 5
+  :defer
   :config
   (setq bbdb-file (expand-file-name "org/bbdb.org" org-directory))
   (setq org-bbdb-anniversary-field 'birthday)
@@ -817,7 +816,7 @@
 
 ;; dumb-jump
 (use-package dumb-jump
-  :defer 3
+  :defer
   :after prog-mode
   :config
   (add-hook 'prog-mode-hook 'dumb-jump-mode))
@@ -835,7 +834,7 @@
 
 ;; flycheck
 (use-package flycheck
-  :defer 2
+  :defer
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'flycheck-error-list-mode 'emacs))
@@ -849,7 +848,7 @@
 
 ;; projectile
 (use-package projectile
-  :defer 2
+  :defer
   :config
   (projectile-global-mode))
 
