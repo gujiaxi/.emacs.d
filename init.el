@@ -197,18 +197,6 @@
       (list 'bibtex-mode-hook 'ess-mode-hook 'LaTeX-mode-hook 'markdown-mode-hook
             'org-mode-hook 'prog-mode-hook 'text-mode-hook))
 
-;; newsticker [built-in]
-(setq newsticker-url-list-defaults nil)
-(setq newsticker-retrieval-interval 0)
-(setq newsticker-url-list '(("湾区日报" "http://wanqu.co/feed/" nil nil nil)
-                            ("一天世界" "https://blog.yitianshijie.net/feed/" nil nil nil)))
-
-;; rcirc [built-in]
-(setq rcirc-server-alist
-      '(("irc.freenode.net"
-         :nick "caasi"
-         :channels ("#archlinux-cn" "#ubuntu-cn"))))
-
 ;; org [built-in]
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
@@ -266,85 +254,6 @@
   (package-install 'use-package))
 (eval-when-compile (require 'use-package))
 (setq use-package-always-ensure t)
-
-
-;; -------------------------------------------------------------------
-;; Gnus
-;; -------------------------------------------------------------------
-
-;; I use it only for emails
-(setq gnus-select-method
-      '(nnimap ""
-               (nnimap-address "imap.gmail.com")
-               (nnimap-server-port 993)
-               (nnimap-stream ssl)))
-;; send email via SMTP
-(setq message-send-mail-function 'smtpmail-send-it)
-(setq smtpmail-smtp-server "smtp.gmail.com")
-(setq smtpmail-smtp-service 587)
-;; more attractive summary view
-(when window-system
-  (setq gnus-sum-thread-tree-indent          "  ")
-  (setq gnus-sum-thread-tree-root            "● ")
-  (setq gnus-sum-thread-tree-false-root      "◯ ")
-  (setq gnus-sum-thread-tree-single-indent   "◎ ")
-  (setq gnus-sum-thread-tree-vertical        "│")
-  (setq gnus-sum-thread-tree-leaf-with-other "├─► ")
-  (setq gnus-sum-thread-tree-single-leaf     "╰─► "))
-(setq gnus-summary-line-format
-      (concat "%0{%U%R%z%}"
-              "%3{│%}" "%1{%d%}" "%3{│%}" "  "
-              "%4{%-20,20f%}" "  "
-              "%3{│%}" " "
-              "%1{%B%}"
-              "%s\n"))
-;; directories
-(setq gnus-use-dribble-file nil)
-(setq gnus-startup-file (expand-file-name "gnus/.newsrc" user-emacs-directory))
-(setq gnus-default-directory (expand-file-name "gnus" user-emacs-directory))
-(setq gnus-home-directory (expand-file-name "gnus" user-emacs-directory))
-(setq gnus-dribble-directory (expand-file-name "gnus" user-emacs-directory))
-(setq gnus-directory (expand-file-name "gnus/news" user-emacs-directory))
-(setq gnus-article-save-directory (expand-file-name "gnus/news" user-emacs-directory))
-(setq gnus-kill-files-directory (expand-file-name "gnus/news" user-emacs-directory))
-(setq gnus-agent-directory (expand-file-name "gnus/news/agent" user-emacs-directory))
-(setq gnus-cache-directory (expand-file-name "gnus/news/cache" user-emacs-directory))
-(setq gnus-cache-active-file (expand-file-name "gnus/news/cache/active" user-emacs-directory))
-(setq message-directory (expand-file-name "gnus/mail" user-emacs-directory))
-(setq message-auto-save-directory (expand-file-name "gnus/mail/drafts" user-emacs-directory))
-(setq mail-source-directory (expand-file-name "gnus/mail/incoming" user-emacs-directory))
-(setq nnfolder-directory (expand-file-name "gnus/mail/archive" user-emacs-directory))
-(setq nnmail-message-id-cache-file (expand-file-name "gnus/.nnmail-cache" user-emacs-directory))
-(setq nntp-marks-directory (expand-file-name "gnus/news/marks" user-emacs-directory))
-(setq mml-default-directory (expand-file-name "gnus/attachments" user-emacs-directory))
-;; gpg
-(setq mm-verify-option 'always)
-(setq mm-decrypt-option 'always)
-(setq mm-encrypt-option 'guided)
-;; misc
-(setq gnus-permanently-visible-groups "INBOX")
-(setq gnus-message-archive-group nil)
-(setq gnus-show-threads t)
-(setq gnus-thread-sort-functions '((not gnus-thread-sort-by-date)))
-(setq gnus-summary-display-arrow t)
-(setq gnus-activate-level 1)
-(setq gnus-use-full-window nil)
-(setq gnus-inhibit-startup-message t)
-(setq gnus-novice-user nil)
-(setq gnus-expert-user t)
-(setq gnus-interactive-exit t)
-(setq gnus-asynchronous t)
-(setq gnus-use-dribble-file nil)
-(setq gnus-always-read-dribble-file nil)
-(setq gnus-preserve-marks nil)
-(setq message-confirm-send t)
-(setq message-from-style 'angles)
-(setq message-signature "Jiaxi\n0x3F938F7B")
-;; type `B m' to move entries
-(setq gnus-move-split-methods
-      '((".*" "INBOX")
-        (".*" "[Gmail]/All Mail")
-        (".*" "[Gmail]/Trash")))
 
 
 ;; -------------------------------------------------------------------
@@ -809,10 +718,6 @@
   (setq bbdb-file (expand-file-name "org/bbdb.org" org-directory))
   (setq org-bbdb-anniversary-field 'birthday)
   (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus))
-
-;; bing-dict
-(use-package bing-dict
-  :bind ("C-c t" . bing-dict-brief))
 
 ;; dumb-jump
 (use-package dumb-jump
