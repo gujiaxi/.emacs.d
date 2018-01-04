@@ -200,6 +200,7 @@
 ;; org [built-in]
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
+(global-set-key (kbd "C-c m") 'org-mac-grab-link)
 
 ;; paren [built-in]
 (show-paren-mode t)
@@ -518,6 +519,7 @@
   :defer
   :config
   (with-eval-after-load 'evil
+    (evil-set-initial-state 'grep-mode 'emacs)
     (evil-set-initial-state 'helm-grep-mode 'emacs))
   (require 'helm-config)
   (helm-mode)
