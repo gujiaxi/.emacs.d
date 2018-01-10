@@ -424,21 +424,10 @@
 
 ;; ----- color theme -----
 
-;; solarized-theme
-(use-package solarized-theme
+;; darktooth-theme
+(use-package darktooth-theme
   :config
-  (setq x-underline-at-descent-line t)
-  (setq solarized-emphasize-indicators nil))
-
-;; circadian
-(use-package circadian
-  :if window-system
-  :config
-  (setq calendar-latitude 39.91)
-  (setq calendar-longitude 116.40)
-  (setq circadian-themes '((:sunrise . solarized-light)
-                           (:sunset  . solarized-dark)))
-  (circadian-setup))
+  (load-theme 'darktooth t))
 
 ;; ----- mode-line -----
 
@@ -474,7 +463,7 @@
   (evil-mode t)
   (mapc (lambda (my-mode) (evil-set-initial-state my-mode 'emacs))
         (list 'calendar-mode 'comint-mode 'completion-mode
-              'dired-mode 'diary-fancy-display-mode
+              'dired-mode 'diary-fancy-display-mode 'diff-mode
               'epa-info-mode 'epa-key-list-mode 'eshell-mode
               'eww-mode 'eww-bookmark-mode 'help-mode
               'inferior-python-mode 'Info-mode 'message-mode
@@ -649,6 +638,8 @@
   :defer
   :config
   (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
+  (with-eval-after-load 'aggressive-indent
+    (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
   (with-eval-after-load 'evil
     (evil-set-initial-state 'haskell-error-mode 'emacs)
     (evil-set-initial-state 'haskell-interactive-mode 'emacs)))
