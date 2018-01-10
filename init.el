@@ -424,10 +424,14 @@
 
 ;; ----- color theme -----
 
-;; darktooth-theme
-(use-package darktooth-theme
+;; zenburn-theme
+(use-package zenburn-theme
+  :init
+  (defvar zenburn-override-colors-alist
+    '(("zenburn-bg" . "#2F2F2F")))
   :config
-  (load-theme 'darktooth t))
+  (load-theme 'zenburn t)
+  (set-face-attribute 'fringe nil :background "#2F2F2F"))
 
 ;; ----- mode-line -----
 
@@ -684,7 +688,11 @@
   :mode (("\\.html?$" . web-mode)
          ("\\.jsx?$"  . web-mode)
          ("\\.php$"   . web-mode)
-         ("\\.s?css$"  . web-mode)))
+         ("\\.s?css$"  . web-mode))
+  :config
+  (use-package rainbow-mode
+    :config
+    (add-hook 'web-mode-hook 'rainbow-mode)))
 
 
 ;; -------------------------------------------------------------------
@@ -762,12 +770,6 @@
   :after prog-mode
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-
-;; rainbow-mode
-(use-package rainbow-mode
-  :after css-mode
-  :config
-  (add-hook 'css-mode-hook 'rainbow-mode))
 
 ;; smartparens
 (use-package smartparens
