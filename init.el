@@ -428,10 +428,11 @@
 (use-package zenburn-theme
   :init
   (defvar zenburn-override-colors-alist
-    '(("zenburn-bg" . "#2F2F2F")))
+    '(("zenburn-bg"   . "#3F3F3F")
+      ("zenburn-bg-1" . "#5F5F5F")))
   :config
   (load-theme 'zenburn t)
-  (set-face-attribute 'fringe nil :background "#2F2F2F"))
+  (set-face-attribute 'fringe nil :background "#3F3F3F"))
 
 ;; ----- mode-line -----
 
@@ -674,8 +675,10 @@
   :mode ("\\.md\\'" "\\.markdown\\'")
   :config
   (setq markdown-enable-math t)
-  (setq markdown-command "pandoc --mathml")
-  (setq markdown-css-paths '("http://tilde.works/~isaac/static/md.css"))
+  (setq markdown-command "pandoc --mathml --quiet")
+  (setq markdown-css-paths '("http://tilde.works/~isaac/static/md.css"
+                             "http://tilde.works/~isaac/static/hl.css"))
+  (setq markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">")
   (add-hook 'markdown-mode-hook 'flyspell-mode))
 
 
@@ -719,6 +722,12 @@
   (setq bbdb-file (expand-file-name "org/bbdb.org" org-directory))
   (setq org-bbdb-anniversary-field 'birthday)
   (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus))
+
+;; color-identifiers-mode
+(use-package color-identifiers-mode
+  :defer 3
+  :config
+  (global-color-identifiers-mode t))
 
 ;; dumb-jump
 (use-package dumb-jump
@@ -804,7 +813,9 @@
 ;; yasnippet
 (use-package yasnippet
   :defer 2
-  :config (yas-global-mode t))
+  :config
+  (use-package yasnippet-snippets)
+  (yas-global-mode t))
 
 
 ;; -------------------------------------------------------------------
