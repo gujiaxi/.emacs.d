@@ -315,11 +315,13 @@
   :after org
   :config
   ;; ox-latex
+  (with-eval-after-load 'ox-latex
+    (add-to-list 'org-latex-logfiles-extensions "tex")
+    (add-to-list 'org-latex-packages-alist '("" "listings"))
+    (add-to-list 'org-latex-packages-alist '("" "color")))
   (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
   (setq org-latex-listings t)
   (setq org-latex-listings-options '(("breaklines" "true")))
-  (add-to-list 'org-latex-packages-alist '("" "listings"))
-  (add-to-list 'org-latex-packages-alist '("" "color"))
   ;; ox-bibtex
   (require 'ox-bibtex)
   ;; org-publish
@@ -392,6 +394,7 @@
 (use-package tex
   :defer
   :ensure auctex
+  :after latex
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'TeX-output-mode 'emacs))
@@ -403,7 +406,8 @@
   (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
   (add-hook 'LaTeX-mode-hook 'TeX-fold-mode)
   (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-  (add-to-list 'TeX-command-list '("Latexmk" "latexmk -pdf -quiet %s" TeX-run-command nil t :help "Run latexmk")))
+  (add-to-list 'TeX-command-list '("Latexmk" "latexmk -pdf -quiet %s" TeX-run-command nil t :help "Run latexmk"))
+  (add-to-list 'LaTeX-clean-intermediate-suffixes "\\.fdb_latexmk"))
 
 ;; company-math
 (use-package company-math
