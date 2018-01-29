@@ -456,8 +456,8 @@
                     '(:eval (propertize (format-time-string "%p·%H:%M ") 'help-echo (format-time-string "%F %a") 'face '(:inherit font-lock-doc-face :slant normal)))
                     'battery-mode-line-string
                     '(:propertize (which-func-mode (" " which-func-format)))
-                    '(:eval (when (> (window-width) 100) (propertize " {%m}" 'face '(:weight normal))))
-                    '(:eval (when (> (window-width) 100) (propertize vc-mode 'face '(:inherit font-lock-keyword-face :weight bold))))
+                    '(:eval (when (> (window-width) 70) (propertize " {%m}" 'face '(:weight normal))))
+                    '(:eval (when (> (window-width) 70) (propertize vc-mode 'face '(:inherit font-lock-keyword-face :weight bold))))
                     "-%-"))
 
 
@@ -475,10 +475,10 @@
               'dired-mode 'diary-fancy-display-mode 'diff-mode
               'epa-info-mode 'epa-key-list-mode 'eshell-mode
               'eww-mode 'eww-bookmark-mode 'help-mode
-              'inferior-python-mode 'Info-mode 'message-mode
-              'newsticker-treeview-mode 'process-menu-mode
-              'profiler-report-mode 'shell-mode 'speedbar-mode
-              'special-mode))
+              'inferior-emacs-lisp-mode 'inferior-python-mode
+              'Info-mode 'message-mode 'newsticker-treeview-mode
+              'process-menu-mode 'profiler-report-mode
+              'shell-mode 'speedbar-mode 'special-mode))
   :bind
   (("<f5>" . evil-make)
    :map evil-normal-state-map
@@ -727,19 +727,6 @@
   (setq org-bbdb-anniversary-field 'birthday)
   (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus))
 
-;; color-identifiers-mode
-(use-package color-identifiers-mode
-  :defer 3
-  :config
-  (global-color-identifiers-mode t))
-
-;; dumb-jump
-(use-package dumb-jump
-  :defer
-  :after prog-mode
-  :config
-  (add-hook 'prog-mode-hook 'dumb-jump-mode))
-
 ;; expand-region
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
@@ -765,12 +752,6 @@
   (linum-relative-mode)
   (setq linum-relative-current-symbol ""))
 
-;; projectile
-(use-package projectile
-  :defer
-  :config
-  (projectile-global-mode))
-
 ;; quickrun
 (use-package quickrun
   :config
@@ -783,13 +764,6 @@
   :after prog-mode
   :config
   (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
-
-;; smartparens
-(use-package smartparens
-  :config
-  (require 'smartparens-config)
-  (smartparens-global-mode t)
-  (sp-use-smartparens-bindings))
 
 ;; sr-speedbar
 (use-package sr-speedbar
