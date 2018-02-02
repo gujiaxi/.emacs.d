@@ -194,8 +194,9 @@
 
 ;; linum [built-in]
 (mapc (lambda (hook) (add-hook hook 'linum-mode))
-      (list 'bibtex-mode-hook 'ess-mode-hook 'LaTeX-mode-hook 'markdown-mode-hook
-            'org-mode-hook 'prog-mode-hook 'text-mode-hook))
+      (list 'bibtex-mode-hook 'ess-mode-hook 'LaTeX-mode-hook
+            'markdown-mode-hook 'org-mode-hook 'prog-mode-hook
+            'text-mode-hook))
 
 ;; org [built-in]
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -214,6 +215,7 @@
 
 ;; reftex [built-in]
 (setq reftex-plug-into-AUCTeX t)
+(setq reftex-toc-split-windows-horizontally t)
 (setq reftex-default-bibliography (list (expand-file-name "org/bib/main.bib" org-directory)))
 
 ;; saveplace [built-in]
@@ -383,7 +385,9 @@
 
 ;; htmlize
 (use-package htmlize
-  :after org)
+  :after org
+  :config
+  (setq org-html-htmlize-output-type 'css))
 
 
 ;; -------------------------------------------------------------------
@@ -719,14 +723,6 @@
   (setq avy-background t)
   :bind* ("C-'" . avy-goto-char-2))
 
-;; bbdb
-(use-package bbdb
-  :defer
-  :config
-  (setq bbdb-file (expand-file-name "org/bbdb.org" org-directory))
-  (setq org-bbdb-anniversary-field 'birthday)
-  (add-hook 'gnus-startup-hook 'bbdb-insinuate-gnus))
-
 ;; expand-region
 (use-package expand-region
   :bind ("C-=" . er/expand-region))
@@ -814,7 +810,9 @@
     (set-face-attribute 'default nil :font "Menlo-13"))
   (when (member "PragmataPro" (font-family-list))
     (add-hook 'org-mode-hook (lambda () (mapc (lambda (face) (set-face-attribute face nil :font "PragmataPro-14"))
-                                              (list 'org-table 'org-link 'org-date 'org-code 'org-verbatim 'org-formula)))))
+                                              (list 'org-table 'org-link 'org-date 'org-code 'org-verbatim 'org-formula))))
+    (add-hook 'markdown-mode-hook (lambda () (mapc (lambda (face) (set-face-attribute face nil :font "PragmataPro-14"))
+                                                   (list 'markdown-table-face)))))
   ;; 4. fix some binareis
   (setq python-shell-interpreter "python3")
   (setq org-babel-python-command "python3"))
