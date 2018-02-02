@@ -446,7 +446,7 @@
 
 ;; Crafted for battery-mode, evil-mode and eyebrowse-mode
 (setq-default mode-line-format
-              (list '(:eval (propertize (evil-generate-mode-line-tag evil-state) 'face '(:inherit font-lock-comment-face)))
+              (list '(:eval (propertize (evil-generate-mode-line-tag evil-state) 'face '(:inherit font-lock-function-name-face)))
                     "%e"
                     'mode-line-mule-info
                     'mode-line-modified
@@ -454,7 +454,7 @@
                     '(:eval (propertize " %b " 'face (if (buffer-modified-p) '(:background "#d33682" :foreground "#fdf6e3" :weight bold)
                                                        '(:background "#268bd2" :foreground "#fdf6e3" :weight light))
                                         'help-echo (buffer-file-name)))
-                    '(:propertize " %p/%I " face (:background "gray60" :foreground "#fdf6e3")
+                    '(:propertize " %p/%I " face (:background "gray30" :foreground "#fdf6e3")
                                   help-echo (count-words--buffer-message))
                     '(:eval (propertize (concat " " (eyebrowse-mode-line-indicator) " ")))
                     '(:eval (propertize (format-time-string "%p·%H:%M ") 'help-echo (format-time-string "%F %a") 'face '(:inherit font-lock-doc-face :slant normal)))
@@ -640,6 +640,17 @@
   :after python
   :config
   (add-to-list 'company-backends 'company-anaconda))
+
+
+;; -------------------------------------------------------------------
+;; Scheme
+;; -------------------------------------------------------------------
+
+;; geiser
+(use-package geiser
+  :config
+  (setq geiser-active-implementations '(chez))
+  (setq geiser-chez-binary "chez"))
 
 
 ;; -------------------------------------------------------------------
