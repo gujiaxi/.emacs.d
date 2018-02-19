@@ -246,9 +246,9 @@
 ;; ----- package archives -----
 
 (setq package-archives
-      '(("gnu" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-        ("melpa" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-        ("org" . "http://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+      '(("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+        ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+        ("org" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 
 ;; ----- use-package -----
 
@@ -273,7 +273,8 @@
 (setq org-export-html-style-include-default nil)
 (setq org-html-postamble t)
 (setq org-archive-location (expand-file-name "org/archive.org::" org-directory))
-(setq org-refile-targets '((org-agenda-files :level . 1)))
+(setq org-refile-targets '((org-agenda-files :level . 1)
+                           (nil :level . 1)))
 (setq org-html-postamble-format '(("en" "&copy; %a / %C")))
 (setq org-priority-faces '((?A . (:foreground "red" :weight bold))
                            (?B . (:foreground "orange" :weight bold))
@@ -640,17 +641,6 @@
   :after python
   :config
   (add-to-list 'company-backends 'company-anaconda))
-
-
-;; -------------------------------------------------------------------
-;; Scheme
-;; -------------------------------------------------------------------
-
-;; geiser
-(use-package geiser
-  :config
-  (setq geiser-active-implementations '(chez))
-  (setq geiser-chez-binary "chez"))
 
 
 ;; -------------------------------------------------------------------
