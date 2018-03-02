@@ -2,11 +2,13 @@
 # name: plot
 # key: plot
 # --
+bfs = 9
 plt.style.use('seaborn-paper')
-plt.rc('font', **{'family': 'sans-serif', 'size': 12})
-plt.rc('xtick', **{'direction': 'in', 'labelsize': 10, 'major.size': 3.5})
-plt.rc('ytick', **{'direction': 'in', 'labelsize': 10, 'major.size': 3.5})
-plt.rc('axes', **{'labelsize': 10})
+plt.rc('font', **{'family': 'sans-serif', 'size': bfs})
+plt.rc('font', **{'sans-serif': ['Helvetica', 'Arial']})
+plt.rc('xtick', **{'direction': 'in', 'labelsize': bfs, 'major.size': 3.5})
+plt.rc('ytick', **{'direction': 'in', 'labelsize': bfs, 'major.size': 3.5})
+plt.rc('axes', **{'labelsize': bfs})
 plt.rc('grid', **{'linestyle': 'dashed'})
 plt.rc('figure', **{'figsize': (3.5, 2.2), 'autolayout': True})
 plt.rc('savefig', **{'bbox': 'tight'})

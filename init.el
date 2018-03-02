@@ -24,7 +24,7 @@
 
 ;; jiaxi's Emacs configuration
 ;;
-;; See documentation on https://git.io/v96UQ
+;; See documentation on https://git.io/vAoD8
 
 ;;; Code:
 
@@ -308,7 +308,7 @@
         ("n" "Note" entry (file+headline "org/notes.org" "Inbox")
          "* %?\n%U\n%a")
         ("j" "Journal" plain (file+datetree "org/journal.org")
-         "_%<%H:%M>_ / %?\n")
+         "%U %?\n")
         ("p" "Publish" plain (file "org/p-tweets.org")
          "*** %?\n%U\n-----")))
 
@@ -477,9 +477,9 @@
   (evil-mode t)
   (mapc (lambda (my-mode) (evil-set-initial-state my-mode 'emacs))
         (list 'calendar-mode 'comint-mode 'completion-mode
-              'dired-mode 'diary-fancy-display-mode 'diff-mode
-              'epa-info-mode 'epa-key-list-mode 'eshell-mode
-              'eww-mode 'eww-bookmark-mode 'help-mode
+              'dired-mode 'diff-mode 'epa-info-mode
+              'epa-key-list-mode 'eshell-mode 'eww-mode
+              'eww-bookmark-mode 'help-mode
               'inferior-emacs-lisp-mode 'inferior-python-mode
               'Info-mode 'message-mode 'newsticker-treeview-mode
               'process-menu-mode 'profiler-report-mode
