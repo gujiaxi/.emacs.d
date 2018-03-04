@@ -85,6 +85,7 @@
 ;; indentation
 (setq-default indent-tabs-mode nil)
 (setq-default default-tab-width 4)
+(setq-default c-basic-offset 4)
 
 ;; turn off truncate lines
 (setq-default truncate-lines t)
@@ -606,26 +607,6 @@
 
 
 ;; -------------------------------------------------------------------
-;; C/C++
-;; -------------------------------------------------------------------
-
-;; basic settings
-(setq-default c-basic-offset 4)
-
-;; comapny-c-headers
-(use-package company-c-headers
-  :after company
-  :config
-  (add-to-list 'company-backends 'company-c-headers))
-
-;; cmake-mode
-(use-package cmake-mode
-  :config
-  :mode (("CMakeLists\\.txt\\'" . cmake-mode)
-         ("\\.cmake\\'" . cmake-mode)))
-
-
-;; -------------------------------------------------------------------
 ;; Python
 ;; -------------------------------------------------------------------
 
@@ -776,10 +757,6 @@
   :config
   (setq symon-delay 33)
   (symon-mode))
-
-;; wgrep
-(use-package wgrep
-  :after grep)
 
 ;; which-key
 (use-package which-key
