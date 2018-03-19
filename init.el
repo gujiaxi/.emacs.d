@@ -310,14 +310,16 @@
          "* %?\n%U\n%a")
         ("j" "Journal" plain (file+datetree "org/journal.org")
          "%U %?\n")
-        ("p" "Publish" plain (file "org/p-tweets.org")
-         "*** %?\n%U\n-----")))
+        ("p" "Publish" plain (file "org/p-scratch.org")
+         "%?\n\n%U\n-----")))
 
 ;; org
 (use-package org
   :ensure org-plus-contrib
   :after org
   :config
+  (use-package htmlize
+    :config (setq org-html-htmlize-output-type 'css))
   ;; ox-latex
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-logfiles-extensions "tex")
@@ -384,12 +386,6 @@
      (R . t)
      (scheme . t)
      (shell . t))))
-
-;; htmlize
-(use-package htmlize
-  :after org
-  :config
-  (setq org-html-htmlize-output-type 'css))
 
 
 ;; -------------------------------------------------------------------
@@ -681,11 +677,7 @@
   :mode (("\\.html?$" . web-mode)
          ("\\.jsx?$"  . web-mode)
          ("\\.php$"   . web-mode)
-         ("\\.s?css$"  . web-mode))
-  :config
-  (use-package rainbow-mode
-    :config
-    (add-hook 'web-mode-hook 'rainbow-mode)))
+         ("\\.s?css$"  . web-mode)))
 
 
 ;; -------------------------------------------------------------------
@@ -787,10 +779,7 @@
   (when (member "Menlo" (font-family-list))
     (set-face-attribute 'default nil :font "Menlo-13"))
   (when (member "PragmataPro" (font-family-list))
-    (add-hook 'org-mode-hook (lambda () (mapc (lambda (face) (set-face-attribute face nil :font "PragmataPro-14"))
-                                              (list 'org-table 'org-link 'org-date 'org-code 'org-verbatim 'org-formula))))
-    (add-hook 'markdown-mode-hook (lambda () (mapc (lambda (face) (set-face-attribute face nil :font "PragmataPro-14"))
-                                                   (list 'markdown-table-face)))))
+    (add-hook 'org-mode-hook (lambda () (setq buffer-face-mode-face '(:family "PragmataPro")) (buffer-face-mode))))
   ;; 4. fix some binareis
   (setq python-shell-interpreter "python3")
   (setq org-babel-python-command "python3"))

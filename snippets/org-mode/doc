@@ -6,6 +6,7 @@
 #+TODO: TODO(t) WAIT(w) | DONE(d) UNDO(u)
 #+STARTUP: hidestars indent content align inlineimages
 #+OPTIONS: toc:nil num:nil ^:{} html-style:t html-scripts:nil html-postamble:t
+# #+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://tilde.works/~isaac/static/org.css" />
 #+HTML_HEAD_EXTRA: <style>@media(min-width:769px){body{width:800px;margin:auto}}#postamble{border-top:1px solid grey;margin-top:1em;padding:.5em}pre{word-wrap:normal}pre.src{overflow:auto}pre.src:hover:before{display:none}img{max-width:100%}</style>
 #+LaTeX_HEADER: \usepackage[scheme=plain]{ctex}
 #+LaTeX_HEADER: \usepackage[margin=1in]{geometry}
