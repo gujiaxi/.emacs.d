@@ -87,10 +87,7 @@
 (setq-default default-tab-width 4)
 (setq-default c-basic-offset 4)
 
-;; turn off truncate lines
-(setq-default truncate-lines t)
-
-;; deltet selection
+;; delete selection
 (delete-selection-mode t)
 
 ;; auto revert external changes
@@ -124,9 +121,6 @@
 ;; use system clipboard
 (setq save-interprogram-paste-before-kill t)
 
-;; dodge the mouse from cursor
-(mouse-avoidance-mode 'animate)
-
 ;; confirm before quit
 (setq confirm-kill-emacs 'yes-or-no-p)
 
@@ -153,12 +147,6 @@
 (setq cal-html-directory (expand-file-name "calendar" org-directory))
 (setq diary-file (expand-file-name "org/diary.org" org-directory))
 (global-set-key (kbd "C-c k") 'calendar)
-
-;; compile [built-in]
-(global-set-key (kbd "<f6>") 'compile)
-
-;; css-mode [built-in]
-(setq css-indent-offset 2)
 
 ;; dired [built-in]
 (put 'dired-find-alternate-file 'disabled nil)
@@ -777,7 +765,7 @@
   (setq mac-option-modifier 'super)
   ;; 3. set font
   (when (member "Menlo" (font-family-list))
-    (set-face-attribute 'default nil :font "Menlo-13"))
+    (set-face-attribute 'default nil :font "Menlo-14"))
   (when (member "PragmataPro" (font-family-list))
     (add-hook 'org-mode-hook (lambda () (setq buffer-face-mode-face '(:family "PragmataPro")) (buffer-face-mode))))
   ;; 4. fix some binareis
