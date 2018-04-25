@@ -446,8 +446,10 @@
                     '(:eval (propertize (format-time-string "%p·%H:%M ") 'help-echo (format-time-string "%F %a") 'face '(:inherit font-lock-doc-face :slant normal)))
                     'battery-mode-line-string
                     '(:propertize (which-func-mode (" " which-func-format)))
-                    '(:eval (when (> (window-width) 70) (propertize " {%m}" 'face '(:weight normal))))
-                    '(:eval (when (> (window-width) 70) (propertize vc-mode 'face '(:inherit font-lock-keyword-face :weight bold))))
+                    '(:eval (when (> (window-width) 70)
+                              (propertize " {%m}" 'face '(:weight normal))))
+                    '(:eval (when (and (> (window-width) 70) vc-mode)
+                              (propertize vc-mode 'face '(:inherit font-lock-keyword-face :weight bold))))
                     "-%-"))
 
 
