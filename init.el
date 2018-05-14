@@ -169,7 +169,7 @@
 ;; flyspell [built-in]
 (setq ispell-program-name "aspell")
 (add-hook 'org-mode-hook 'flyspell-mode)
-(add-hook 'message-mode-hook 'flyspell-mode)
+(add-hook 'text-mode-hook 'flyspell-mode)
 
 ;; grep [built-in]
 (global-set-key (kbd "C-c g") 'zrgrep)
@@ -183,8 +183,7 @@
 
 ;; linum [built-in]
 (mapc (lambda (hook) (add-hook hook 'linum-mode))
-      (list 'bibtex-mode-hook 'ess-mode-hook 'LaTeX-mode-hook
-            'markdown-mode-hook 'org-mode-hook 'prog-mode-hook
+      (list 'bibtex-mode-hook 'org-mode-hook 'prog-mode-hook
             'text-mode-hook))
 
 ;; org [built-in]
@@ -306,8 +305,7 @@
   :ensure org-plus-contrib
   :after org
   :config
-  (use-package htmlize
-    :config (setq org-html-htmlize-output-type 'css))
+  (use-package htmlize :custom (org-html-htmlize-output-type 'css))
   ;; ox-latex
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-logfiles-extensions "tex")
@@ -382,22 +380,23 @@
 
 ;; auctex
 (use-package tex
-  :defer
   :ensure auctex
   :after latex
   :config
+  (add-to-list 'TeX-command-list '("Latexmk" "latexmk -pdf -quiet %s" TeX-run-command nil t :help "Run latexmk"))
+  (add-to-list 'LaTeX-clean-intermediate-suffixes "\\.fdb_latexmk")
   (with-eval-after-load 'evil
     (evil-set-initial-state 'TeX-output-mode 'emacs))
-  (setq TeX-auto-save t)
-  (setq TeX-parse-self t)
-  (setq TeX-clean-confirm nil)
-  (add-hook 'LaTeX-mode-hook 'turn-on-reftex)
-  (add-hook 'LaTeX-mode-hook 'visual-line-mode)
-  (add-hook 'LaTeX-mode-hook 'LaTeX-math-mode)
-  (add-hook 'LaTeX-mode-hook 'TeX-fold-mode)
-  (add-hook 'LaTeX-mode-hook 'flyspell-mode)
-  (add-to-list 'TeX-command-list '("Latexmk" "latexmk -pdf -quiet %s" TeX-run-command nil t :help "Run latexmk"))
-  (add-to-list 'LaTeX-clean-intermediate-suffixes "\\.fdb_latexmk"))
+  :hook ((LaTeX-mode . turn-on-reftex)
+         (LaTeX-mode . linum-mode)
+         (LaTeX-mode . visual-line-mode)
+         (LaTeX-mode . LaTeX-math-mode)
+         (LaTeX-mode . TeX-fold-mode)
+         (LaTeX-mode . flyspell-mode))
+  :custom
+  (TeX-auto-save t)
+  (TeX-parse-self t)
+  (TeX-clean-confirm nil))
 
 ;; company-math
 (use-package company-math
@@ -408,8 +407,7 @@
 ;; company-auctex
 (use-package company-auctex
   :after tex
-  :config
-  (company-auctex-init))
+  :config (company-auctex-init))
 
 
 ;; -------------------------------------------------------------------
@@ -459,7 +457,6 @@
 
 ;; evil
 (use-package evil
-  :demand t
   :config
   (evil-mode t)
   (mapc (lambda (my-mode) (evil-set-initial-state my-mode 'emacs))
@@ -471,23 +468,21 @@
               'Info-mode 'message-mode 'newsticker-treeview-mode
               'process-menu-mode 'profiler-report-mode
               'shell-mode 'speedbar-mode 'special-mode))
-  :bind
-  (("<f5>" . evil-make)
-   :map evil-normal-state-map
-   ("j" . evil-next-visual-line)
-   ("k" . evil-previous-visual-line)
-   :map evil-visual-state-map
-   ("j" . evil-next-visual-line)
-   ("k" . evil-previous-visual-line)
-   :map evil-emacs-state-map
-   ("C-w" . evil-window-map)))
+  :bind (("<f5>" . evil-make)
+         :map evil-normal-state-map
+         ("j" . evil-next-visual-line)
+         ("k" . evil-previous-visual-line)
+         :map evil-visual-state-map
+         ("j" . evil-next-visual-line)
+         ("k" . evil-previous-visual-line)
+         :map evil-emacs-state-map
+         ("C-w" . evil-window-map)))
 
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
-  :bind
-  (("M-;" . evilnc-comment-or-uncomment-lines)
-   :map evil-normal-state-map
-   (", c SPC" . evilnc-comment-or-uncomment-lines)))
+  :bind (("M-;" . evilnc-comment-or-uncomment-lines)
+         :map evil-normal-state-map
+         (", c SPC" . evilnc-comment-or-uncomment-lines)))
 
 ;; evil-surround
 (use-package evil-surround
@@ -506,42 +501,41 @@
 
 ;; helm
 (use-package helm
-  :defer
   :config
-  (with-eval-after-load 'evil
-    (evil-set-initial-state 'grep-mode 'emacs)
-    (evil-set-initial-state 'helm-grep-mode 'emacs))
   (require 'helm-config)
   (helm-mode)
   (helm-autoresize-mode t)
   (helm-adaptive-mode t)
-  (setq helm-split-window-in-side-p t)
-  (setq helm-ff-search-library-in-sexp t)
-  (setq helm-ff-file-name-history-use-recentf t)
-  (setq helm-follow-mode-persistent t)
-  (setq helm-mode-fuzzy-match t)
-  (setq helm-completion-in-region-fuzzy-match t)
-  (setq helm-grep-ag-command "rg --color always --smart-case --no-heading --line-number %s %s %s")
-  :bind
-  (("M-x" . helm-M-x)
-   ("M-y" . helm-show-kill-ring)
-   ("C-s" . helm-occur)
-   ("C-x b" . helm-mini)
-   ("C-x C-f" . helm-find-files)
-   ("C-x g" . helm-do-grep-ag)))
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'grep-mode 'emacs)
+    (evil-set-initial-state 'helm-grep-mode 'emacs))
+  :custom
+  (helm-split-window-in-side-p t)
+  (helm-ff-search-library-in-sexp t)
+  (helm-ff-file-name-history-use-recentf t)
+  (helm-follow-mode-persistent t)
+  (helm-mode-fuzzy-match t)
+  (helm-completion-in-region-fuzzy-match t)
+  (helm-grep-ag-command "rg --color always --smart-case --no-heading --line-number %s %s %s")
+  :bind (("M-x" . helm-M-x)
+         ("M-y" . helm-show-kill-ring)
+         ("C-s" . helm-occur)
+         ("C-x b" . helm-mini)
+         ("C-x C-f" . helm-find-files)
+         ("C-x g" . helm-do-grep-ag)))
 
 ;; helm-bibtex
 (use-package helm-bibtex
   :after helm
-  :config
-  (setq bibtex-completion-bibliography (list (expand-file-name "org/bib/main.bib" org-directory)))
-  (setq bibtex-completion-notes-symbol "✎")
-  (setq bibtex-completion-notes-path (expand-file-name "org/research-notes.org" org-directory))
-  (setq bibtex-completion-pdf-symbol "⌘")
-  (setq bibtex-completion-library-path (list (expand-file-name "pdf" org-directory)))
-  (setq bibtex-completion-pdf-open-function 'helm-open-file-with-default-tool)
-  (setq bibtex-completion-cite-prompt-for-optional-arguments nil)
-  (setq bibtex-completion-notes-template-one-file "\n* ${title} (${year})\n:PROPERTIES:\n:Custom_ID: ${=key=}\n:END:\n")
+  :custom
+  (bibtex-completion-bibliography (list (expand-file-name "org/bib/main.bib" org-directory)))
+  (bibtex-completion-notes-symbol "✎")
+  (bibtex-completion-notes-path (expand-file-name "org/research-notes.org" org-directory))
+  (bibtex-completion-pdf-symbol "⌘")
+  (bibtex-completion-library-path (list (expand-file-name "pdf" org-directory)))
+  (bibtex-completion-pdf-open-function 'helm-open-file-with-default-tool)
+  (bibtex-completion-cite-prompt-for-optional-arguments nil)
+  (bibtex-completion-notes-template-one-file "\n* ${title} (${year})\n:PROPERTIES:\n:Custom_ID: ${=key=}\n:END:\n")
   :bind ("C-c b" . helm-bibtex))
 
 
@@ -551,26 +545,20 @@
 
 ;; company
 (use-package company
-  :init
-  ;; enable company globally
-  (add-hook 'after-init-hook 'global-company-mode)
+  :hook (after-init . global-company-mode)
+  :custom
+  (company-idle-delay 0.3)
+  (company-minimum-prefix-length 1)
+  (company-dabbrev-downcase nil)
+  (company-selection-wrap-around t)
+  (company-show-numbers t)
+  (company-global-modes '(not comint-mode eshell-mode org-mode))
   :config
-  (setq company-idle-delay 0.3)
-  (setq company-minimum-prefix-length 1)
-  (setq company-dabbrev-downcase nil)
-  (setq company-selection-wrap-around t)
-  (setq company-show-numbers t)
-  ;; enable file name completion
-  (add-to-list 'company-backends 'company-files)
-  ;; exclude annoying dabbrev completion
   (setq company-backends (delete 'company-dabbrev company-backends))
-  ;; turn company off in some specific modes
-  (setq company-global-modes '(not comint-mode eshell-mode org-mode))
-  :bind
-  (:map
-   company-active-map
-   ("C-n" . company-select-next)
-   ("C-p" . company-select-previous)))
+  (add-to-list 'company-backends 'company-files)
+  :bind (:map company-active-map
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous)))
 
 
 ;; -------------------------------------------------------------------
@@ -578,17 +566,18 @@
 ;; -------------------------------------------------------------------
 
 (use-package deft 
+  :custom
+  (deft-directory (expand-file-name "org" org-directory))
+  (deft-extensions '("org" "md" "tex"))
+  (deft-default-extension "org")
+  (deft-recursive t)
+  (deft-auto-save-interval nil)
+  (deft-use-filename-as-title t)
+  (deft-use-filter-string-for-filename t)
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'deft-mode 'emacs))
-  (setq deft-directory (expand-file-name "org" org-directory))
-  (setq deft-extensions '("org" "md" "tex"))
-  (setq deft-default-extension "org")
-  (setq deft-recursive t)
-  (setq deft-auto-save-interval nil)
-  (setq deft-use-filename-as-title t)
-  (setq deft-use-filter-string-for-filename t)
-  (add-hook 'deft-open-file-hook 'deft-filter-clear)
+  :hook (deft-open-file . deft-filter-clear)
   :bind ("C-c d" . deft))
 
 
@@ -599,9 +588,8 @@
 ;; anaconda-mode
 (use-package anaconda-mode
   :after python
-  :config
-  (add-hook 'python-mode-hook 'anaconda-mode)
-  (add-hook 'python-mode-hook 'anaconda-eldoc-mode))
+  :hook ((python-mode . anaconda-mode)
+         (python-mode . anaconda-eldoc-mode)))
 
 ;; company-anaconda
 (use-package company-anaconda
@@ -616,14 +604,13 @@
 
 ;; haskell-mode
 (use-package haskell-mode
-  :defer
   :config
-  (add-hook 'haskell-mode-hook 'interactive-haskell-mode)
   (with-eval-after-load 'aggressive-indent
     (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
   (with-eval-after-load 'evil
     (evil-set-initial-state 'haskell-error-mode 'emacs)
-    (evil-set-initial-state 'haskell-interactive-mode 'emacs)))
+    (evil-set-initial-state 'haskell-interactive-mode 'emacs))
+  :hook (haskell-mode . interactive-haskell-mode))
 
 
 ;; -------------------------------------------------------------------
@@ -632,14 +619,15 @@
 
 ;; ess
 (use-package ess
-  :defer
+  :after ess-site
+  :custom
+  (ess-ask-for-ess-directory nil)
+  (ess-eval-visibly nil)
+  (ess-history-file nil)
+  :hook (ess-mode . linum-mode)
   :config
   (with-eval-after-load 'evil
-    (evil-set-initial-state 'inferior-ess-mode 'emacs))
-  (require 'ess-site)
-  (setq ess-ask-for-ess-directory nil)
-  (setq ess-eval-visibly nil)
-  (setq ess-history-file nil))
+    (evil-set-initial-state 'inferior-ess-mode 'emacs)))
 
 
 ;; -------------------------------------------------------------------
@@ -649,13 +637,14 @@
 ;; markdown-mode
 (use-package markdown-mode
   :mode ("\\.md\\'" "\\.markdown\\'")
-  :config
-  (setq markdown-enable-math t)
-  (setq markdown-command "pandoc --mathml --quiet")
-  (setq markdown-css-paths '("http://tilde.works/~isaac/static/md.css"
-                             "http://tilde.works/~isaac/static/hl.css"))
-  (setq markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">")
-  (add-hook 'markdown-mode-hook 'flyspell-mode))
+  :hook ((markdown-mode . flyspell-mode)
+         (markdown-mode . linum-mode))
+  :custom
+  (markdown-enable-math t)
+  (markdown-command "pandoc --mathml --quiet")
+  (markdown-css-paths '("http://tilde.works/~isaac/static/md.css"
+                        "http://tilde.works/~isaac/static/hl.css"))
+  (markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">"))
 
 
 ;; -------------------------------------------------------------------
@@ -683,8 +672,7 @@
 
 ;; avy
 (use-package avy
-  :config
-  (setq avy-background t)
+  :custom (avy-background t)
   :bind* ("C-'" . avy-goto-char-2))
 
 ;; expand-region
@@ -693,52 +681,37 @@
 
 ;; eyebrowse
 (use-package eyebrowse
+  :custom (eyebrowse-mode-line-separator ",")
   :config
   (eyebrowse-mode t)
-  (setq eyebrowse-mode-line-separator ",")
   (set-face-attribute 'eyebrowse-mode-line-active nil :inherit font-lock-warning-face))
 
 ;; flycheck
 (use-package flycheck
-  :defer
-  :config
-  (with-eval-after-load 'evil
-    (evil-set-initial-state 'flycheck-error-list-mode 'emacs))
-  (add-hook 'after-init-hook 'global-flycheck-mode))
+  :hook (after-init . global-flycheck-mode))
 
 ;; linum-relative
 (use-package linum-relative
-  :config
-  (linum-relative-mode)
-  (setq linum-relative-current-symbol ""))
-
-;; quickrun
-(use-package quickrun
-  :config
-  (with-eval-after-load 'evil
-    (evil-set-initial-state 'quickrun--mode 'emacs))
-  :bind ("C-c q" . quickrun))
+  :custom (linum-relative-current-symbol "")
+  :config (linum-relative-mode))
 
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
-  :after prog-mode
-  :config
-  (add-hook 'prog-mode-hook 'rainbow-delimiters-mode))
+  :hook (prog-mode . rainbow-delimiters-mode))
 
 ;; sr-speedbar
 (use-package sr-speedbar
-  :config
-  (setq speedbar-show-unknown-files t)
-  (setq speedbar-enable-update t)
-  (setq sr-speedbar-skip-other-window-p t)
-  (setq sr-speedbar-auto-refresh t)
+  :custom
+  (speedbar-show-unknown-files t)
+  (speedbar-enable-update t)
+  (sr-speedbar-skip-other-window-p t)
+  (sr-speedbar-auto-refresh t)
   :bind ("<f9>" . sr-speedbar-toggle))
 
 ;; symon
 (use-package symon
-  :config
-  (setq symon-delay 33)
-  (symon-mode))
+  :custom (symon-delay 33)
+  :config (symon-mode))
 
 ;; which-key
 (use-package which-key
