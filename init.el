@@ -593,7 +593,7 @@
 
 ;; company-anaconda
 (use-package company-anaconda
-  :after python
+  :after (anaconda company)
   :config
   (add-to-list 'company-backends 'company-anaconda))
 
