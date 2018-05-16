@@ -69,9 +69,9 @@
 (setq ring-bell-function 'ignore)
 
 ;; nice frame
-(when (display-graphic-p)
-  (scroll-bar-mode 0)
-  (tool-bar-mode 0))
+(scroll-bar-mode 0)
+(tool-bar-mode 0)
+(menu-bar-mode 0)
 
 ;; nice scrolling
 (setq scroll-margin 5)
@@ -189,7 +189,6 @@
 ;; org [built-in]
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
-(global-set-key (kbd "C-c m") 'org-mac-grab-link)
 
 ;; paren [built-in]
 (show-paren-mode t)
@@ -732,18 +731,20 @@
 ;; ----- MacOS -----
 
 (when (eq system-type 'darwin)
-  ;; 1. fix PATH problem
+  ;; Set path
   (use-package exec-path-from-shell
     :config (exec-path-from-shell-copy-env "PATH"))
-  ;; 2. command => meta; option => super
+  ;; Modify keys
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'super)
-  ;; 3. set font
+  ;; Enable menu-bar-mode
+  (menu-bar-mode 1)
+  ;; Set fonts
   (when (member "Menlo" (font-family-list))
     (set-face-attribute 'default nil :font "Menlo-14"))
   (when (member "PragmataPro" (font-family-list))
     (add-hook 'org-mode-hook (lambda () (setq buffer-face-mode-face '(:family "PragmataPro")) (buffer-face-mode))))
-  ;; 4. fix some binareis
+  ;; Modify program names
   (setq python-shell-interpreter "python3")
   (setq org-babel-python-command "python3"))
 
