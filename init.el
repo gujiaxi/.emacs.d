@@ -155,6 +155,8 @@
 (setq dired-listing-switches "-alh")
 
 ;; display-line-numbers [built-in]
+(when (not (version< emacs-version "26"))
+  (setq display-line-numbers-type 'relative))
 (let ((line-num-mode (if (version< emacs-version "26") 'linum-mode
                        'display-line-numbers-mode))
       (line-num-hooks (list 'prog-mode-hook 'org-mode-hook
@@ -170,7 +172,7 @@
 
 ;; epa [built-in]
 (setq epa-file-cache-passphrase-for-symmetric-encryption t)
-(setf epa-pinentry-mode 'loopback)
+(setq epa-pinentry-mode 'loopback)
 
 ;; epg [built-in]
 (setq epg-gpg-minimum-version "100")
@@ -689,14 +691,6 @@
   :config
   (eyebrowse-mode t)
   (set-face-attribute 'eyebrowse-mode-line-active nil :inherit font-lock-warning-face))
-
-;; linum-relative
-(use-package linum-relative
-  :custom (linum-relative-current-symbol "")
-  :config (if (version< emacs-version "26")
-              (setq linum-relative-backend 'linum-mode)
-            (setq linum-relative-backend 'display-line-numbers-mode))
-  (linum-relative-mode))
 
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
