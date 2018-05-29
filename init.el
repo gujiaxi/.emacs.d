@@ -154,6 +154,15 @@
 (setq dired-recursive-copies 'always)
 (setq dired-listing-switches "-alh")
 
+;; display-line-numbers [built-in]
+(let ((line-num-mode (if (version< emacs-version "26") 'linum-mode
+                       'display-line-numbers-mode))
+      (line-num-hooks (list 'prog-mode-hook 'org-mode-hook
+                            'text-mode-hook 'bibtex-mode-hook
+                            'markdown-mode-hook 'ess-mode-hook
+                            'LaTeX-mode-hook)))
+  (mapc (lambda (hook) (add-hook hook line-num-mode)) line-num-hooks))
+
 ;; electric [built-in]
 (electric-pair-mode t)
 (electric-indent-mode t)
@@ -166,10 +175,15 @@
 ;; epg [built-in]
 (setq epg-gpg-minimum-version "100")
 
+;; flymake [built-in]
+(add-hook 'prog-mode-hook 'flymake-mode)
+
 ;; flyspell [built-in]
 (setq ispell-program-name "aspell")
 (add-hook 'org-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'flyspell-mode)
+(add-hook 'LaTeX-mode-hook 'flyspell-mode)
+(add-hook 'markdown-mode-hook 'flyspell-mode)
 
 ;; grep [built-in]
 (global-set-key (kbd "C-c g") 'zrgrep)
@@ -180,11 +194,6 @@
 ;; ido [built-in]
 (ido-mode t)
 (ido-everywhere t)
-
-;; linum [built-in]
-(mapc (lambda (hook) (add-hook hook 'linum-mode))
-      (list 'bibtex-mode-hook 'org-mode-hook 'prog-mode-hook
-            'text-mode-hook))
 
 ;; org [built-in]
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -387,11 +396,9 @@
   (with-eval-after-load 'evil
     (evil-set-initial-state 'TeX-output-mode 'emacs))
   :hook ((LaTeX-mode . turn-on-reftex)
-         (LaTeX-mode . linum-mode)
          (LaTeX-mode . visual-line-mode)
          (LaTeX-mode . LaTeX-math-mode)
-         (LaTeX-mode . TeX-fold-mode)
-         (LaTeX-mode . flyspell-mode))
+         (LaTeX-mode . TeX-fold-mode))
   :custom
   (TeX-auto-save t)
   (TeX-parse-self t)
@@ -509,7 +516,8 @@
     (evil-set-initial-state 'grep-mode 'emacs)
     (evil-set-initial-state 'helm-grep-mode 'emacs))
   :custom
-  (helm-split-window-in-side-p t)
+  (helm-full-frame nil)
+  (helm-split-window-inside-p t)
   (helm-ff-search-library-in-sexp t)
   (helm-ff-file-name-history-use-recentf t)
   (helm-follow-mode-persistent t)
@@ -623,7 +631,6 @@
   (ess-ask-for-ess-directory nil)
   (ess-eval-visibly nil)
   (ess-history-file nil)
-  :hook (ess-mode . linum-mode)
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'inferior-ess-mode 'emacs)))
@@ -636,8 +643,6 @@
 ;; markdown-mode
 (use-package markdown-mode
   :mode ("\\.md\\'" "\\.markdown\\'")
-  :hook ((markdown-mode . flyspell-mode)
-         (markdown-mode . linum-mode))
   :custom
   (markdown-enable-math t)
   (markdown-command "pandoc --mathml --quiet")
@@ -685,14 +690,13 @@
   (eyebrowse-mode t)
   (set-face-attribute 'eyebrowse-mode-line-active nil :inherit font-lock-warning-face))
 
-;; flycheck
-(use-package flycheck
-  :hook (after-init . global-flycheck-mode))
-
 ;; linum-relative
 (use-package linum-relative
   :custom (linum-relative-current-symbol "")
-  :config (linum-relative-mode))
+  :config (if (version< emacs-version "26")
+              (setq linum-relative-backend 'linum-mode)
+            (setq linum-relative-backend 'display-line-numbers-mode))
+  (linum-relative-mode))
 
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
