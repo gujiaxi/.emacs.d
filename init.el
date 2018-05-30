@@ -62,8 +62,10 @@
 (setq delete-by-moving-to-trash t)
 (setq trash-directory "~/.Trash/")
 
-;; no startup message
+;; clean startup
 (setq inhibit-startup-message t)
+(setq initial-major-mode 'text-mode)
+(setq initial-scratch-message nil)
 
 ;; no ring-bell
 (setq ring-bell-function 'ignore)
@@ -74,6 +76,7 @@
 (menu-bar-mode 0)
 
 ;; nice scrolling
+(pixel-scroll-mode)
 (setq scroll-margin 5)
 
 ;; enable y/n answers
@@ -98,7 +101,6 @@
 
 ;; show which function current line belongs to
 (which-function-mode)
-(setq which-func-modes (list 'emacs-lisp-mode 'c++-mode 'python-mode))
 
 ;; highlight current line
 (global-hl-line-mode t)
@@ -235,6 +237,7 @@
 ;; ----- key binding -----
 
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
+(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 
 
 ;; -------------------------------------------------------------------
