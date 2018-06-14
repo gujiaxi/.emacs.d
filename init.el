@@ -1,11 +1,16 @@
 ;;; init.el --- jiaxi's configuration
 
-;; Copyright (C) 2017 Jiaxi Gu
+;; Copyright (c) 2016-2018 Jiaxi Gu
 
 ;; Author: Jiaxi Gu <imjiaxi@gmail.com>
-;; Version: 0.2.0
-;; Keywords: emacs, dotfile
-;; Package-Requires: ((emacs "25.2"))
+;; URL: https://github.com/gujiaxi/.emacs.d
+;; Package-Requires: ((emacs "26.1"))
+
+;;; Commentary:
+
+;; This is my personal Emacs configuration.
+
+;;; License:
 
 ;; This program is free software; you can redistribute it and/or modify
 ;; it under the terms of the GNU General Public License as published by
@@ -20,14 +25,7 @@
 ;; You should have received a copy of the GNU General Public License
 ;; along with this program.  If not, see <http://www.gnu.org/licenses/>.
 
-;;; Commentary:
-
-;; jiaxi's Emacs configuration
-;;
-;; See documentation on https://git.io/vAoD8
-
 ;;; Code:
-
 
 ;; -------------------------------------------------------------------
 ;; Initialization
@@ -157,15 +155,11 @@
 (setq dired-listing-switches "-alh")
 
 ;; display-line-numbers [built-in]
-(when (not (version< emacs-version "26"))
-  (setq display-line-numbers-type 'relative))
-(let ((line-num-mode (if (version< emacs-version "26") 'linum-mode
-                       'display-line-numbers-mode))
-      (line-num-hooks (list 'prog-mode-hook 'org-mode-hook
-                            'text-mode-hook 'bibtex-mode-hook
-                            'markdown-mode-hook 'ess-mode-hook
-                            'LaTeX-mode-hook)))
-  (mapc (lambda (hook) (add-hook hook line-num-mode)) line-num-hooks))
+(setq display-line-numbers-type 'relative)
+(mapc (lambda (hook) (add-hook hook 'display-line-numbers-mode))
+      (list 'prog-mode-hook 'org-mode-hook 'text-mode-hook
+            'bibtex-mode-hook 'markdown-mode-hook 'ess-mode-hook
+            'LaTeX-mode-hook))
 
 ;; electric [built-in]
 (electric-pair-mode t)
@@ -478,7 +472,9 @@
               'inferior-emacs-lisp-mode 'inferior-python-mode
               'Info-mode 'message-mode 'newsticker-treeview-mode
               'process-menu-mode 'profiler-report-mode
-              'shell-mode 'speedbar-mode 'special-mode))
+              'shell-mode 'speedbar-mode 'special-mode
+              'term-mode))
+  :custom (evil-want-abbrev-expand-on-insert-exit nil)
   :bind (("<f5>" . evil-make)
          :map evil-normal-state-map
          ("j" . evil-next-visual-line)
@@ -491,9 +487,7 @@
 
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
-  :bind (("M-;" . evilnc-comment-or-uncomment-lines)
-         :map evil-normal-state-map
-         (", c SPC" . evilnc-comment-or-uncomment-lines)))
+  :bind ("M-;" . evilnc-comment-or-uncomment-lines))
 
 ;; evil-surround
 (use-package evil-surround
@@ -695,6 +689,15 @@
   (eyebrowse-mode t)
   (set-face-attribute 'eyebrowse-mode-line-active nil :inherit font-lock-warning-face))
 
+;; general
+(use-package general
+  :config
+  (general-define-key
+   :states 'normal
+   :prefix "SPC"
+   "c SPC" 'evilnc-comment-or-uncomment-lines
+   "s"     'avy-goto-char-2))
+
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -706,7 +709,10 @@
   (speedbar-enable-update t)
   (sr-speedbar-skip-other-window-p t)
   (sr-speedbar-auto-refresh t)
-  :bind ("<f9>" . sr-speedbar-toggle))
+  :bind (("<f9>" . sr-speedbar-toggle)
+         :map speedbar-mode-map
+         ("a" . speedbar-toggle-show-all-files)
+         ("l" . sr-speedbar-refresh-toggle)))
 
 ;; symon
 (use-package symon
