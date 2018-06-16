@@ -312,7 +312,7 @@
   :ensure org-plus-contrib
   :after org
   :config
-  (use-package htmlize :custom (org-html-htmlize-output-type 'css))
+  (use-package htmlize)
   ;; ox-latex
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-logfiles-extensions "tex")
@@ -323,49 +323,6 @@
   (setq org-latex-listings-options '(("breaklines" "true")))
   ;; ox-bibtex
   (require 'ox-bibtex)
-  ;; org-publish
-  (defun org-html-publish-index (prop)
-    "Generate index.html."
-    (let ((index-org (expand-file-name "org/index.org" org-directory))
-          (export-dir "/ssh:jiaxi@sdf.org:~/html/"))
-      (org-html-publish-to-html nil index-org export-dir)))
-  ;; sitemap generation
-  (defun org-sitemap-format-entry (entry style project)
-    (cond ((not (directory-name-p entry))
-           (format "%s » [[file:%s.html][%s]]"
-                   (format-time-string "%F" (org-publish-find-date entry project))
-                   (file-name-sans-extension entry)
-                   (org-publish-find-title entry project)))
-          ((eq style 'tree) (file-name-nondirectory (directory-file-name entry)))
-          (t entry)))
-  (setq org-publish-timestamp-directory user-emacs-directory)
-  (setq org-publish-project-alist
-        `(("org"
-           :base-directory ,(expand-file-name "org/" org-directory)
-           :base-extension "org"
-           :publishing-directory "/ssh:jiaxi@sdf.org:~/html/"
-           :publishing-function org-html-publish-to-html
-           :exclude "^\\([^p]\\|p[^-]\\).*"
-           :completion-function org-html-publish-index
-           :html-head-include-default-style nil
-           :html-head-include-scripts nil
-           :html-head "<link rel='stylesheet' type='text/css' href='static/org.css'/>"
-           :html-mathjax "path:https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.0/MathJax.js?config=TeX-AMS_HTML"
-           :html-doctype "html5"
-           :html-html5-fancy t
-           :htmlized-source t
-           :auto-sitemap t
-           :sitemap-title ""
-           :sitemap-filename "sitemap.org"
-           :sitemap-sort-files anti-chronologically
-           :sitemap-format-entry org-sitemap-format-entry)
-          ("static"
-           :base-directory ,(expand-file-name "static/" org-directory)
-           :base-extension "css\\|js\\|pdf"
-           :publishing-directory "/ssh:jiaxi@sdf.org:~/html/static/"
-           :publishing-function org-publish-attachment)
-          ("website"
-           :components ("org" "static"))))
   ;; org-babel
   (org-babel-do-load-languages
    'org-babel-load-languages
@@ -732,28 +689,29 @@
 
 
 ;; -------------------------------------------------------------------
-;; Compatibility
+;; Other settings
 ;; -------------------------------------------------------------------
+
+;; ----- Font -----
+
+(when (member "Menlo" (font-family-list))
+  (set-face-attribute 'default nil :font "Menlo-14"))
+(when (member "PragmataPro" (font-family-list))
+  (add-hook 'org-mode-hook (lambda () (setq buffer-face-mode-face '(:family "PragmataPro")) (buffer-face-mode))))
+
+;; ----- Python -----
+
+(setq python-shell-interpreter "python3")
+(setq org-babel-python-command "python3")
 
 ;; ----- MacOS -----
 
 (when (eq system-type 'darwin)
-  ;; Set path
   (use-package exec-path-from-shell
     :config (exec-path-from-shell-copy-env "PATH"))
-  ;; Modify keys
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'super)
-  ;; Enable menu-bar-mode
-  (menu-bar-mode 1)
-  ;; Set fonts
-  (when (member "Menlo" (font-family-list))
-    (set-face-attribute 'default nil :font "Menlo-14"))
-  (when (member "PragmataPro" (font-family-list))
-    (add-hook 'org-mode-hook (lambda () (setq buffer-face-mode-face '(:family "PragmataPro")) (buffer-face-mode))))
-  ;; Modify program names
-  (setq python-shell-interpreter "python3")
-  (setq org-babel-python-command "python3"))
+  (menu-bar-mode 1))
 
 
 ;;; init.el ends here
