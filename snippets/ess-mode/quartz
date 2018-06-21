@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: quartz_option
-# key: quartz
-# --
-quartz.options(width=7, height=4.4)

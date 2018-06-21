@@ -139,6 +139,9 @@
 
 ;; ----- plugin settings -----
 
+;; abbrev [built-in]
+(setq save-abbrevs nil)
+
 ;; calendar [built-in]
 (setq calendar-location-name "Beijing, China")
 (setq calendar-chinese-all-holidays-flag t)
@@ -313,6 +316,8 @@
   :after org
   :config
   (use-package htmlize)
+  ;; ox-html
+  (setq org-html-htmlize-output-type 'css)
   ;; ox-latex
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-logfiles-extensions "tex")
@@ -602,8 +607,7 @@
   :custom
   (markdown-enable-math t)
   (markdown-command "pandoc --mathml --quiet")
-  (markdown-css-paths '("http://tilde.works/~isaac/static/md.css"
-                        "http://tilde.works/~isaac/static/hl.css"))
+  (markdown-css-paths '("http://jiaxi.sdf.org/static/md.css"))
   (markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">"))
 
 

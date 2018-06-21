@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: shebang_r
-# key: #!
-# --
-#!/usr/bin/env Rscript

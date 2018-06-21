@@ -2,4 +2,4 @@
 *.elc
 !.gitignore
 !init.el
-!snippets/
+!abbrev_defs

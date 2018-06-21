@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: shebang_hs
-# key: #!
-# --
-#!/usr/bin/env stack runghc
