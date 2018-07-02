@@ -199,6 +199,15 @@
 ;; org [built-in]
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
+(defun org-publish-site ()
+  "A function for publishing a site.
+The site configuration is defined in index.org."
+  (interactive)
+  (let ((index-file (expand-file-name "org/index.org" org-directory)))
+    (find-file index-file)
+    (org-babel-load-file index-file)
+    (kill-this-buffer)))
+(global-set-key (kbd "C-c p") 'org-publish-site)
 
 ;; paren [built-in]
 (show-paren-mode t)
@@ -322,10 +331,14 @@
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-logfiles-extensions "tex")
     (add-to-list 'org-latex-packages-alist '("" "listings"))
-    (add-to-list 'org-latex-packages-alist '("" "color")))
+    (add-to-list 'org-latex-packages-alist '("" "amsthm"))
+    (add-to-list 'org-latex-packages-alist '("scheme=plain" "ctex")))
   (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
   (setq org-latex-listings t)
-  (setq org-latex-listings-options '(("breaklines" "true")))
+  (setq org-latex-listings-options '(("breaklines" "true")
+                                     ("basicstyle" "\\ttfamily")
+                                     ("numbers" "left")
+                                     ("frame" "single")))
   ;; ox-bibtex
   (require 'ox-bibtex)
   ;; org-babel
@@ -392,6 +405,7 @@
   :config
   (load-theme 'zenburn t)
   (set-face-attribute 'fringe nil :background "#3F3F3F"))
+
 
 ;; ----- mode-line -----
 
@@ -654,7 +668,7 @@
 (use-package general
   :config
   (general-define-key
-   :states 'normal
+   :states '(normal visual)
    :prefix "SPC"
    "c SPC" 'evilnc-comment-or-uncomment-lines
    "s"     'avy-goto-char-2))
@@ -715,6 +729,8 @@
     :config (exec-path-from-shell-copy-env "PATH"))
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'super)
+  (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
+  (add-to-list 'default-frame-alist '(ns-appearance . dark))
   (menu-bar-mode 1))
 
 

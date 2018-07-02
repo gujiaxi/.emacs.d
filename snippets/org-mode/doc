@@ -1,0 +1,11 @@
+# -*- mode: snippet -*-
+# name: doc
+# key: doc
+# --
+#+TITLE: $0
+#+TODO: TODO(t) WAIT(w) | DONE(d) UNDO(u)
+#+STARTUP: hidestars indent content align inlineimages
+#+OPTIONS: toc:nil num:nil html-style:nil html-scripts:nil html-postamble:t
+#+HTML_HEAD: <link rel="stylesheet" type="text/css" href="http://jiaxi.sdf.org/static/org.css"/>
+#+LaTeX_HEADER: \usepackage[margin=1in]{geometry}
+#+LaTeX_HEADER: \usepackage{amsthm}
