@@ -267,7 +267,7 @@ The site configuration is defined in index.org."
 
 
 ;; -------------------------------------------------------------------
-;; OrgMode
+;; Orgmode
 ;; -------------------------------------------------------------------
 
 ;; basic org options
@@ -276,6 +276,7 @@ The site configuration is defined in index.org."
 (setq org-src-fontify-natively t)
 (setq org-src-preserve-indentation t)
 (setq org-confirm-babel-evaluate nil)
+(setq org-export-with-archived-trees nil)
 (setq org-export-html-style-include-scripts nil)
 (setq org-export-html-style-include-default nil)
 (setq org-html-postamble t)
@@ -330,8 +331,8 @@ The site configuration is defined in index.org."
   ;; ox-latex
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-logfiles-extensions "tex")
-    (add-to-list 'org-latex-packages-alist '("" "listings"))
     (add-to-list 'org-latex-packages-alist '("" "amsthm"))
+    (add-to-list 'org-latex-packages-alist '("" "listings"))
     (add-to-list 'org-latex-packages-alist '("scheme=plain" "ctex")))
   (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
   (setq org-latex-listings t)
@@ -345,6 +346,7 @@ The site configuration is defined in index.org."
   (org-babel-do-load-languages
    'org-babel-load-languages
    '((awk . t)
+     (C . t)
      (calc . t)
      (emacs-lisp . t)
      (haskell . t)
@@ -378,12 +380,6 @@ The site configuration is defined in index.org."
   (TeX-parse-self t)
   (TeX-clean-confirm nil))
 
-;; company-math
-(use-package company-math
-  :after tex
-  :config
-  (add-to-list 'company-backends 'company-math-symbols-unicode))
-
 ;; company-auctex
 (use-package company-auctex
   :after tex
@@ -405,7 +401,6 @@ The site configuration is defined in index.org."
   :config
   (load-theme 'zenburn t)
   (set-face-attribute 'fringe nil :background "#3F3F3F"))
-
 
 ;; ----- mode-line -----
 
@@ -482,6 +477,7 @@ The site configuration is defined in index.org."
 
 ;; helm
 (use-package helm
+  :defer 2
   :config
   (require 'helm-config)
   (helm-mode)
@@ -575,7 +571,7 @@ The site configuration is defined in index.org."
 
 ;; company-anaconda
 (use-package company-anaconda
-  :after (anaconda company)
+  :after company
   :config
   (add-to-list 'company-backends 'company-anaconda))
 
@@ -593,22 +589,6 @@ The site configuration is defined in index.org."
     (evil-set-initial-state 'haskell-error-mode 'emacs)
     (evil-set-initial-state 'haskell-interactive-mode 'emacs))
   :hook (haskell-mode . interactive-haskell-mode))
-
-
-;; -------------------------------------------------------------------
-;; R
-;; -------------------------------------------------------------------
-
-;; ess
-(use-package ess
-  :after ess-site
-  :custom
-  (ess-ask-for-ess-directory nil)
-  (ess-eval-visibly nil)
-  (ess-history-file nil)
-  :config
-  (with-eval-after-load 'evil
-    (evil-set-initial-state 'inferior-ess-mode 'emacs)))
 
 
 ;; -------------------------------------------------------------------
@@ -673,6 +653,13 @@ The site configuration is defined in index.org."
    "c SPC" 'evilnc-comment-or-uncomment-lines
    "s"     'avy-goto-char-2))
 
+;; quickrun
+(use-package quickrun
+  :config
+  (with-eval-after-load 'evil
+    (evil-set-initial-state 'quickrun--mode 'emacs))
+  :bind ("C-c q" . quickrun))
+
 ;; rainbow-delimiters
 (use-package rainbow-delimiters
   :hook (prog-mode . rainbow-delimiters-mode))
@@ -725,8 +712,12 @@ The site configuration is defined in index.org."
 ;; ----- MacOS -----
 
 (when (eq system-type 'darwin)
-  (use-package exec-path-from-shell
-    :config (exec-path-from-shell-copy-env "PATH"))
+  (let ((envpath (list "/usr/local/bin/"
+                       "/Library/TeX/texbin/"
+                       "/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/")))
+    ;; (setenv "PATH" (mapconcat 'identity (push (getenv "PATH") envpath) ":"))
+    (setenv "PATH" (mapconcat 'identity (add-to-list 'envpath (getenv "PATH") t) ":"))
+    (setq exec-path (append envpath exec-path)))
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'super)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
