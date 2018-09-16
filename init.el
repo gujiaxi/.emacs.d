@@ -189,6 +189,11 @@
 ;; grep [built-in]
 (global-set-key (kbd "C-c g") 'zrgrep)
 
+;; help-at-pt [bilt-in]
+(custom-set-variables
+ '(help-at-pt-timer-delay 0.5)
+ '(help-at-pt-display-when-idle t))
+
 ;; hideshow [built-in]
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 
@@ -349,7 +354,6 @@ The site configuration is defined in index.org."
      (C . t)
      (calc . t)
      (emacs-lisp . t)
-     (haskell . t)
      (latex . t)
      (python . t)
      (ruby . t)
@@ -500,7 +504,8 @@ The site configuration is defined in index.org."
          ("C-s" . helm-occur)
          ("C-x b" . helm-mini)
          ("C-x C-f" . helm-find-files)
-         ("C-x g" . helm-do-grep-ag)))
+         ("C-x g" . helm-do-grep-ag)
+         ("C-c i" . helm-imenu)))
 
 ;; helm-bibtex
 (use-package helm-bibtex
@@ -577,21 +582,6 @@ The site configuration is defined in index.org."
 
 
 ;; -------------------------------------------------------------------
-;; Haskell
-;; -------------------------------------------------------------------
-
-;; haskell-mode
-(use-package haskell-mode
-  :config
-  (with-eval-after-load 'aggressive-indent
-    (add-to-list 'aggressive-indent-excluded-modes 'haskell-mode))
-  (with-eval-after-load 'evil
-    (evil-set-initial-state 'haskell-error-mode 'emacs)
-    (evil-set-initial-state 'haskell-interactive-mode 'emacs))
-  :hook (haskell-mode . interactive-haskell-mode))
-
-
-;; -------------------------------------------------------------------
 ;; Markdown
 ;; -------------------------------------------------------------------
 
@@ -625,8 +615,11 @@ The site configuration is defined in index.org."
 (use-package aggressive-indent
   :config
   (global-aggressive-indent-mode t)
-  (add-to-list 'aggressive-indent-excluded-modes 'latex-mode)
-  (add-to-list 'aggressive-indent-excluded-modes 'org-mode))
+  (add-to-list
+   'aggressive-indent-dont-indent-if
+   '(and (derived-mode-p 'c++-mode)
+         (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
+                             (thing-at-point 'line))))))
 
 ;; avy
 (use-package avy
@@ -658,6 +651,9 @@ The site configuration is defined in index.org."
   :config
   (with-eval-after-load 'evil
     (evil-set-initial-state 'quickrun--mode 'emacs))
+  (quickrun-add-command "c++/clang++"
+    '((:exec . ("%c -std=c++14 -x c++ %o -o %e %s" "%e %a")))
+    :override t)
   :bind ("C-c q" . quickrun))
 
 ;; rainbow-delimiters
