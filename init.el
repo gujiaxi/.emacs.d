@@ -97,9 +97,6 @@
 ;; always load newest byte code
 (setq load-prefer-newer t)
 
-;; show which function current line belongs to
-(which-function-mode)
-
 ;; highlight current line
 (global-hl-line-mode t)
 
@@ -258,9 +255,9 @@ The site configuration is defined in index.org."
 ;; ----- package archives -----
 
 (setq package-archives
-      '(("gnu" . "https://elpa.emacs-china.org/gnu/")
-        ("melpa" . "https://elpa.emacs-china.org/melpa/")
-        ("org" . "https://elpa.emacs-china.org/org/")))
+      '(("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
+        ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
+        ("org" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
 
 ;; ----- use-package -----
 
@@ -398,13 +395,10 @@ The site configuration is defined in index.org."
 
 ;; zenburn-theme
 (use-package zenburn-theme
-  :init
-  (defvar zenburn-override-colors-alist
-    '(("zenburn-bg"   . "#3F3F3F")
-      ("zenburn-bg-1" . "#5F5F5F")))
   :config
   (load-theme 'zenburn t)
-  (set-face-attribute 'fringe nil :background "#3F3F3F"))
+  (set-face-attribute 'fringe nil :background "#3F3F3F")
+  (set-face-attribute 'line-number nil :background "#3F3F3F"))
 
 ;; ----- mode-line -----
 
@@ -423,7 +417,7 @@ The site configuration is defined in index.org."
                     '(:eval (propertize (concat " " (eyebrowse-mode-line-indicator) " ")))
                     '(:eval (propertize (format-time-string "%p·%H:%M ") 'help-echo (format-time-string "%F %a") 'face '(:inherit font-lock-doc-face :slant normal)))
                     'battery-mode-line-string
-                    '(:propertize (which-func-mode (" " which-func-format)))
+                    'flymake--mode-line-format
                     '(:eval (when (> (window-width) 70)
                               (propertize " {%m}" 'face '(:weight normal))))
                     '(:eval (when (and (> (window-width) 70) vc-mode)
@@ -548,7 +542,7 @@ The site configuration is defined in index.org."
 ;; Deft
 ;; -------------------------------------------------------------------
 
-(use-package deft 
+(use-package deft
   :custom
   (deft-directory (expand-file-name "org" org-directory))
   (deft-extensions '("org" "md" "tex"))
