@@ -175,6 +175,7 @@
 
 ;; flymake [built-in]
 (add-hook 'prog-mode-hook 'flymake-mode)
+(remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake)
 
 ;; flyspell [built-in]
 (setq ispell-program-name "aspell")
@@ -193,10 +194,6 @@
 
 ;; hideshow [built-in]
 (add-hook 'prog-mode-hook 'hs-minor-mode)
-
-;; ido [built-in]
-(ido-mode t)
-(ido-everywhere t)
 
 ;; org [built-in]
 (global-set-key (kbd "C-c a") 'org-agenda)
@@ -318,7 +315,7 @@ The site configuration is defined in index.org."
         ("n" "Note" entry (file+headline "org/notes.org" "Inbox")
          "* %?\n%U\n%a")
         ("j" "Journal" plain (file+datetree "org/journal.org")
-         "%U %?\n")
+         "%?\n")
         ("p" "Publish" plain (file "org/p-scratch.org")
          "%?\n\n%U\n-----")))
 
@@ -608,12 +605,7 @@ The site configuration is defined in index.org."
 ;; aggressive-indent
 (use-package aggressive-indent
   :config
-  (global-aggressive-indent-mode t)
-  (add-to-list
-   'aggressive-indent-dont-indent-if
-   '(and (derived-mode-p 'c++-mode)
-         (null (string-match "\\([;{}]\\|\\b\\(if\\|for\\|while\\)\\b\\)"
-                             (thing-at-point 'line))))))
+  (global-aggressive-indent-mode t))
 
 ;; avy
 (use-package avy
@@ -705,7 +697,6 @@ The site configuration is defined in index.org."
   (let ((envpath (list "/usr/local/bin/"
                        "/Library/TeX/texbin/"
                        "/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/")))
-    ;; (setenv "PATH" (mapconcat 'identity (push (getenv "PATH") envpath) ":"))
     (setenv "PATH" (mapconcat 'identity (add-to-list 'envpath (getenv "PATH") t) ":"))
     (setq exec-path (append envpath exec-path)))
   (setq mac-command-modifier 'meta)
