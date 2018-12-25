@@ -62,8 +62,6 @@
 
 ;; clean startup
 (setq inhibit-startup-message t)
-(setq initial-major-mode 'text-mode)
-(setq initial-scratch-message nil)
 
 ;; no ring-bell
 (setq ring-bell-function 'ignore)
@@ -414,7 +412,6 @@ The site configuration is defined in index.org."
                     '(:eval (propertize (concat " " (eyebrowse-mode-line-indicator) " ")))
                     '(:eval (propertize (format-time-string "%p·%H:%M ") 'help-echo (format-time-string "%F %a") 'face '(:inherit font-lock-doc-face :slant normal)))
                     'battery-mode-line-string
-                    'flymake--mode-line-format
                     '(:eval (when (> (window-width) 70)
                               (propertize " {%m}" 'face '(:weight normal))))
                     '(:eval (when (and (> (window-width) 70) vc-mode)
@@ -581,9 +578,9 @@ The site configuration is defined in index.org."
   :mode ("\\.md\\'" "\\.markdown\\'")
   :custom
   (markdown-enable-math t)
-  (markdown-command "pandoc --mathml --quiet")
+  (markdown-command "~/.gem/ruby/2.3.0/bin/kramdown -i GFM")
   (markdown-css-paths '("http://jiaxi.sdf.org/static/md.css"))
-  (markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">"))
+  (markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">\n<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$']]}});</script>\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML\"></script>"))
 
 
 ;; -------------------------------------------------------------------
