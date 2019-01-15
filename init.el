@@ -437,6 +437,7 @@ The site configuration is defined in index.org."
               'process-menu-mode 'profiler-report-mode
               'shell-mode 'speedbar-mode 'special-mode
               'term-mode))
+  (unbind-key "SPC" evil-normal-state-map)
   :custom (evil-want-abbrev-expand-on-insert-exit nil)
   :bind (("<f5>" . evil-make)
          :map evil-normal-state-map
@@ -450,7 +451,10 @@ The site configuration is defined in index.org."
 
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
-  :bind ("M-;" . evilnc-comment-or-uncomment-lines))
+  :defer 1
+  :bind (("M-;" . evilnc-comment-or-uncomment-lines)
+         :map evil-normal-state-map
+         ("SPC c SPC" . evilnc-comment-or-uncomment-lines)))
 
 ;; evil-surround
 (use-package evil-surround
@@ -566,6 +570,7 @@ The site configuration is defined in index.org."
 (use-package company-anaconda
   :after company
   :config
+  (require 'rx)
   (add-to-list 'company-backends 'company-anaconda))
 
 
@@ -607,7 +612,9 @@ The site configuration is defined in index.org."
 ;; avy
 (use-package avy
   :custom (avy-background t)
-  :bind* ("C-'" . avy-goto-char-2))
+  :bind (("C-'" . avy-goto-char-2)
+         :map evil-normal-state-map
+         ("SPC s" . avy-goto-char-2)))
 
 ;; expand-region
 (use-package expand-region
@@ -615,19 +622,15 @@ The site configuration is defined in index.org."
 
 ;; eyebrowse
 (use-package eyebrowse
-  :custom (eyebrowse-mode-line-separator ",")
-  :config
-  (eyebrowse-mode t)
-  (set-face-attribute 'eyebrowse-mode-line-active nil :inherit font-lock-warning-face))
-
-;; general
-(use-package general
-  :config
-  (general-define-key
-   :states '(normal visual)
-   :prefix "SPC"
-   "c SPC" 'evilnc-comment-or-uncomment-lines
-   "s"     'avy-goto-char-2))
+  :custom (eyebrowse-wrap-around t)
+  :config (eyebrowse-mode t)
+  (set-face-attribute 'eyebrowse-mode-line-active nil
+                      :inherit font-lock-warning-face)
+  :bind (:map evil-normal-state-map
+              ("g o" . eyebrowse-create-window-config)
+              ("g c" . eyebrowse-close-window-config)
+              ("g t" . eyebrowse-next-window-config)
+              ("g T" . eyebrowse-prev-window-config)))
 
 ;; quickrun
 (use-package quickrun
