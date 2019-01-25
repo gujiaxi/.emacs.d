@@ -410,7 +410,7 @@ The site configuration is defined in index.org."
                     '(:propertize " %p/%I " face (:background "gray30" :foreground "#fdf6e3")
                                   help-echo (count-words--buffer-message))
                     '(:eval (propertize (concat " " (eyebrowse-mode-line-indicator) " ")))
-                    '(:eval (propertize (format-time-string "%p·%H:%M ") 'help-echo (format-time-string "%F %a") 'face '(:inherit font-lock-doc-face :slant normal)))
+                    '(:eval (propertize (format-time-string "%p·%H:%M ") 'help-echo (format-time-string "%F %a") 'face '(:inherit font-lock-function-name-face :slant normal)))
                     'battery-mode-line-string
                     '(:eval (when (> (window-width) 70)
                               (propertize " {%m}" 'face '(:weight normal))))
@@ -622,6 +622,7 @@ The site configuration is defined in index.org."
 
 ;; eyebrowse
 (use-package eyebrowse
+  :defer 1
   :custom (eyebrowse-wrap-around t)
   :config (eyebrowse-mode t)
   (set-face-attribute 'eyebrowse-mode-line-active nil
