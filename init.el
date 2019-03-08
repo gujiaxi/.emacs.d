@@ -63,6 +63,10 @@
 ;; clean startup
 (setq inhibit-startup-message t)
 
+;; initial buffer
+(setq initial-major-mode 'text-mode)
+(setq initial-scratch-message nil)
+
 ;; no ring-bell
 (setq ring-bell-function 'ignore)
 
@@ -685,7 +689,7 @@ The site configuration is defined in index.org."
 (when (member "Menlo" (font-family-list))
   (set-face-attribute 'default nil :font "Menlo-14"))
 (when (member "PragmataPro" (font-family-list))
-  (add-hook 'org-mode-hook (lambda () (setq buffer-face-mode-face '(:family "PragmataPro")) (buffer-face-mode))))
+  (add-hook 'org-mode-hook (lambda () (set-face-attribute 'org-table nil :family "PragmataPro"))))
 
 ;; ----- Python -----
 
