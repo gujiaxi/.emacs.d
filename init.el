@@ -503,20 +503,6 @@ The site configuration is defined in index.org."
          ("C-x g" . helm-do-grep-ag)
          ("C-c i" . helm-imenu)))
 
-;; helm-bibtex
-(use-package helm-bibtex
-  :after helm
-  :custom
-  (bibtex-completion-bibliography (list (expand-file-name "org/bib/main.bib" org-directory)))
-  (bibtex-completion-notes-symbol "✎")
-  (bibtex-completion-notes-path (expand-file-name "org/research-notes.org" org-directory))
-  (bibtex-completion-pdf-symbol "⌘")
-  (bibtex-completion-library-path (list (expand-file-name "pdf" org-directory)))
-  (bibtex-completion-pdf-open-function 'helm-open-file-with-default-tool)
-  (bibtex-completion-cite-prompt-for-optional-arguments nil)
-  (bibtex-completion-notes-template-one-file "\n* ${title} (${year})\n:PROPERTIES:\n:Custom_ID: ${=key=}\n:END:\n")
-  :bind ("C-c b" . helm-bibtex))
-
 
 ;; -------------------------------------------------------------------
 ;; Company
