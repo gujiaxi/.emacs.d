@@ -1,5 +1,4 @@
-/*
-*.elc
+*
 !.gitignore
 !init.el
-!snippets/
+!snippets
