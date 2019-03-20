@@ -1,6 +1,6 @@
 ;;; init.el --- jiaxi's configuration
 
-;; Copyright (c) 2016-2018 Jiaxi Gu
+;; Copyright (c) 2016-2019 Jiaxi Gu
 
 ;; Author: Jiaxi Gu <imjiaxi@gmail.com>
 ;; URL: https://github.com/gujiaxi/.emacs.d
