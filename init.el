@@ -616,9 +616,8 @@ The site configuration is defined in index.org."
 ;; avy
 (use-package avy
   :custom (avy-background t)
-  :bind (("C-'" . avy-goto-char-2)
-         :map evil-normal-state-map
-         ("SPC s" . avy-goto-char-2)))
+  :bind (:map evil-normal-state-map
+              ("SPC s" . avy-goto-char-2)))
 
 ;; expand-region
 (use-package expand-region
