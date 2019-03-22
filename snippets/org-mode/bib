@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: bib
-# key: bib
-# --
-#+BIBLIOGRAPHY: $0 plain limit:t option:-nobibsource option:-nokeywords

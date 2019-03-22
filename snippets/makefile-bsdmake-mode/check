@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: check
-# key: check
-# expand-env: ((yas-indent-line nil))
-# --
-check-syntax:
-	CC -Wall -Wextra -pedantic -std=c++14 -fsyntax-only $(CHK_SOURCES)

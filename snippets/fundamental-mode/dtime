@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: dtime
-# key: dtime
-# --
-`(format-time-string "%F %R")`$0

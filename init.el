@@ -659,10 +659,11 @@ The site configuration is defined in index.org."
 
 ;; yasnippet
 (use-package yasnippet
-  :defer 2
   :config
   (use-package yasnippet-snippets)
-  (yas-global-mode t))
+  (yas-global-mode t)
+  (let ((snip-file (expand-file-name "snippets.el" user-emacs-directory)))
+    (when (file-exists-p snip-file) (load-file snip-file))))
 
 
 ;; -------------------------------------------------------------------

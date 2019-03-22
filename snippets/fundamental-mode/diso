@@ -1,5 +1,0 @@
-# -*- mode: snippet -*-
-# name: diso
-# key: diso
-# --
-`(format-time-string "%F %T%z")`$0
