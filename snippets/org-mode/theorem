@@ -1,7 +1,0 @@
-# -*- mode: snippet -*-
-# name: proof
-# key: <t
-# --
-#+begin_$1
-$0
-#+end_$1
