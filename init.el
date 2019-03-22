@@ -197,7 +197,7 @@
 ;; hideshow [built-in]
 (add-hook 'prog-mode-hook 'hs-minor-mode)
 
-;; org [built-in]
+;; org-mode [built-in]
 (global-set-key (kbd "C-c a") 'org-agenda)
 (global-set-key (kbd "C-c c") 'org-capture)
 (defun org-publish-site ()
@@ -268,7 +268,7 @@ The site configuration is defined in index.org."
 
 
 ;; -------------------------------------------------------------------
-;; Orgmode
+;; org-mode
 ;; -------------------------------------------------------------------
 
 ;; basic org options
@@ -337,10 +337,7 @@ The site configuration is defined in index.org."
     (add-to-list 'org-latex-packages-alist '("scheme=plain" "ctex")))
   (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
   (setq org-latex-listings t)
-  (setq org-latex-listings-options '(("breaklines" "true")
-                                     ("basicstyle" "\\ttfamily")
-                                     ("numbers" "left")
-                                     ("frame" "single")))
+  (setq org-latex-listings-options '(("breaklines" "true") ("basicstyle" "\\ttfamily") ("numbers" "left") ("frame" "single")))
   ;; ox-bibtex
   (require 'ox-bibtex)
   ;; org-babel
@@ -355,7 +352,9 @@ The site configuration is defined in index.org."
      (ruby . t)
      (R . t)
      (scheme . t)
-     (shell . t))))
+     (shell . t)))
+  ;; key bindings in org-mode
+  (unbind-key "C-'" org-mode-map))
 
 
 ;; -------------------------------------------------------------------
@@ -602,8 +601,9 @@ The site configuration is defined in index.org."
 ;; avy
 (use-package avy
   :custom (avy-background t)
-  :bind (:map evil-normal-state-map
-              ("SPC s" . avy-goto-char-2)))
+  :bind (("C-'" . avy-goto-char-2)
+         :map evil-normal-state-map
+         ("SPC s" . avy-goto-char-2)))
 
 ;; expand-region
 (use-package expand-region
