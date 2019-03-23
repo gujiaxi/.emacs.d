@@ -454,7 +454,7 @@ The site configuration is defined in index.org."
 
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
-  :defer 1
+  :commands evilnc-comment-or-uncomment-lines
   :bind (("M-;" . evilnc-comment-or-uncomment-lines)
          :map evil-normal-state-map
          ("SPC c SPC" . evilnc-comment-or-uncomment-lines)))
@@ -476,7 +476,6 @@ The site configuration is defined in index.org."
 
 ;; helm
 (use-package helm
-  :defer 2
   :config
   (require 'helm-config)
   (helm-mode)
@@ -611,7 +610,7 @@ The site configuration is defined in index.org."
 
 ;; eyebrowse
 (use-package eyebrowse
-  :defer 1
+  :commands eyebrowse-mode-line-indicator
   :custom (eyebrowse-wrap-around t)
   :config (eyebrowse-mode t)
   (set-face-attribute 'eyebrowse-mode-line-active nil
@@ -659,11 +658,14 @@ The site configuration is defined in index.org."
 
 ;; yasnippet
 (use-package yasnippet
+  :defer 1
+  :commands yas-define-snippets
   :config
   (use-package yasnippet-snippets)
   (yas-global-mode t)
   (let ((snip-file (expand-file-name "snippets.el" user-emacs-directory)))
-    (when (file-exists-p snip-file) (load-file snip-file))))
+    (when (file-exists-p snip-file)
+      (load-file snip-file))))
 
 
 ;; -------------------------------------------------------------------
