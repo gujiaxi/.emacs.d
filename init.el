@@ -520,8 +520,8 @@ The site configuration is defined in index.org."
   (setq company-backends (delete 'company-dabbrev company-backends))
   (add-to-list 'company-backends 'company-files)
   :bind (:map company-active-map
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous)))
+         ("C-n" . company-select-next)
+         ("C-p" . company-select-previous)))
 
 
 ;; -------------------------------------------------------------------
@@ -616,10 +616,10 @@ The site configuration is defined in index.org."
   (set-face-attribute 'eyebrowse-mode-line-active nil
                       :inherit font-lock-warning-face)
   :bind (:map evil-normal-state-map
-              ("g o" . eyebrowse-create-window-config)
-              ("g c" . eyebrowse-close-window-config)
-              ("g t" . eyebrowse-next-window-config)
-              ("g T" . eyebrowse-prev-window-config)))
+         ("g o" . eyebrowse-create-window-config)
+         ("g c" . eyebrowse-close-window-config)
+         ("g t" . eyebrowse-next-window-config)
+         ("g T" . eyebrowse-prev-window-config)))
 
 ;; quickrun
 (use-package quickrun
@@ -642,7 +642,8 @@ The site configuration is defined in index.org."
   (speedbar-enable-update t)
   (sr-speedbar-skip-other-window-p t)
   (sr-speedbar-auto-refresh t)
-  :bind (("<f9>" . sr-speedbar-toggle)
+  :bind (:map evil-normal-state-map
+         ("SPC e" . sr-speedbar-toggle)
          :map speedbar-mode-map
          ("a" . speedbar-toggle-show-all-files)
          ("l" . sr-speedbar-refresh-toggle)))
