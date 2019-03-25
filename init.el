@@ -90,6 +90,9 @@
 (setq-default default-tab-width 4)
 (setq-default c-basic-offset 4)
 
+;; fill column width
+(setq-default fill-column 80)
+
 ;; delete selection
 (delete-selection-mode t)
 
@@ -127,7 +130,7 @@
 (setq find-file-suppress-same-file-warnings t)
 
 ;; custom directory
-(setq org-directory "~/Dropbox/Documents/EmacsFiles/")
+(setq org-directory "~/Dropbox/Documents/OrgDir/")
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file) (load custom-file))
 
@@ -146,8 +149,7 @@
 (setq calendar-chinese-all-holidays-flag t)
 (setq mark-diary-entries-in-calendar t)
 (setq mark-holidays-in-calendar t)
-(setq cal-html-directory (expand-file-name "calendar" org-directory))
-(setq diary-file (expand-file-name "org/diary.org" org-directory))
+(setq diary-file (expand-file-name "diary.org" org-directory))
 (global-set-key (kbd "C-c k") 'calendar)
 
 ;; dired [built-in]
@@ -204,7 +206,7 @@
   "A function for publishing a site.
 The site configuration is defined in index.org."
   (interactive)
-  (let ((index-file (expand-file-name "org/index.org" org-directory)))
+  (let ((index-file (expand-file-name "index.org" org-directory)))
     (find-file index-file)
     (org-babel-load-file index-file)
     (kill-this-buffer)))
@@ -223,7 +225,7 @@ The site configuration is defined in index.org."
 ;; reftex [built-in]
 (setq reftex-plug-into-AUCTeX t)
 (setq reftex-toc-split-windows-horizontally t)
-(setq reftex-default-bibliography (list (expand-file-name "org/bib/main.bib" org-directory)))
+(setq reftex-default-bibliography (list (expand-file-name "bib/main.bib" org-directory)))
 
 ;; saveplace [built-in]
 (save-place-mode t)
@@ -281,7 +283,7 @@ The site configuration is defined in index.org."
 (setq org-export-html-style-include-scripts nil)
 (setq org-export-html-style-include-default nil)
 (setq org-html-postamble t)
-(setq org-archive-location (expand-file-name "org/archive.org::" org-directory))
+(setq org-archive-location (expand-file-name "archive.org::" org-directory))
 (setq org-refile-targets '((org-agenda-files :level . 1)
                            (nil :level . 1)))
 (setq org-html-postamble-format '(("en" "&copy; %a / %C")))
@@ -290,7 +292,7 @@ The site configuration is defined in index.org."
                            (?C . (:foreground "yellow" :wegith bold))))
 
 ;; org-agenda
-(setq org-agenda-files (list (expand-file-name "org/agenda.org" org-directory)))
+(setq org-agenda-files (list (expand-file-name "agenda.org" org-directory)))
 (setq org-agenda-include-diary nil)
 (setq org-agenda-custom-commands
       '(("n" "Agenda and all TODOs"
@@ -308,17 +310,17 @@ The site configuration is defined in index.org."
                  (org-agenda-overriding-header "Postponed tasks:")))))))
 
 ;; org-capture
-(setq org-default-notes-file (expand-file-name "org/agenda.org" org-directory))
+(setq org-default-notes-file (expand-file-name "agenda.org" org-directory))
 (setq org-capture-templates
-      '(("a" "Appt" entry (file+headline "org/agenda.org" "Appointments")
+      '(("a" "Appt" entry (file+headline "agenda.org" "Appointments")
          "* %?\n%t")
-        ("t" "Task" entry (file+headline "org/agenda.org" "Tasks")
+        ("t" "Task" entry (file+headline "agenda.org" "Tasks")
          "* TODO %?\n%U\n%a")
-        ("n" "Note" entry (file+headline "org/notes.org" "Inbox")
+        ("n" "Note" entry (file+headline "notes.org" "Inbox")
          "* %?\n%U\n%a")
-        ("j" "Journal" plain (file+datetree "org/journal.org")
+        ("j" "Journal" plain (file+datetree "journal.org")
          "%?\n")
-        ("p" "Publish" plain (file "org/p-scratch.org")
+        ("p" "Publish" plain (file "p-scratch.org")
          "%?\n\n%U\n-----")))
 
 ;; org
@@ -519,6 +521,8 @@ The site configuration is defined in index.org."
   :config
   (setq company-backends (delete 'company-dabbrev company-backends))
   (add-to-list 'company-backends 'company-files)
+  (with-eval-after-load 'yasnippet
+    (add-to-list 'company-backends 'company-yasnippet))
   :bind (:map company-active-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous)))
@@ -530,7 +534,7 @@ The site configuration is defined in index.org."
 
 (use-package deft
   :custom
-  (deft-directory (expand-file-name "org" org-directory))
+  (deft-directory org-directory)
   (deft-extensions '("org" "md" "tex"))
   (deft-default-extension "org")
   (deft-recursive t)
@@ -572,7 +576,7 @@ The site configuration is defined in index.org."
   :custom
   (markdown-enable-math t)
   (markdown-command "~/.gem/ruby/2.3.0/bin/kramdown -i GFM")
-  (markdown-css-paths '("http://jiaxi.sdf.org/static/md.css"))
+  (markdown-css-paths '("http://jiaxi.sdf.org/css/md.css"))
   (markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">\n<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$']]}});</script>\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML\"></script>"))
 
 
@@ -600,9 +604,8 @@ The site configuration is defined in index.org."
 ;; avy
 (use-package avy
   :custom (avy-background t)
-  :bind (("C-'" . avy-goto-char-2)
-         :map evil-normal-state-map
-         ("SPC s" . avy-goto-char-2)))
+  :bind (:map evil-normal-state-map
+         ("s" . avy-goto-char-2)))
 
 ;; expand-region
 (use-package expand-region
@@ -629,7 +632,7 @@ The site configuration is defined in index.org."
   (quickrun-add-command "c++/clang++"
     '((:exec . ("%c -std=c++14 -x c++ %o -o %e %s" "%e %a")))
     :override t)
-  :bind ("C-c q" . quickrun))
+  :bind ("C-c r" . quickrun))
 
 ;; rainbow-delimiters
 (use-package rainbow-delimiters

@@ -13,7 +13,7 @@
                        ("lorem" "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." "lorem")))
 
 (yas-define-snippets 'makefile-mode
-                     '(("check" "check-syntax:\n\tCC -Wall -Wextra -pedantic -std=c++14 -fsyntax-only $(CHK_SOURCES)" "check" nil nil "((yas-indent-line nil))")))
+                     '(("check" "check-syntax:\n\tCC -Wall -Wextra -pedantic -std=c++14 -fsyntax-only $(CHK_SOURCES)" "check" nil nil ((yas-indent-line nil)))))
 
 (yas-define-snippets 'org-mode
                      '(("bib" "#+BIBLIOGRAPHY: $0 plain limit:t option:-nobibsource option:-nokeywords" "bib")
