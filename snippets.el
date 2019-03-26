@@ -21,7 +21,7 @@
 #+TODO: TODO(t) WAIT(w) | DONE(d) UNDO(u)
 #+STARTUP: hidestars indent
 #+OPTIONS: toc:nil num:nil html-style:nil html-scripts:nil html-postamble:t
-#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://jiaxi.sdf.org/static/org.css\"/>
+#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://jiaxi.sdf.org/css/org.css\"/>
 #+LaTeX_HEADER: \\usepackage[margin=1in]{geometry}
 #+LaTeX_HEADER: \\hypersetup{hidelinks=true}
 #+LaTeX_HEADER: \\usepackage{amsthm}

@@ -537,8 +537,9 @@ The site configuration is defined in index.org."
   (deft-directory org-directory)
   (deft-extensions '("org" "md" "tex"))
   (deft-default-extension "org")
+  (deft-ignore-file-regexp "\\(?:sitemap\\)")
   (deft-recursive t)
-  (deft-auto-save-interval nil)
+  (deft-auto-save-interval 0)
   (deft-use-filename-as-title t)
   (deft-use-filter-string-for-filename t)
   :config
