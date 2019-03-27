@@ -537,7 +537,7 @@ The site configuration is defined in index.org."
   (deft-directory org-directory)
   (deft-extensions '("org" "md" "tex"))
   (deft-default-extension "org")
-  (deft-ignore-file-regexp "\\(?:sitemap\\)")
+  (deft-ignore-file-regexp "\\(?:index\\|readme\\|sitemap\\|archive\\)")
   (deft-recursive t)
   (deft-auto-save-interval 0)
   (deft-use-filename-as-title t)
@@ -607,10 +607,6 @@ The site configuration is defined in index.org."
   :custom (avy-background t)
   :bind (:map evil-normal-state-map
          ("s" . avy-goto-char-2)))
-
-;; expand-region
-(use-package expand-region
-  :bind ("C-=" . er/expand-region))
 
 ;; eyebrowse
 (use-package eyebrowse
