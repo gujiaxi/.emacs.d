@@ -245,6 +245,7 @@ The site configuration is defined in index.org."
 
 ;; ----- key binding -----
 
+(global-set-key (kbd "C-c m") 'compile)
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
 
@@ -339,7 +340,7 @@ The site configuration is defined in index.org."
     (add-to-list 'org-latex-packages-alist '("scheme=plain" "ctex")))
   (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
   (setq org-latex-listings t)
-  (setq org-latex-listings-options '(("breaklines" "true") ("basicstyle" "\\ttfamily") ("numbers" "left") ("frame" "single")))
+  (setq org-latex-listings-options '(("breaklines" "true") ("basicstyle" "\\ttfamily") ("frame" "single")))
   ;; ox-bibtex
   (require 'ox-bibtex)
   ;; org-babel
@@ -578,7 +579,7 @@ The site configuration is defined in index.org."
   (markdown-enable-math t)
   (markdown-command "~/.gem/ruby/2.3.0/bin/kramdown -i GFM")
   (markdown-css-paths '("http://jiaxi.sdf.org/css/md.css"))
-  (markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">\n<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$']]}});</script>\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML\"></script>"))
+  (markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">\n<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$']]}});</script>\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML\" async></script>"))
 
 
 ;; -------------------------------------------------------------------

@@ -31,8 +31,7 @@
 #+LaTeX_HEADER: \\newtheorem{claim}[theorem]{Claim}
 #+LaTeX_HEADER: \\newtheorem{corollary}[theorem]{Corollary}
 #+LaTeX_HEADER: \\newtheorem{definition}[theorem]{Definition}
-$0"
-                        "doc")))
+$0" "doc")))
 
 (yas-define-snippets 'python-mode
                      '(("plot" "bfs = 9
@@ -45,8 +44,7 @@ plt.rc('axes', **{'labelsize': bfs})
 plt.rc('legend', **{'fontsize': bfs})
 plt.rc('grid', **{'linestyle': 'dashed'})
 plt.rc('figure', **{'figsize': (3.5, 2.2), 'autolayout': True})
-plt.rc('savefig', **{'bbox': 'tight'})"
-                        "plot")))
+plt.rc('savefig', **{'bbox': 'tight'})" "plot")))
 
 
 ;;; snippets.el ends here
