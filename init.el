@@ -521,8 +521,6 @@ The site configuration is defined in index.org."
   :config
   (setq company-backends (delete 'company-dabbrev company-backends))
   (add-to-list 'company-backends 'company-files)
-  (with-eval-after-load 'yasnippet
-    (add-to-list 'company-backends 'company-yasnippet))
   :bind (:map company-active-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous)))
