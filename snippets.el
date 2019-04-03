@@ -23,7 +23,7 @@
 #+OPTIONS: toc:nil num:nil html-style:nil html-scripts:nil html-postamble:t
 #+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://jiaxi.sdf.org/css/org.css\"/>
 #+LaTeX_HEADER: \\usepackage[margin=1in]{geometry}
-#+LaTeX_HEADER: \\hypersetup{hidelinks=true}
+#+LaTeX_HEADER: \\hypersetup{hidelinks}
 #+LaTeX_HEADER: \\usepackage{amsthm}
 #+LaTeX_HEADER: \\newtheorem{theorem}{Theorem}[section]
 #+LaTeX_HEADER: \\newtheorem{lemma}[theorem]{Lemma}
