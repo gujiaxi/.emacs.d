@@ -335,9 +335,8 @@ The site configuration is defined in index.org."
   ;; ox-latex
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-logfiles-extensions "tex")
-    (add-to-list 'org-latex-packages-alist '("" "amsthm"))
-    (add-to-list 'org-latex-packages-alist '("" "listings"))
-    (add-to-list 'org-latex-packages-alist '("scheme=plain" "ctex")))
+    (add-to-list 'org-latex-packages-alist '("" "listings" nil))
+    (add-to-list 'org-latex-packages-alist '("scheme=plain" "ctex" nil)))
   (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
   (setq org-latex-listings t)
   (setq org-latex-listings-options '(("breaklines" "true") ("basicstyle" "\\ttfamily") ("frame" "single")))
