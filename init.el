@@ -339,7 +339,10 @@ The site configuration is defined in index.org."
     (add-to-list 'org-latex-packages-alist '("scheme=plain" "ctex" nil)))
   (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
   (setq org-latex-listings t)
-  (setq org-latex-listings-options '(("breaklines" "true") ("basicstyle" "\\ttfamily") ("frame" "single")))
+  (setq org-latex-listings-options
+        '(("breaklines" "true")
+          ("basicstyle" "\\ttfamily")
+          ("frame" "single")))
   ;; ox-bibtex
   (require 'ox-bibtex)
   ;; org-babel
@@ -368,7 +371,8 @@ The site configuration is defined in index.org."
   :ensure auctex
   :after latex
   :config
-  (add-to-list 'TeX-command-list '("Latexmk" "latexmk -pdf -quiet %s" TeX-run-command nil t :help "Run latexmk"))
+  (add-to-list 'TeX-command-list '("Latexmk" "latexmk -pdf -quiet %s" TeX-run-command nil t
+                                   :help "Run latexmk"))
   (add-to-list 'LaTeX-clean-intermediate-suffixes "\\.fdb_latexmk")
   (with-eval-after-load 'evil
     (evil-set-initial-state 'TeX-output-mode 'emacs))
@@ -409,18 +413,30 @@ The site configuration is defined in index.org."
                     'mode-line-mule-info
                     'mode-line-modified
                     'mode-line-remote " "
-                    '(:eval (propertize " %b " 'face (if (buffer-modified-p) '(:background "#d33682" :foreground "#fdf6e3" :weight bold)
-                                                       '(:background "#268bd2" :foreground "#fdf6e3" :weight light))
-                                        'help-echo (buffer-file-name)))
-                    '(:propertize " %p/%I " face (:background "gray30" :foreground "#fdf6e3")
-                                  help-echo (count-words--buffer-message))
-                    '(:eval (propertize (concat " " (eyebrowse-mode-line-indicator) " ")))
-                    '(:eval (propertize (format-time-string "%p·%H:%M ") 'help-echo (format-time-string "%F %a") 'face '(:inherit font-lock-function-name-face :slant normal)))
+                    '(:eval (propertize
+                             " %b "
+                             'face (if (buffer-modified-p) '(:background "#d33682" :foreground "#fdf6e3" :weight bold)
+                                     '(:background "#268bd2" :foreground "#fdf6e3" :weight light))
+                             'help-echo (buffer-file-name)))
+                    '(:propertize
+                      " %p/%I "
+                      face (:background "gray30" :foreground "#fdf6e3")
+                      help-echo (count-words--buffer-message))
+                    '(:eval (propertize
+                             (concat " " (eyebrowse-mode-line-indicator) " ")))
+                    '(:eval (propertize
+                             (format-time-string "%p·%H:%M ")
+                             'face '(:inherit font-lock-function-name-face :slant normal)
+                             'help-echo (format-time-string "%F %a")))
                     'battery-mode-line-string
                     '(:eval (when (> (window-width) 70)
-                              (propertize " {%m}" 'face '(:weight normal))))
+                              (propertize
+                               " {%m}"
+                               'face '(:weight normal))))
                     '(:eval (when (and (> (window-width) 70) vc-mode)
-                              (propertize vc-mode 'face '(:inherit font-lock-keyword-face :weight bold))))
+                              (propertize
+                               vc-mode
+                               'face '(:inherit font-lock-keyword-face :weight bold))))
                     "-%-"))
 
 
@@ -456,7 +472,7 @@ The site configuration is defined in index.org."
 
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
-  :commands evilnc-comment-or-uncomment-lines
+  :defer 1
   :bind (("M-;" . evilnc-comment-or-uncomment-lines)
          :map evil-normal-state-map
          ("SPC c SPC" . evilnc-comment-or-uncomment-lines)))
@@ -609,7 +625,9 @@ The site configuration is defined in index.org."
 ;; eyebrowse
 (use-package eyebrowse
   :commands eyebrowse-mode-line-indicator
-  :custom (eyebrowse-wrap-around t)
+  :custom
+  (eyebrowse-wrap-around t)
+  (eyebrowse-mode-line-separator ",")
   :config (eyebrowse-mode t)
   (set-face-attribute 'eyebrowse-mode-line-active nil
                       :inherit font-lock-warning-face)
