@@ -528,7 +528,7 @@ The site configuration is defined in index.org."
 (use-package company
   :hook (after-init . global-company-mode)
   :custom
-  (company-idle-delay 0.3)
+  (company-idle-delay 0.2)
   (company-minimum-prefix-length 1)
   (company-dabbrev-downcase nil)
   (company-selection-wrap-around t)
@@ -620,7 +620,7 @@ The site configuration is defined in index.org."
 (use-package avy
   :custom (avy-background t)
   :bind (:map evil-normal-state-map
-         ("s" . avy-goto-char-2)))
+         ("SPC s" . avy-goto-char-2)))
 
 ;; eyebrowse
 (use-package eyebrowse
