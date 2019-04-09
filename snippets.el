@@ -18,19 +18,9 @@
 (yas-define-snippets 'org-mode
                      '(("bib" "#+BIBLIOGRAPHY: $0 plain limit:t option:-nobibsource option:-nokeywords" "bib")
                        ("doc" "#+TITLE: $1
-#+TODO: TODO(t) WAIT(w) | DONE(d) UNDO(u)
 #+STARTUP: hidestars indent
-#+OPTIONS: toc:nil num:nil html-style:nil html-scripts:nil html-postamble:t
-#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://jiaxi.sdf.org/css/org.css\"/>
-#+LaTeX_HEADER: \\usepackage[margin=1in]{geometry}
-#+LaTeX_HEADER: \\hypersetup{hidelinks}
-#+LaTeX_HEADER: \\usepackage{amsthm}
-#+LaTeX_HEADER: \\newtheorem{theorem}{Theorem}[section]
-#+LaTeX_HEADER: \\newtheorem{lemma}[theorem]{Lemma}
-#+LaTeX_HEADER: \\newtheorem{proposition}[theorem]{Proposition}
-#+LaTeX_HEADER: \\newtheorem{claim}[theorem]{Claim}
-#+LaTeX_HEADER: \\newtheorem{corollary}[theorem]{Corollary}
-#+LaTeX_HEADER: \\newtheorem{definition}[theorem]{Definition}
+#+OPTIONS: toc:nil num:nil
+#+HTML_HEAD: <style>body{max-width:38rem;padding:1.5rem;margin:auto;}</style>
 $0" "doc")))
 
 (yas-define-snippets 'python-mode

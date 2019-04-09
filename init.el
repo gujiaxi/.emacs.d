@@ -283,11 +283,11 @@ The site configuration is defined in index.org."
 (setq org-export-with-archived-trees nil)
 (setq org-export-html-style-include-scripts nil)
 (setq org-export-html-style-include-default nil)
-(setq org-html-postamble t)
+(setq org-html-postamble t
+      org-html-postamble-format '(("en" "&copy; %a · %C")))
 (setq org-archive-location (expand-file-name "archive.org::" org-directory))
 (setq org-refile-targets '((org-agenda-files :level . 1)
                            (nil :level . 1)))
-(setq org-html-postamble-format '(("en" "&copy; %a / %C")))
 (setq org-priority-faces '((?A . (:foreground "red" :weight bold))
                            (?B . (:foreground "orange" :weight bold))
                            (?C . (:foreground "yellow" :wegith bold))))
@@ -336,7 +336,8 @@ The site configuration is defined in index.org."
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-logfiles-extensions "tex")
     (add-to-list 'org-latex-packages-alist '("" "listings" nil))
-    (add-to-list 'org-latex-packages-alist '("scheme=plain" "ctex" nil)))
+    (add-to-list 'org-latex-packages-alist '("scheme=plain" "ctex" nil))
+    (setq org-latex-hyperref-template "\\hypersetup{pdfauthor={%a},pdftitle={%t},hidelinks}"))
   (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
   (setq org-latex-listings t)
   (setq org-latex-listings-options
@@ -619,7 +620,8 @@ The site configuration is defined in index.org."
 ;; avy
 (use-package avy
   :custom (avy-background t)
-  :bind (:map evil-normal-state-map
+  :bind (("C-'" . avy-goto-char-2)
+         :map evil-normal-state-map
          ("SPC s" . avy-goto-char-2)))
 
 ;; eyebrowse
