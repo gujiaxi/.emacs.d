@@ -19,8 +19,8 @@
                      '(("bib" "#+BIBLIOGRAPHY: $0 plain limit:t option:-nobibsource option:-nokeywords" "bib")
                        ("doc" "#+TITLE: $1
 #+STARTUP: hidestars indent
-#+OPTIONS: toc:nil num:nil
-#+HTML_HEAD: <style>body{max-width:38rem;padding:1.5rem;margin:auto;}</style>
+#+OPTIONS: toc:nil num:nil html-style:nil html-scripts:nil html-postamble:t
+#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://jiaxi.sdf.org/css/org.css\"/>
 $0" "doc")))
 
 (yas-define-snippets 'python-mode
