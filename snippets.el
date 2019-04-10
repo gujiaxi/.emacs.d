@@ -18,7 +18,7 @@
 (yas-define-snippets 'org-mode
                      '(("bib" "#+BIBLIOGRAPHY: $0 plain limit:t option:-nobibsource option:-nokeywords" "bib")
                        ("doc" "#+TITLE: $1
-#+STARTUP: hidestars indent
+#+STARTUP: hidestars indent content
 #+OPTIONS: toc:nil num:nil html-style:nil html-scripts:nil html-postamble:t
 #+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"http://jiaxi.sdf.org/css/org.css\"/>
 $0" "doc")))

@@ -284,7 +284,7 @@ The site configuration is defined in index.org."
 (setq org-export-html-style-include-scripts nil)
 (setq org-export-html-style-include-default nil)
 (setq org-html-postamble t
-      org-html-postamble-format '(("en" "&copy; %a · %C")))
+      org-html-postamble-format '(("en" "Edited by %a on %C")))
 (setq org-archive-location (expand-file-name "archive.org::" org-directory))
 (setq org-refile-targets '((org-agenda-files :level . 1)
                            (nil :level . 1)))
