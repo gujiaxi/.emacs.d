@@ -715,7 +715,7 @@ The site configuration is defined in index.org."
   (setq mac-option-modifier 'super)
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
-  (menu-bar-mode 1))
+  (when (display-graphic-p) (menu-bar-mode 1)))
 
 
 ;;; init.el ends here
