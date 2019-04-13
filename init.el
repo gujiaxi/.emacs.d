@@ -245,9 +245,10 @@ The site configuration is defined in index.org."
 
 ;; ----- key binding -----
 
-(global-set-key (kbd "C-c m") 'compile)
-(global-set-key (kbd "C-x k") 'kill-this-buffer)
 (define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+(global-set-key (kbd "C-x k") 'kill-this-buffer)
+(global-set-key (kbd "C-c m") 'compile)
+(global-set-key (kbd "C-c t") 'toggle-truncate-lines)
 
 
 ;; -------------------------------------------------------------------
@@ -591,7 +592,7 @@ The site configuration is defined in index.org."
   :mode ("\\.md\\'" "\\.markdown\\'")
   :custom
   (markdown-enable-math t)
-  (markdown-command "~/.gem/ruby/2.3.0/bin/kramdown -i GFM")
+  (markdown-command "~/.gem/ruby/2.3.0/bin/kramdown -i GFM --no-hard-wrap")
   (markdown-css-paths '("http://jiaxi.sdf.org/css/md.css"))
   (markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">\n<script type=\"text/x-mathjax-config\">MathJax.Hub.Config({tex2jax:{inlineMath:[['$','$']]}});</script>\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML\" async></script>"))
 
