@@ -1,14 +1,14 @@
-;;; init.el --- jiaxi's configuration
+;;; init.el --- Jiaxi's Emacs configuration
 
 ;; Copyright (c) 2016-2019 Jiaxi Gu
 
 ;; Author: Jiaxi Gu <imjiaxi@gmail.com>
 ;; URL: https://github.com/gujiaxi/.emacs.d
-;; Package-Requires: ((emacs "26.1"))
+;; Package-Requires: ((emacs "26.2"))
 
 ;;; Commentary:
 
-;; This is my personal Emacs configuration.
+;; This is a personal Emacs configuration.
 
 ;;; License:
 
@@ -411,10 +411,7 @@ The site configuration is defined in index.org."
 ;; Crafted for battery-mode, evil-mode and eyebrowse-mode
 (setq-default mode-line-format
               (list '(:eval (propertize (evil-generate-mode-line-tag evil-state) 'face '(:inherit font-lock-function-name-face)))
-                    "%e"
-                    'mode-line-mule-info
-                    'mode-line-modified
-                    'mode-line-remote " "
+                    'mode-line-mule-info 'mode-line-modified 'mode-line-remote " "
                     '(:eval (propertize
                              " %b "
                              'face (if (buffer-modified-p) '(:background "#d33682" :foreground "#fdf6e3" :weight bold)

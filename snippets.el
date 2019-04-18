@@ -7,9 +7,9 @@
 ;;; Code:
 
 (yas-define-snippets 'fundamental-mode
-                     '(("date" "`(format-time-string \"%F\")`" "date")
-                       ("time" "`(format-time-string \"%T\")`" "time")
-                       ("dtime" "`(format-time-string \"%F %T%z\")`" "dtime")
+                     '(("dd" "`(format-time-string \"%F\")`" "date")
+                       ("dt" "`(format-time-string \"%T\")`" "time")
+                       ("df" "`(format-time-string \"%F %T%z\")`" "dtime")
                        ("lorem" "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." "lorem")))
 
 (yas-define-snippets 'makefile-mode
