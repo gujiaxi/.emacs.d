@@ -408,32 +408,38 @@ The site configuration is defined in index.org."
 
 ;; ----- mode-line -----
 
-;; Crafted for battery-mode, evil-mode and eyebrowse-mode
+;; Crafted for battery-mode, vc-mode, evil-mode and eyebrowse-mode
 (setq-default mode-line-format
-              (list '(:eval (propertize (evil-generate-mode-line-tag evil-state) 'face '(:inherit font-lock-function-name-face)))
+              (list '(:eval (when (boundp 'evil-mode)
+                              (propertize
+                               (evil-generate-mode-line-tag evil-state)
+                               'face '(:inherit font-lock-function-name-face))))
                     'mode-line-mule-info 'mode-line-modified 'mode-line-remote " "
                     '(:eval (propertize
                              " %b "
-                             'face (if (buffer-modified-p) '(:background "#d33682" :foreground "#fdf6e3" :weight bold)
+                             'face (if (buffer-modified-p)
+                                       '(:background "#d33682" :foreground "#fdf6e3" :weight bold)
                                      '(:background "#268bd2" :foreground "#fdf6e3" :weight light))
                              'help-echo (buffer-file-name)))
                     '(:propertize
                       " %p/%I "
                       face (:background "gray30" :foreground "#fdf6e3")
                       help-echo (count-words--buffer-message))
-                    '(:eval (propertize
-                             (concat " " (eyebrowse-mode-line-indicator))))
-                    '(:eval (propertize
-                             vc-mode
-                             'face '(:inherit font-lock-keyword-face :weight bold)))
-                    '(:eval (when (> (window-width) 70)
+                    '(:eval (when eyebrowse-mode
                               (propertize
-                               " %m "
-                               'face '(:inherit font-lock-function-name-face :weight bold))))
-                    '(:eval (when (> (window-width) 70)
+                               (concat " " (eyebrowse-mode-line-indicator)))))
+                    '(:eval (when vc-mode
                               (propertize
-                               (format-time-string "%p·%H:%M ")
-                               'help-echo (format-time-string "%F %a"))))
+                               vc-mode
+                               'face '(:inherit font-lock-keyword-face :weight bold))))
+                    '(:eval (when (> (window-width) 70)
+                              (concat
+                               (propertize
+                                " %m "
+                                'face '(:inherit font-lock-function-name-face :weight bold))
+                               (propertize
+                                (format-time-string "%p·%R ")
+                                'help-echo (format-time-string "%F %A")))))
                     'battery-mode-line-string
                     "-%-"))
 
@@ -620,7 +626,6 @@ The site configuration is defined in index.org."
 
 ;; eyebrowse
 (use-package eyebrowse
-  :commands eyebrowse-mode-line-indicator
   :custom
   (eyebrowse-wrap-around t)
   (eyebrowse-mode-line-separator ",")
