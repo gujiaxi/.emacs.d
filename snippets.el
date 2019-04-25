@@ -10,6 +10,7 @@
                      '(("dd" "`(format-time-string \"%F\")`" "dd")
                        ("dt" "`(format-time-string \"%T\")`" "dt")
                        ("df" "`(format-time-string \"%F %T%z\")`" "df")
+                       ("magic" "`(yas-trimmed-comment-start)` -*- $1 -*-" "magic")
                        ("lorem" "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat,sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet." "lorem")))
 
 (yas-define-snippets 'makefile-mode
