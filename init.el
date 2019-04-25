@@ -422,20 +422,19 @@ The site configuration is defined in index.org."
                       face (:background "gray30" :foreground "#fdf6e3")
                       help-echo (count-words--buffer-message))
                     '(:eval (propertize
-                             (concat " " (eyebrowse-mode-line-indicator) " ")))
+                             (concat " " (eyebrowse-mode-line-indicator))))
                     '(:eval (propertize
-                             (format-time-string "%p·%H:%M ")
-                             'face '(:inherit font-lock-function-name-face :slant normal)
-                             'help-echo (format-time-string "%F %a")))
-                    'battery-mode-line-string
+                             vc-mode
+                             'face '(:inherit font-lock-keyword-face :weight bold)))
                     '(:eval (when (> (window-width) 70)
                               (propertize
-                               " {%m}"
-                               'face '(:weight normal))))
-                    '(:eval (when (and (> (window-width) 70) vc-mode)
+                               " %m "
+                               'face '(:inherit font-lock-function-name-face :weight bold))))
+                    '(:eval (when (> (window-width) 70)
                               (propertize
-                               vc-mode
-                               'face '(:inherit font-lock-keyword-face :weight bold))))
+                               (format-time-string "%p·%H:%M ")
+                               'help-echo (format-time-string "%F %a"))))
+                    'battery-mode-line-string
                     "-%-"))
 
 
@@ -533,9 +532,6 @@ The site configuration is defined in index.org."
   (company-selection-wrap-around t)
   (company-show-numbers t)
   (company-global-modes '(not comint-mode eshell-mode org-mode))
-  :config
-  (setq company-backends (delete 'company-dabbrev company-backends))
-  (add-to-list 'company-backends 'company-files)
   :bind (:map company-active-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous)))
