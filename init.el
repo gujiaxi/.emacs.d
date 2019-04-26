@@ -422,25 +422,25 @@ The site configuration is defined in index.org."
                                      '(:background "#268bd2" :foreground "#fdf6e3" :weight light))
                              'help-echo (buffer-file-name)))
                     '(:propertize
-                      " %p/%I "
-                      face (:background "gray30" :foreground "#fdf6e3")
-                      help-echo (count-words--buffer-message))
+                      " %p "
+                      face (:background "gray30" :foreground "#fdf6e3"))
                     '(:eval (when eyebrowse-mode
                               (propertize
                                (concat " " (eyebrowse-mode-line-indicator)))))
-                    '(:eval (when vc-mode
-                              (propertize
-                               vc-mode
-                               'face '(:inherit font-lock-keyword-face :weight bold))))
-                    '(:eval (when (> (window-width) 70)
+                    '(:propertize
+                      " (%m)"
+                      face (:inherit font-lock-function-name-face :weight bold))
+                    '(:eval (when (> (window-width) 65)
                               (concat
+                               (when vc-mode
+                                 (propertize
+                                  vc-mode
+                                  'face '(:inherit font-lock-keyword-face :weight bold)))
                                (propertize
-                                " %m "
-                                'face '(:inherit font-lock-function-name-face :weight bold))
-                               (propertize
-                                (format-time-string "%p·%R ")
-                                'help-echo (format-time-string "%F %A")))))
-                    'battery-mode-line-string
+                                (format-time-string " %p·%R ")
+                                'help-echo (format-time-string "%F %A"))
+                               (replace-regexp-in-string
+                                "%" "%%" battery-mode-line-string))))
                     "-%-"))
 
 
