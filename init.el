@@ -538,6 +538,7 @@ The site configuration is defined in index.org."
   (company-selection-wrap-around t)
   (company-show-numbers t)
   (company-global-modes '(not comint-mode eshell-mode org-mode))
+  :config (delete 'company-dabbrev company-backends)
   :bind (:map company-active-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous)))
