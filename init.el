@@ -27,12 +27,6 @@
 
 ;;; Code:
 
-;; -------------------------------------------------------------------
-;; Initialization
-;; -------------------------------------------------------------------
-
-(package-initialize)
-
 
 ;; -------------------------------------------------------------------
 ;; Basic settings
@@ -139,7 +133,7 @@
 ;; Built-in packages
 ;; -------------------------------------------------------------------
 
-;; ----- plugin settings -----
+;; ----- customizations -----
 
 ;; abbrev [built-in]
 (setq save-abbrevs nil)
@@ -252,18 +246,17 @@ The site configuration is defined in index.org."
 
 
 ;; -------------------------------------------------------------------
-;; Package bootstrap
+;; Package Bootstrap
 ;; -------------------------------------------------------------------
 
-;; ----- package archives -----
-
+;; package repository
 (setq package-archives
       '(("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
         ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
         ("org" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+(package-initialize)
 
-;; ----- use-package -----
-
+;; bootstrap `use-package'
 (unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
@@ -272,13 +265,14 @@ The site configuration is defined in index.org."
 
 
 ;; -------------------------------------------------------------------
-;; org-mode
+;; Org-mode
 ;; -------------------------------------------------------------------
 
 ;; basic org options
 (setq org-startup-with-inline-images nil)
 (setq org-image-actual-width nil)
 (setq org-src-fontify-natively t)
+(setq org-catch-invisible-edits 'show-and-error)
 (setq org-src-preserve-indentation t)
 (setq org-confirm-babel-evaluate nil)
 (setq org-export-with-archived-trees nil)
@@ -325,7 +319,7 @@ The site configuration is defined in index.org."
         ("p" "Publish" plain (file "p-scratch.org")
          "%?\n\n%U\n-----")))
 
-;; org
+;; org-plus
 (use-package org
   :ensure org-plus-contrib
   :after org
