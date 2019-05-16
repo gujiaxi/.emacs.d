@@ -456,7 +456,9 @@ The site configuration is defined in index.org."
               'process-menu-mode 'profiler-report-mode
               'shell-mode 'speedbar-mode 'special-mode
               'term-mode))
-  (unbind-key "SPC" evil-normal-state-map)
+  (unbind-key "SPC" evil-normal-state-map) ;; reserve for leader key
+  (unbind-key "C-n" evil-insert-state-map) ;; reserve for company-mode
+  (unbind-key "C-p" evil-insert-state-map) ;; reserve for company-mode
   :custom (evil-want-abbrev-expand-on-insert-exit nil)
   :bind (("<f5>" . evil-make)
          :map evil-normal-state-map
@@ -526,7 +528,7 @@ The site configuration is defined in index.org."
 (use-package company
   :hook (after-init . global-company-mode)
   :custom
-  (company-idle-delay 0.2)
+  (company-idle-delay 0.1)
   (company-minimum-prefix-length 1)
   (company-dabbrev-downcase nil)
   (company-selection-wrap-around t)
@@ -536,6 +538,15 @@ The site configuration is defined in index.org."
   :bind (:map company-active-map
          ("C-n" . company-select-next)
          ("C-p" . company-select-previous)))
+
+
+;; -------------------------------------------------------------------
+;; LSP (Language Server Protocol)
+;; -------------------------------------------------------------------
+
+;; eglot
+(use-package eglot
+  :hook (python-mode . eglot-ensure))
 
 
 ;; -------------------------------------------------------------------
@@ -557,24 +568,6 @@ The site configuration is defined in index.org."
     (evil-set-initial-state 'deft-mode 'emacs))
   :hook (deft-open-file . deft-filter-clear)
   :bind ("C-c d" . deft))
-
-
-;; -------------------------------------------------------------------
-;; Python
-;; -------------------------------------------------------------------
-
-;; anaconda-mode
-(use-package anaconda-mode
-  :after python
-  :hook ((python-mode . anaconda-mode)
-         (python-mode . anaconda-eldoc-mode)))
-
-;; company-anaconda
-(use-package company-anaconda
-  :after company
-  :config
-  (require 'rx)
-  (add-to-list 'company-backends 'company-anaconda))
 
 
 ;; -------------------------------------------------------------------
@@ -697,7 +690,7 @@ The site configuration is defined in index.org."
 (setq python-shell-interpreter "python3")
 (setq org-babel-python-command "python3")
 
-;; ----- MacOS -----
+;; ----- macOS -----
 
 (when (eq system-type 'darwin)
   (let ((envpath (list "/usr/local/bin/"
