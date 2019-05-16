@@ -315,7 +315,7 @@ The site configuration is defined in index.org."
         ("n" "Note" entry (file+headline "notes.org" "Inbox")
          "* %?\n%U\n%a")
         ("j" "Journal" plain (file+datetree "journal.org")
-         "%?\n")
+         "%U %?\n")
         ("p" "Publish" plain (file "p-scratch.org")
          "%?\n\n%U\n-----")))
 
