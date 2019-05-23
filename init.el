@@ -341,6 +341,8 @@ The site configuration is defined in index.org."
           ("frame" "single")))
   ;; ox-bibtex
   (require 'ox-bibtex)
+  ;; org-drill
+  (require 'org-drill)
   ;; org-babel
   (org-babel-do-load-languages
    'org-babel-load-languages
