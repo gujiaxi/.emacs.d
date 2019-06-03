@@ -580,7 +580,6 @@ The site configuration is defined in index.org."
 (use-package markdown-mode
   :mode ("\\.md\\'" "\\.markdown\\'")
   :custom
-  (markdown-enable-math t)
   (markdown-command "pandoc --quiet --mathjax --no-highlight -f markdown")
   (markdown-css-paths '("http://jiaxi.sdf.org/css/md.css"))
   (markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML\" async></script>"))
