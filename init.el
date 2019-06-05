@@ -239,7 +239,8 @@ The site configuration is defined in index.org."
 
 ;; ----- key binding -----
 
-(define-key key-translation-map (kbd "ESC") (kbd "C-g"))
+(when (display-graphic-p)
+  (define-key key-translation-map (kbd "ESC") (kbd "C-g")))
 (global-set-key (kbd "C-x k") 'kill-this-buffer)
 (global-set-key (kbd "C-c m") 'compile)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
@@ -316,7 +317,7 @@ The site configuration is defined in index.org."
          "* %?\n%U\n%a")
         ("j" "Journal" plain (file+datetree "journal.org")
          "%U %?\n")
-        ("p" "Publish" plain (file "p-scratch.org")
+        ("p" "Publish" plain (file "scratch.org")
          "%?\n\n%U\n-----")))
 
 ;; org-plus
