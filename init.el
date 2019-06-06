@@ -549,6 +549,7 @@ The site configuration is defined in index.org."
 
 ;; eglot
 (use-package eglot
+  :custom (eglot-autoreconnect nil)
   :hook (python-mode . eglot-ensure))
 
 
