@@ -25,17 +25,21 @@
 $0" "doc")))
 
 (yas-define-snippets 'python-mode
-                     '(("plot" "bfs = 9
-plt.style.use('seaborn-paper')
-plt.rc('font', **{'family': 'sans-serif', 'size': bfs})
-plt.rc('font', **{'sans-serif': ['Helvetica', 'Arial']})
-plt.rc('xtick', **{'direction': 'in', 'labelsize': bfs, 'major.size': 3.5})
-plt.rc('ytick', **{'direction': 'in', 'labelsize': bfs, 'major.size': 3.5})
-plt.rc('axes', **{'titlesize':bfs, 'labelsize': bfs})
-plt.rc('legend', **{'fontsize': bfs})
-plt.rc('grid', **{'linestyle': 'dashed'})
-plt.rc('figure', **{'figsize': (3.5, 2.2), 'autolayout': True})
-plt.rc('savefig', **{'bbox': 'tight'})" "plot")))
+                     '(("plot" "plt.rcParams['font.size'] = 8
+plt.rcParams['font.family'] = 'sans-serif'
+plt.rcParams['font.serif'] = ['DejaVu Serif']
+plt.rcParams['font.sans-serif'] = ['DejaVu Sans']
+plt.rcParams['font.monospace'] = ['DejaVu Sans Mono']
+plt.rcParams['grid.linestyle'] = 'dashed'
+plt.rcParams['grid.linewidth'] = 0.5
+plt.rcParams['grid.alpha'] = 0.5
+plt.rcParams['legend.fontsize'] = 8
+plt.rcParams['axes.labelsize'] = 8
+plt.rcParams['axes.titlesize'] = 8
+plt.rcParams['xtick.labelsize'] = 8
+plt.rcParams['ytick.labelsize'] = 8
+plt.rcParams['savefig.dpi'] = 150
+plt.rcParams['figure.figsize'] = [3.39, 2.10]" "plot")))
 
 
 ;;; snippets.el ends here
