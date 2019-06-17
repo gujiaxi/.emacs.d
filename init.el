@@ -84,9 +84,6 @@
 (setq-default default-tab-width 4)
 (setq-default c-basic-offset 4)
 
-;; fill column width
-(setq-default fill-column 80)
-
 ;; delete selection
 (delete-selection-mode t)
 
@@ -315,7 +312,7 @@ The site configuration is defined in index.org."
          "* TODO %?\n%U\n%a")
         ("n" "Note" entry (file+headline "notes.org" "Inbox")
          "* %?\n%U\n%a")
-        ("j" "Journal" plain (file+datetree "journal.org")
+        ("j" "Journal" plain (file+olp+datetree "journal.org")
          "%U %?\n")
         ("p" "Publish" plain (file "scratch.org")
          "%?\n\n%U\n-----")))
@@ -467,6 +464,7 @@ The site configuration is defined in index.org."
          :map evil-normal-state-map
          ("j" . evil-next-visual-line)
          ("k" . evil-previous-visual-line)
+         ("SPC w" . save-buffer)
          :map evil-visual-state-map
          ("j" . evil-next-visual-line)
          ("k" . evil-previous-visual-line)
