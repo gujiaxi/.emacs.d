@@ -322,8 +322,8 @@ The site configuration is defined in index.org."
   :ensure org-plus-contrib
   :after org
   :config
-  (use-package htmlize)
   ;; ox-html
+  (use-package htmlize)
   (setq org-html-htmlize-output-type 'css)
   ;; ox-latex
   (with-eval-after-load 'ox-latex
