@@ -267,11 +267,12 @@ The site configuration is defined in index.org."
 ;; -------------------------------------------------------------------
 
 ;; basic org options
-(setq org-startup-with-inline-images nil)
-(setq org-image-actual-width nil)
-(setq org-src-fontify-natively t)
-(setq org-catch-invisible-edits 'show-and-error)
+(setq org-hide-leading-stars t)
+(setq org-startup-indented t)
+(setq org-startup-folded nil)
 (setq org-src-preserve-indentation t)
+(setq org-image-actual-width nil)
+(setq org-catch-invisible-edits 'show-and-error)
 (setq org-confirm-babel-evaluate nil)
 (setq org-export-with-archived-trees nil)
 (setq org-export-html-style-include-scripts nil)
