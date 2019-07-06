@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: df
+# key: df
+# --
+`(format-time-string "%F %T%z")`

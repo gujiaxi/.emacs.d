@@ -1,0 +1,5 @@
+# -*- mode: snippet -*-
+# name: dd
+# key: dd
+# --
+`(format-time-string "%F")`

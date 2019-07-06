@@ -686,6 +686,7 @@ The site configuration is defined in index.org."
 
 (setq python-shell-interpreter "python3")
 (setq org-babel-python-command "python3")
+(setq python-indent-guess-indent-offset-verbose nil)
 
 ;; ----- macOS -----
 
