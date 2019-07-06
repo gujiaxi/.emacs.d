@@ -367,7 +367,7 @@ The site configuration is defined in index.org."
   :ensure auctex
   :after latex
   :config
-  (add-to-list 'TeX-command-list '("Latexmk" "latexmk -pdf -quiet %s" TeX-run-command nil t
+  (add-to-list 'TeX-command-list '("Latexmk" "latexmk -xelatex -quiet %s" TeX-run-command nil t
                                    :help "Run latexmk"))
   (add-to-list 'LaTeX-clean-intermediate-suffixes "\\.fdb_latexmk")
   (with-eval-after-load 'evil
@@ -648,8 +648,7 @@ The site configuration is defined in index.org."
   (speedbar-enable-update t)
   (sr-speedbar-skip-other-window-p t)
   (sr-speedbar-auto-refresh t)
-  :bind (:map evil-normal-state-map
-         ("SPC e" . sr-speedbar-toggle)
+  :bind (("C-c s" . sr-speedbar-toggle)
          :map speedbar-mode-map
          ("a" . speedbar-toggle-show-all-files)
          ("l" . sr-speedbar-refresh-toggle)))
@@ -669,10 +668,7 @@ The site configuration is defined in index.org."
   :commands yas-define-snippets
   :config
   (use-package yasnippet-snippets)
-  (yas-global-mode t)
-  (let ((snip-file (expand-file-name "snippets.el" user-emacs-directory)))
-    (when (file-exists-p snip-file)
-      (load-file snip-file))))
+  (yas-global-mode t))
 
 
 ;; -------------------------------------------------------------------
