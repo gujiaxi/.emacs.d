@@ -249,9 +249,9 @@ The site configuration is defined in index.org."
 
 ;; package repository
 (setq package-archives
-      '(("gnu" . "https://elpa.emacs-china.org/gnu/")
-        ("melpa" . "https://elpa.emacs-china.org/melpa/")
-        ("org" . "https://elpa.emacs-china.org/org/")))
+      '(("gnu" . "https://mirrors.163.com/elpa/gnu/")
+        ("melpa" . "https://mirrors.163.com/elpa/melpa/")
+        ("org" . "https://mirrors.163.com/elpa/org/")))
 (package-initialize)
 
 ;; bootstrap `use-package'
