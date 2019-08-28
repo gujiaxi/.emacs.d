@@ -152,9 +152,7 @@
 ;; display-line-numbers [built-in]
 (setq display-line-numbers-type 'relative)
 (mapc (lambda (hook) (add-hook hook 'display-line-numbers-mode))
-      (list 'prog-mode-hook 'org-mode-hook 'text-mode-hook
-            'bibtex-mode-hook 'markdown-mode-hook 'ess-mode-hook
-            'LaTeX-mode-hook))
+      (list 'prog-mode-hook 'bibtex-mode-hook))
 
 ;; electric [built-in]
 (electric-pair-mode t)
@@ -372,7 +370,6 @@ The site configuration is defined in index.org."
   (with-eval-after-load 'evil
     (evil-set-initial-state 'TeX-output-mode 'emacs))
   :hook ((LaTeX-mode . turn-on-reftex)
-         (LaTeX-mode . visual-line-mode)
          (LaTeX-mode . LaTeX-math-mode)
          (LaTeX-mode . TeX-fold-mode))
   :custom
