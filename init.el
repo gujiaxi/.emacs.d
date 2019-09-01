@@ -328,6 +328,7 @@ The site configuration is defined in index.org."
   (with-eval-after-load 'ox-latex
     (add-to-list 'org-latex-logfiles-extensions "tex")
     (add-to-list 'org-latex-packages-alist '("" "listings" nil))
+    (add-to-list 'org-latex-packages-alist '("margin=1in" "geometry" nil))
     (add-to-list 'org-latex-packages-alist '("scheme=plain" "ctex" nil))
     (setq org-latex-hyperref-template "\\hypersetup{pdfauthor={%a},pdftitle={%t},hidelinks}"))
   (setq org-latex-pdf-process '("latexmk -xelatex -quiet -shell-escape -f %f"))
