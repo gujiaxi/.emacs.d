@@ -1,0 +1,17 @@
+* .emacs.d
+
+#+begin_quote
+This is my =.emacs.d=. There are many like it, but this one is mine.
+#+end_quote
+
+** Installation
+
+Just put =init.el= where it should be.
+
+** Preview
+
+[[https://i.imgur.com/KNhMIPA.png]]
+
+** Philosophy
+
+Simplicity and portability.
