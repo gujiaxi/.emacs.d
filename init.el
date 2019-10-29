@@ -413,7 +413,7 @@ The site configuration is defined in index.org."
                                      '(:background "#268bd2" :foreground "#fdf6e3" :weight light))
                              'help-echo (buffer-file-name)))
                     '(:propertize
-                      " %p "
+                      " %p L%l "
                       face (:background "gray30" :foreground "#fdf6e3"))
                     '(:eval (when eyebrowse-mode
                               (propertize
