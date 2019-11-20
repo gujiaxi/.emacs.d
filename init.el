@@ -313,7 +313,7 @@ The site configuration is defined in index.org."
          "* %?\n%U\n%a")
         ("j" "Journal" plain (file+olp+datetree "journal.org")
          "%U %?\n")
-        ("p" "Publish" plain (file "scratch.org")
+        ("p" "Publish" plain (file "p-scratch.org")
          "%?\n\n%U\n-----")))
 
 ;; org-plus
