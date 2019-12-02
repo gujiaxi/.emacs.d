@@ -171,7 +171,6 @@
 (remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake)
 
 ;; flyspell [built-in]
-(setq ispell-program-name "aspell")
 (add-hook 'org-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'flyspell-mode)
 (add-hook 'LaTeX-mode-hook 'flyspell-mode)
@@ -690,9 +689,7 @@ The site configuration is defined in index.org."
 ;; ----- macOS -----
 
 (when (eq system-type 'darwin)
-  (let ((envpath (list "/usr/local/bin/"
-                       "/Library/TeX/texbin/"
-                       "/Applications/Android Studio.app/Contents/jre/jdk/Contents/Home/bin/")))
+  (let ((envpath (list "/usr/local/bin/" "/Library/TeX/texbin/")))
     (setenv "PATH" (mapconcat 'identity (add-to-list 'envpath (getenv "PATH") t) ":"))
     (setq exec-path (append envpath exec-path)))
   (setq mac-command-modifier 'meta)
