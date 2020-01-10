@@ -441,7 +441,7 @@ The site configuration is defined in index.org."
 ;; evil
 (use-package evil
   :config
-  (evil-mode t)
+  (evil-mode)
   (mapc (lambda (my-mode) (evil-set-initial-state my-mode 'emacs))
         (list 'calendar-mode 'comint-mode 'completion-mode
               'dired-mode 'diff-mode 'epa-info-mode
@@ -469,20 +469,17 @@ The site configuration is defined in index.org."
 
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
-  :defer 1
   :bind (("M-;" . evilnc-comment-or-uncomment-lines)
          :map evil-normal-state-map
          ("SPC c SPC" . evilnc-comment-or-uncomment-lines)))
 
 ;; evil-surround
 (use-package evil-surround
-  :config
-  (global-evil-surround-mode t))
+  :config (global-evil-surround-mode))
 
 ;; evil-matchit
 (use-package evil-matchit
-  :config
-  (global-evil-matchit-mode t))
+  :config (global-evil-matchit-mode))
 
 
 ;; -------------------------------------------------------------------
