@@ -213,7 +213,6 @@ The site configuration is defined in index.org."
 ;; reftex [built-in]
 (setq reftex-plug-into-AUCTeX t)
 (setq reftex-toc-split-windows-horizontally t)
-(setq reftex-default-bibliography (list (expand-file-name "bib/main.bib" org-directory)))
 
 ;; saveplace [built-in]
 (save-place-mode t)
