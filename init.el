@@ -1,10 +1,10 @@
 ;;; init.el --- Jiaxi's Emacs configuration
 
-;; Copyright (c) 2016-2019 Jiaxi Gu
+;; Copyright (c) 2016-2020 Jiaxi Gu
 
 ;; Author: Jiaxi Gu <imjiaxi@gmail.com>
 ;; URL: https://github.com/gujiaxi/.emacs.d
-;; Package-Requires: ((emacs "26.2"))
+;; Package-Requires: ((emacs "26.3"))
 
 ;;; Commentary:
 
@@ -245,9 +245,9 @@ The site configuration is defined in index.org."
 
 ;; package repository
 (setq package-archives
-      '(("gnu" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/gnu/")
-        ("melpa" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/melpa/")
-        ("org" . "https://mirrors.tuna.tsinghua.edu.cn/elpa/org/")))
+      '(("gnu" . "http://elpa.emacs-china.org/gnu/")
+        ("melpa" . "http://elpa.emacs-china.org/melpa/")
+        ("org" . "http://elpa.emacs-china.org/org/")))
 (package-initialize)
 
 ;; bootstrap `use-package'
@@ -620,6 +620,9 @@ The site configuration is defined in index.org."
          ("g c" . eyebrowse-close-window-config)
          ("g t" . eyebrowse-next-window-config)
          ("g T" . eyebrowse-prev-window-config)))
+
+;; magit
+(use-package magit)
 
 ;; quickrun
 (use-package quickrun
