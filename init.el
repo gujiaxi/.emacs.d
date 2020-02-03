@@ -672,30 +672,29 @@ The site configuration is defined in index.org."
 ;; Other settings
 ;; -------------------------------------------------------------------
 
-;; ----- Font -----
-
-(when (member "Menlo" (font-family-list))
-  (set-face-attribute 'default nil :font "Menlo-14"))
-(when (member "PragmataPro" (font-family-list))
-  (add-hook 'org-mode-hook (lambda () (set-face-attribute 'org-table nil :family "PragmataPro"))))
-
-;; ----- Python -----
-
-(setq python-shell-interpreter "python3")
-(setq org-babel-python-command "python3")
-(setq python-indent-guess-indent-offset-verbose nil)
-
 ;; ----- macOS -----
 
 (when (eq system-type 'darwin)
+  ;; environment path
   (let ((envpath (list "/usr/local/bin/" "/Library/TeX/texbin/")))
     (setenv "PATH" (mapconcat 'identity (add-to-list 'envpath (getenv "PATH") t) ":"))
     (setq exec-path (append envpath exec-path)))
+  ;; keys
   (setq mac-command-modifier 'meta)
   (setq mac-option-modifier 'super)
+  ;; display
   (add-to-list 'default-frame-alist '(ns-transparent-titlebar . t))
   (add-to-list 'default-frame-alist '(ns-appearance . dark))
-  (when (display-graphic-p) (menu-bar-mode 1)))
+  (when (display-graphic-p) (menu-bar-mode 1))
+  ;; font
+  (when (member "Menlo" (font-family-list))
+    (set-face-attribute 'default nil :font "Menlo-14"))
+  (when (member "PragmataPro" (font-family-list))
+    (add-hook 'org-mode-hook (lambda () (set-face-attribute 'org-table nil :family "PragmataPro"))))
+  ;; python
+  (setq python-shell-interpreter "python3")
+  (setq org-babel-python-command "python3")
+  (setq python-indent-guess-indent-offset-verbose nil))
 
 
 ;;; init.el ends here
