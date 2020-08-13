@@ -4,7 +4,7 @@
 
 ;; Author: Jiaxi Gu <imjiaxi@gmail.com>
 ;; URL: https://github.com/gujiaxi/.emacs.d
-;; Package-Requires: ((emacs "26.3"))
+;; Package-Requires: ((emacs "27.1"))
 
 ;;; Commentary:
 
@@ -242,13 +242,14 @@ The site configuration is defined in index.org."
 
 ;; package repository
 (setq package-archives
-      '(("gnu" . "http://elpa.emacs-china.org/gnu/")
-        ("melpa" . "http://elpa.emacs-china.org/melpa/")
-        ("org" . "http://elpa.emacs-china.org/org/")))
-(package-initialize)
+      '(("gnu" . "https://mirrors.ustc.edu.cn/elpa/gnu/")
+        ("melpa" . "https://mirrors.ustc.edu.cn/elpa/melpa/")
+        ("org" . "https://mirrors.ustc.edu.cn/elpa/org/")))
+(when (< emacs-major-version 27)
+  (package-initialize))
 
 ;; bootstrap `use-package'
-(unless (package-installed-p 'use-package)
+(unless (fboundp 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 (eval-when-compile (require 'use-package))
