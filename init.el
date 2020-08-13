@@ -214,6 +214,9 @@ The site configuration is defined in index.org."
 ;; saveplace [built-in]
 (save-place-mode t)
 
+;; tab-bar [built-in]
+(setq tab-bar-show 1)
+
 ;; tramp [built-in]
 (setq tramp-backup-directory-alist backup-directory-alist)
 
@@ -249,7 +252,7 @@ The site configuration is defined in index.org."
   (package-initialize))
 
 ;; bootstrap `use-package'
-(unless (fboundp 'use-package)
+(unless (package-installed-p 'use-package)
   (package-refresh-contents)
   (package-install 'use-package))
 (eval-when-compile (require 'use-package))
@@ -395,7 +398,7 @@ The site configuration is defined in index.org."
 
 ;; ----- mode-line -----
 
-;; Crafted for battery-mode, vc-mode, evil-mode and eyebrowse-mode
+;; Crafted for battery-mode, vc-mode and evil-mode
 (setq-default mode-line-format
               (list '(:eval (when (boundp 'evil-mode)
                               (propertize
@@ -411,9 +414,6 @@ The site configuration is defined in index.org."
                     '(:propertize
                       " %p L%l "
                       face (:background "gray30" :foreground "#fdf6e3"))
-                    '(:eval (when eyebrowse-mode
-                              (propertize
-                               (concat " " (eyebrowse-mode-line-indicator)))))
                     '(:propertize
                       " (%m)"
                       face (:inherit font-lock-function-name-face :weight bold))
@@ -458,6 +458,11 @@ The site configuration is defined in index.org."
          ("j" . evil-next-visual-line)
          ("k" . evil-previous-visual-line)
          ("SPC w" . save-buffer)
+         ;; tab-bar-mode
+         ("g o" . tab-bar-new-tab)
+         ("g c" . tab-bar-close-tab)
+         ("g t" . tab-bar-switch-to-next-tab)
+         ("g T" . tab-bar-switch-to-prev-tab)
          :map evil-visual-state-map
          ("j" . evil-next-visual-line)
          ("k" . evil-previous-visual-line)
@@ -604,20 +609,6 @@ The site configuration is defined in index.org."
   :bind (("C-'" . avy-goto-char-2)
          :map evil-normal-state-map
          ("SPC s" . avy-goto-char-2)))
-
-;; eyebrowse
-(use-package eyebrowse
-  :custom
-  (eyebrowse-wrap-around t)
-  (eyebrowse-mode-line-separator ",")
-  :config (eyebrowse-mode t)
-  (set-face-attribute 'eyebrowse-mode-line-active nil
-                      :inherit font-lock-warning-face)
-  :bind (:map evil-normal-state-map
-         ("g o" . eyebrowse-create-window-config)
-         ("g c" . eyebrowse-close-window-config)
-         ("g t" . eyebrowse-next-window-config)
-         ("g T" . eyebrowse-prev-window-config)))
 
 ;; magit
 (use-package magit)
