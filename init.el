@@ -485,35 +485,25 @@ The site configuration is defined in index.org."
 
 
 ;; -------------------------------------------------------------------
-;; Helm
+;; Ivy
 ;; -------------------------------------------------------------------
 
-;; helm
-(use-package helm
-  :config
-  (require 'helm-config)
-  (helm-mode)
-  (helm-autoresize-mode t)
-  (helm-adaptive-mode t)
-  (with-eval-after-load 'evil
-    (evil-set-initial-state 'grep-mode 'emacs)
-    (evil-set-initial-state 'helm-grep-mode 'emacs))
+;; Counsel / Swiper / Ivy
+(use-package counsel
+  :config (ivy-mode 1)
   :custom
-  (helm-full-frame nil)
-  (helm-split-window-inside-p t)
-  (helm-ff-search-library-in-sexp t)
-  (helm-ff-file-name-history-use-recentf t)
-  (helm-follow-mode-persistent t)
-  (helm-mode-fuzzy-match t)
-  (helm-completion-in-region-fuzzy-match t)
-  (helm-grep-ag-command "rg --color always --smart-case --no-heading --line-number %s %s %s")
-  :bind (("M-x" . helm-M-x)
-         ("M-y" . helm-show-kill-ring)
-         ("C-s" . helm-occur)
-         ("C-x b" . helm-mini)
-         ("C-x C-f" . helm-find-files)
-         ("C-x g" . helm-do-grep-ag)
-         ("C-c i" . helm-imenu)))
+  (ivy-use-virtual-buffers t)
+  (ivy-initial-inputs-alist nil)
+  (counsel-switch-buffer-preview-virtual-buffers nil)
+  :bind (("C-h f" . counsel-describe-function)
+         ("C-h v" . counsel-describe-variable)
+         ("M-x" . counsel-M-x)
+         ("M-y" . counsel-yank-pop)
+         ("C-s" . swiper)
+         ("C-x b" . counsel-switch-buffer)
+         ("C-x C-f" . counsel-find-file)
+         ("C-x g" . counsel-grep)
+         ("C-c i" . counsel-imenu)))
 
 
 ;; -------------------------------------------------------------------
