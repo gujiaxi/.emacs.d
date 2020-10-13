@@ -502,7 +502,6 @@ The site configuration is defined in index.org."
          ("C-s" . swiper)
          ("C-x b" . counsel-switch-buffer)
          ("C-x C-f" . counsel-find-file)
-         ("C-x g" . counsel-grep)
          ("C-c i" . counsel-imenu)))
 
 
@@ -633,6 +632,11 @@ The site configuration is defined in index.org."
 (use-package symon
   :custom (symon-delay 33)
   :config (symon-mode))
+
+;; undo-fu
+(use-package undo-fu
+  :after evil
+  :custom (evil-undo-system 'undo-fu))
 
 ;; which-key
 (use-package which-key
