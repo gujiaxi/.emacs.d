@@ -163,10 +163,6 @@
 ;; epg [built-in]
 (setq epg-gpg-minimum-version "100")
 
-;; flymake [built-in]
-(add-hook 'prog-mode-hook 'flymake-mode)
-(remove-hook 'flymake-diagnostic-functions 'flymake-proc-legacy-flymake)
-
 ;; flyspell [built-in]
 (add-hook 'org-mode-hook 'flyspell-mode)
 (add-hook 'text-mode-hook 'flyspell-mode)
@@ -259,64 +255,71 @@ The site configuration is defined in index.org."
 
 
 ;; -------------------------------------------------------------------
-;; Org-mode
+;; Flymake
 ;; -------------------------------------------------------------------
 
-;; basic org options
-(setq org-hide-leading-stars t)
-(setq org-startup-indented t)
-(setq org-startup-folded nil)
-(setq org-src-preserve-indentation t)
-(setq org-image-actual-width nil)
-(setq org-catch-invisible-edits 'show-and-error)
-(setq org-confirm-babel-evaluate nil)
-(setq org-export-with-archived-trees nil)
-(setq org-export-html-style-include-scripts nil)
-(setq org-export-html-style-include-default nil)
-(setq org-html-postamble t
-      org-html-postamble-format '(("en" "Edited by %a on %C")))
-(setq org-archive-location (expand-file-name "archive.org::" org-directory))
-(setq org-refile-targets '((org-agenda-files :level . 1)
-                           (nil :level . 1)))
-(setq org-priority-faces '((?A . (:foreground "red" :weight bold))
-                           (?B . (:foreground "orange" :weight bold))
-                           (?C . (:foreground "yellow" :wegith bold))))
+;; flymake [built]
+(use-package flymake
+  :ensure nil
+  :hook (prog-mode . flymake-mode))
 
-;; org-agenda
-(setq org-agenda-files (list (expand-file-name "agenda.org" org-directory)))
-(setq org-agenda-include-diary nil)
-(setq org-agenda-custom-commands
-      '(("n" "Agenda and all TODOs"
-         ((tags "PRIORITY={A}"
-                ((org-agenda-skip-function '(org-agenda-skip-subtree-if 'todo 'done))
-                 (org-agenda-overriding-header "High-priority:")))
-          (agenda "" ((org-agenda-span (quote day))))
-          (alltodo ""
-                   ((org-agenda-skip-function '(or (org-agenda-skip-subtree-if 'scheduled)
-                                                   (org-agenda-skip-subtree-if 'todo '("WAIT"))
-                                                   (org-agenda-skip-subtree-if 'regexp "\\[#A\\]")))
-                    (org-agenda-overriding-header "Others tasks:")))
-          (todo "WAIT"
-                ((org-agenda-skip-function '(org-agenda-skip-subtree-if 'regexp "\\[#A\\]"))
-                 (org-agenda-overriding-header "Postponed tasks:")))))))
 
-;; org-capture
-(setq org-default-notes-file (expand-file-name "agenda.org" org-directory))
-(setq org-capture-templates
-      '(("a" "Appt" entry (file+headline "agenda.org" "Appointments")
-         "* %?\n%t")
-        ("t" "Task" entry (file+headline "agenda.org" "Tasks")
-         "* TODO %?\n%U\n%a")
-        ("n" "Note" entry (file+headline "notes.org" "Inbox")
-         "* %?\n%U\n%a")
-        ("j" "Journal" plain (file+olp+datetree "journal.org")
-         "%U %?\n")
-        ("p" "Publish" plain (file "p-scratch.org")
-         "%?\n\n%U\n-----")))
+;; -------------------------------------------------------------------
+;; Org Mode
+;; -------------------------------------------------------------------
 
-;; org
+;; org [built-in]
 (use-package org
   :ensure nil
+  :custom
+  ;; general
+  (org-hide-leading-stars t)
+  (org-startup-indented t)
+  (org-startup-folded nil)
+  (org-src-preserve-indentation t)
+  (org-image-actual-width nil)
+  (org-catch-invisible-edits 'show-and-error)
+  (org-confirm-babel-evaluate nil)
+  (org-export-with-archived-trees nil)
+  (org-export-html-style-include-scripts nil)
+  (org-export-html-style-include-default nil)
+  (org-html-postamble t)
+  (org-html-postamble-format '(("en" "Edited by %a on %C")))
+  (org-archive-location (expand-file-name "archive.org::" org-directory))
+  (org-refile-targets '((org-agenda-files :level . 1)
+                        (nil :level . 1)))
+  (org-priority-faces '((?A . (:foreground "red" :weight bold))
+                        (?B . (:foreground "orange" :weight bold))
+                        (?C . (:foreground "yellow" :wegith bold))))
+  ;; org-agenda
+  (org-agenda-files (list (expand-file-name "agenda.org" org-directory)))
+  (org-agenda-include-diary nil)
+  (org-agenda-custom-commands
+   '(("n" "Agenda and all TODOs"
+      ((tags "PRIORITY={A}"
+             ((org-agenda-skip-function '(org-agenda-skip-subtree-if 'todo 'done))
+              (org-agenda-overriding-header "High-priority:")))
+       (agenda "" ((org-agenda-span (quote day))))
+       (alltodo ""
+                ((org-agenda-skip-function '(or (org-agenda-skip-subtree-if 'scheduled)
+                                                (org-agenda-skip-subtree-if 'todo '("WAIT"))
+                                                (org-agenda-skip-subtree-if 'regexp "\\[#A\\]")))
+                 (org-agenda-overriding-header "Others tasks:")))
+       (todo "WAIT"
+             ((org-agenda-skip-function '(org-agenda-skip-subtree-if 'regexp "\\[#A\\]"))
+              (org-agenda-overriding-header "Postponed tasks:")))))))
+  ;; org-capture
+  (org-default-notes-file (expand-file-name "agenda.org" org-directory))
+  (org-capture-templates
+   '(("a" "Appt" entry (file+headline "agenda.org" "Appointments")
+      "* %?\n%t")
+     ("t" "Task" entry (file+headline "agenda.org" "Tasks")
+      "* TODO %?\n%U\n%a")
+     ("n" "Note" entry (file+headline "notes.org" "Inbox")
+      "* %?\n%U\n%a")
+     ("j" "Journal" plain (file+olp+datetree "journal.org")
+      "%U %?\n")
+     ("p" "Publish" plain (file "p-scratch.org"))))
   :config
   ;; ox-html
   (use-package htmlize)
@@ -467,6 +470,7 @@ The site configuration is defined in index.org."
 
 ;; evil-nerd-commenter
 (use-package evil-nerd-commenter
+  :after evil
   :bind (("M-;" . evilnc-comment-or-uncomment-lines)
          :map evil-normal-state-map
          ("SPC c SPC" . evilnc-comment-or-uncomment-lines)))
@@ -655,7 +659,9 @@ The site configuration is defined in index.org."
 
 (when (eq system-type 'darwin)
   ;; environment path
-  (let ((envpath (list "/usr/local/bin/" "/Library/TeX/texbin/")))
+  (let ((envpath (list "/usr/local/bin/"
+                       "/Library/TeX/texbin/"
+                       "~/Library/Python/3.7/bin/")))
     (setenv "PATH" (mapconcat 'identity (add-to-list 'envpath (getenv "PATH") t) ":"))
     (setq exec-path (append envpath exec-path)))
   ;; keys
