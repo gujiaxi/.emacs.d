@@ -248,8 +248,7 @@ The site configuration is defined in index.org."
       '(("gnu" . "https://mirrors.ustc.edu.cn/elpa/gnu/")
         ("melpa" . "https://mirrors.ustc.edu.cn/elpa/melpa/")
         ("org" . "https://mirrors.ustc.edu.cn/elpa/org/")))
-(when (< emacs-major-version 27)
-  (package-initialize))
+(package-initialize)
 
 ;; bootstrap `use-package'
 (unless (package-installed-p 'use-package)
@@ -315,10 +314,9 @@ The site configuration is defined in index.org."
         ("p" "Publish" plain (file "p-scratch.org")
          "%?\n\n%U\n-----")))
 
-;; org-plus
+;; org
 (use-package org
-  :ensure org-plus-contrib
-  :after org
+  :ensure nil
   :config
   ;; ox-html
   (use-package htmlize)
@@ -336,8 +334,6 @@ The site configuration is defined in index.org."
         '(("breaklines" "true")
           ("basicstyle" "\\ttfamily")
           ("frame" "single")))
-  ;; ox-bibtex
-  (require 'ox-bibtex)
   ;; org-babel
   (org-babel-do-load-languages
    'org-babel-load-languages
