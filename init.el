@@ -567,7 +567,7 @@ The site configuration is defined in index.org."
   :mode ("\\.md\\'" "\\.markdown\\'")
   :custom
   (markdown-command "pandoc --quiet --mathjax --no-highlight -f markdown")
-  (markdown-css-paths '("https://org.gujiaxi.com/css/md.css"))
+  (markdown-css-paths '("https://isaac.ttm.sh/org/css/md.css"))
   (markdown-xhtml-header-content "\n<meta name=\"viewport\" content=\"width=device-width\">\n<script src=\"https://cdnjs.cloudflare.com/ajax/libs/mathjax/2.7.5/latest.js?config=TeX-MML-AM_CHTML\" async></script>"))
 
 
