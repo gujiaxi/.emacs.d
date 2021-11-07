@@ -241,9 +241,9 @@ The site configuration is defined in index.org."
 
 ;; package repository
 (setq package-archives
-      '(("gnu" . "https://mirrors.ustc.edu.cn/elpa/gnu/")
-        ("melpa" . "https://mirrors.ustc.edu.cn/elpa/melpa/")
-        ("org" . "https://mirrors.ustc.edu.cn/elpa/org/")))
+      '(("gnu" . "https://elpa.emacs-china.org/gnu/")
+        ("melpa" . "https://elpa.emacs-china.org/melpa/")
+        ("org" . "https://elpa.emacs-china.org/org/")))
 (package-initialize)
 
 ;; bootstrap `use-package'
@@ -535,7 +535,10 @@ The site configuration is defined in index.org."
   :custom
   (eglot-autoreconnect nil)
   (eglot-autoshutdown t)
-  :hook (python-mode . eglot-ensure))
+  :hook (python-mode . eglot-ensure)
+  :bind (:map eglot-mode-map
+         ("C-c C-e f" . eglot-format)
+         ("C-c C-e i" . eglot-code-action-organize-imports)))
 
 
 ;; -------------------------------------------------------------------
