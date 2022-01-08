@@ -241,9 +241,9 @@ The site configuration is defined in index.org."
 
 ;; package repository
 (setq package-archives
-      '(("gnu" . "https://elpa.emacs-china.org/gnu/")
-        ("melpa" . "https://elpa.emacs-china.org/melpa/")
-        ("org" . "https://elpa.emacs-china.org/org/")))
+      '(("gnu" . "https://elpa.gnu.org/packages/")
+        ("melpa" . "https://melpa.org/packages/")
+        ("org" . "https://orgmode.org/elpa/")))
 (package-initialize)
 
 ;; bootstrap `use-package'
