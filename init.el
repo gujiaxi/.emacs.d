@@ -1,8 +1,8 @@
-;;; init.el --- Jiaxi's Emacs configuration
+;;; init.el --- Isaac's Emacs configuration
 
-;; Copyright (c) 2016-2020 Jiaxi Gu
+;; Copyright (c) 2016-2022 Isaac Gu
 
-;; Author: Jiaxi Gu <imjiaxi@gmail.com>
+;; Author: Isaac Gu <imjiaxi@gmail.com>
 ;; URL: https://github.com/gujiaxi/.emacs.d
 ;; Package-Requires: ((emacs "27.1"))
 
@@ -33,7 +33,7 @@
 ;; -------------------------------------------------------------------
 
 ;; Personal Infomation
-(setq user-full-name "Jiaxi Gu")
+(setq user-full-name "Isaac Gu")
 (setq user-mail-address "imjiaxi@gmail.com")
 
 ;; set unicode encoding
@@ -486,24 +486,28 @@ The site configuration is defined in index.org."
 
 
 ;; -------------------------------------------------------------------
-;; Ivy
+;; Completion System
 ;; -------------------------------------------------------------------
 
-;; Counsel / Swiper / Ivy
-(use-package counsel
-  :config (ivy-mode 1)
+;; Vertico
+(use-package vertico
+  :init (vertico-mode)
   :custom
-  (ivy-use-virtual-buffers t)
-  (ivy-initial-inputs-alist nil)
-  (counsel-switch-buffer-preview-virtual-buffers nil)
-  :bind (("C-h f" . counsel-describe-function)
-         ("C-h v" . counsel-describe-variable)
-         ("M-x" . counsel-M-x)
-         ("M-y" . counsel-yank-pop)
-         ("C-s" . swiper)
-         ("C-x b" . counsel-switch-buffer)
-         ("C-x C-f" . counsel-find-file)
-         ("C-c i" . counsel-imenu)))
+  (vertico-resize t)
+  (vertico-cycle t)
+  :config
+  (use-package orderless
+    :custom (completion-styles '(substring orderless)))
+  (use-package marginalia
+    :init (marginalia-mode)
+    :custom (marginalia-annotator-registry
+             '((command marginalia-annotate-binding builtin none))))
+  (use-package consult
+    :config (consult-customize consult-buffer :preview-key (kbd "M-."))
+    :bind (("C-x b" . consult-buffer)
+           ("C-s" . consult-line)
+           ("M-y" . consult-yank-pop)
+           ("C-c i" . consult-imenu))))
 
 
 ;; -------------------------------------------------------------------
@@ -522,8 +526,8 @@ The site configuration is defined in index.org."
   (company-global-modes '(not comint-mode eshell-mode org-mode))
   :config (delete 'company-dabbrev company-backends)
   :bind (:map company-active-map
-         ("C-n" . company-select-next)
-         ("C-p" . company-select-previous)))
+              ("C-n" . company-select-next)
+              ("C-p" . company-select-previous)))
 
 
 ;; -------------------------------------------------------------------
