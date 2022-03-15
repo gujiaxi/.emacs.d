@@ -241,9 +241,9 @@ The site configuration is defined in index.org."
 
 ;; package repository
 (setq package-archives
-      '(("gnu" . "https://elpa.gnu.org/packages/")
-        ("melpa" . "https://melpa.org/packages/")
-        ("org" . "https://orgmode.org/elpa/")))
+      '(("gnu" . "https://mirrors.163.com/elpa/gnu/")
+        ("melpa" . "https://mirrors.163.com/elpa/melpa/")
+        ("org" . "https://mirrors.163.com/elpa/org/")))
 (package-initialize)
 
 ;; bootstrap `use-package'
@@ -377,11 +377,6 @@ The site configuration is defined in index.org."
   (TeX-parse-self t)
   (TeX-clean-confirm nil))
 
-;; company-auctex
-(use-package company-auctex
-  :after tex
-  :config (company-auctex-init))
-
 
 ;; -------------------------------------------------------------------
 ;; Theme
@@ -450,8 +445,8 @@ The site configuration is defined in index.org."
               'shell-mode 'speedbar-mode 'special-mode
               'term-mode))
   (unbind-key "SPC" evil-normal-state-map) ;; reserve for leader key
-  (unbind-key "C-n" evil-insert-state-map) ;; reserve for company-mode
-  (unbind-key "C-p" evil-insert-state-map) ;; reserve for company-mode
+  (unbind-key "C-n" evil-insert-state-map) ;; reserve for auto complete
+  (unbind-key "C-p" evil-insert-state-map) ;; reserve for auto complete
   :custom (evil-want-abbrev-expand-on-insert-exit nil)
   :bind (("<f5>" . evil-make)
          :map evil-normal-state-map
@@ -511,23 +506,21 @@ The site configuration is defined in index.org."
 
 
 ;; -------------------------------------------------------------------
-;; Company
+;; Auto Complete
 ;; -------------------------------------------------------------------
 
-;; company
-(use-package company
-  :hook (after-init . global-company-mode)
+(use-package corfu
   :custom
-  (company-idle-delay 0.1)
-  (company-minimum-prefix-length 1)
-  (company-dabbrev-downcase nil)
-  (company-selection-wrap-around t)
-  (company-show-numbers t)
-  (company-global-modes '(not comint-mode eshell-mode org-mode))
-  :config (delete 'company-dabbrev company-backends)
-  :bind (:map company-active-map
-              ("C-n" . company-select-next)
-              ("C-p" . company-select-previous)))
+  (corfu-cycle t)
+  (corfu-auto t)
+  (corfu-auto-delay 0.1)
+  (corfu-auto-prefix 2)
+  (corfu-preview-current nil)
+  :config (corfu-global-mode)
+  (use-package cape
+    :config
+    (add-to-list 'completion-at-point-functions #'cape-file)
+    (add-to-list 'completion-at-point-functions #'cape-keyword)))
 
 
 ;; -------------------------------------------------------------------
@@ -606,6 +599,10 @@ The site configuration is defined in index.org."
   :bind (("C-'" . avy-goto-char-2)
          :map evil-normal-state-map
          ("SPC s" . avy-goto-char-2)))
+
+;; bind-dict
+(use-package bing-dict
+  :bind ("C-c l" . bing-dict-brief))
 
 ;; magit
 (use-package magit)
