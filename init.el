@@ -70,8 +70,11 @@
 (pixel-scroll-mode)
 (setq scroll-margin 5)
 
-;; enable y/n answers
-(defalias 'yes-or-no-p 'y-or-n-p)
+;; use y/n instead of yes/no
+(setq use-short-answers t)
+
+;; word wrap for CJK
+(setq word-wrap-by-category t)
 
 ;; enable syntax highlight
 (global-font-lock-mode t)
@@ -192,9 +195,6 @@ The site configuration is defined in index.org."
     (org-babel-load-file index-file)
     (kill-this-buffer)))
 (global-set-key (kbd "C-c p") 'org-publish-site)
-
-;; paren [built-in]
-(show-paren-mode t)
 
 ;; savehist [built-in]
 (savehist-mode t)
@@ -384,12 +384,10 @@ The site configuration is defined in index.org."
 
 ;; ----- color theme -----
 
-;; zenburn-theme
-(use-package zenburn-theme
-  :config
-  (load-theme 'zenburn t)
-  (set-face-attribute 'fringe nil :background "#3F3F3F")
-  (set-face-attribute 'line-number nil :background "#3F3F3F"))
+;; modus-themes: operandi for day and vivendi for night
+(load-theme 'modus-operandi)
+(run-at-time "09:00" (* 60 60 24) (lambda () (load-theme 'modus-operandi)))
+(run-at-time "17:30" (* 60 60 24) (lambda () (load-theme 'modus-vivendi)))
 
 ;; ----- mode-line -----
 
