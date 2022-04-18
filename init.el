@@ -386,6 +386,7 @@ The site configuration is defined in index.org."
 
 ;; modus-themes: operandi for day and vivendi for night
 (load-theme 'modus-operandi)
+(setq modus-themes-no-mixed-fonts t)
 (run-at-time "09:00" (* 60 60 24) (lambda () (load-theme 'modus-operandi)))
 (run-at-time "17:30" (* 60 60 24) (lambda () (load-theme 'modus-vivendi)))
 
@@ -432,6 +433,7 @@ The site configuration is defined in index.org."
 (use-package evil
   :config
   (evil-mode)
+  (evil-set-undo-system 'undo-redo)
   (mapc (lambda (my-mode) (evil-set-initial-state my-mode 'emacs))
         (list 'calendar-mode 'comint-mode 'completion-mode
               'dired-mode 'diff-mode 'epa-info-mode
@@ -443,6 +445,7 @@ The site configuration is defined in index.org."
               'shell-mode 'speedbar-mode 'special-mode
               'term-mode))
   (unbind-key "SPC" evil-normal-state-map) ;; reserve for leader key
+  (unbind-key "TAB" evil-motion-state-map) ;; reserve for org-mode
   (unbind-key "C-n" evil-insert-state-map) ;; reserve for auto complete
   (unbind-key "C-p" evil-insert-state-map) ;; reserve for auto complete
   :custom (evil-want-abbrev-expand-on-insert-exit nil)
@@ -635,11 +638,6 @@ The site configuration is defined in index.org."
 (use-package symon
   :custom (symon-delay 33)
   :config (symon-mode))
-
-;; undo-fu
-(use-package undo-fu
-  :after evil
-  :custom (evil-undo-system 'undo-fu))
 
 ;; which-key
 (use-package which-key
