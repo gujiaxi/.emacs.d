@@ -121,7 +121,7 @@
 (setq find-file-suppress-same-file-warnings t)
 
 ;; custom directory
-(setq org-directory "~/Dropbox/Documents/OrgDir/")
+(setq org-directory "~/Library/CloudStorage/Dropbox/Documents/OrgDir/")
 (setq custom-file (expand-file-name "custom.el" user-emacs-directory))
 (when (file-exists-p custom-file) (load custom-file))
 
@@ -387,8 +387,8 @@ The site configuration is defined in index.org."
 ;; modus-themes: operandi for day and vivendi for night
 (load-theme 'modus-operandi)
 (setq modus-themes-no-mixed-fonts t)
-(run-at-time "09:00" (* 60 60 24) (lambda () (load-theme 'modus-operandi)))
-(run-at-time "17:30" (* 60 60 24) (lambda () (load-theme 'modus-vivendi)))
+(run-at-time "09:00" (* 60 60 24) #'load-theme 'modus-operandi)
+(run-at-time "17:30" (* 60 60 24) #'load-theme 'modus-vivendi)
 
 ;; ----- mode-line -----
 
@@ -517,7 +517,7 @@ The site configuration is defined in index.org."
   (corfu-auto-delay 0.1)
   (corfu-auto-prefix 2)
   (corfu-preview-current nil)
-  :config (corfu-global-mode)
+  :config (global-corfu-mode)
   (use-package cape
     :config
     (add-to-list 'completion-at-point-functions #'cape-file)
