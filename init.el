@@ -433,7 +433,6 @@ The site configuration is defined in index.org."
 (use-package evil
   :config
   (evil-mode)
-  (evil-set-undo-system 'undo-redo)
   (mapc (lambda (my-mode) (evil-set-initial-state my-mode 'emacs))
         (list 'calendar-mode 'comint-mode 'completion-mode
               'dired-mode 'diff-mode 'epa-info-mode
@@ -448,7 +447,8 @@ The site configuration is defined in index.org."
   (unbind-key "TAB" evil-motion-state-map) ;; reserve for org-mode
   (unbind-key "C-n" evil-insert-state-map) ;; reserve for auto complete
   (unbind-key "C-p" evil-insert-state-map) ;; reserve for auto complete
-  :custom (evil-want-abbrev-expand-on-insert-exit nil)
+  :custom (evil-undo-system 'undo-redo)
+  (evil-want-abbrev-expand-on-insert-exit nil)
   :bind (("<f5>" . evil-make)
          :map evil-normal-state-map
          ("j" . evil-next-visual-line)
@@ -499,7 +499,7 @@ The site configuration is defined in index.org."
     :custom (marginalia-annotator-registry
              '((command marginalia-annotate-binding builtin none))))
   (use-package consult
-    :config (consult-customize consult-buffer :preview-key (kbd "M-."))
+    :custom (consult-preview-key "M-.")
     :bind (("C-x b" . consult-buffer)
            ("C-s" . consult-line)
            ("M-y" . consult-yank-pop)
@@ -516,12 +516,15 @@ The site configuration is defined in index.org."
   (corfu-auto t)
   (corfu-auto-delay 0.1)
   (corfu-auto-prefix 2)
+  (corfu-on-exact-match nil)
   (corfu-preview-current nil)
   :config (global-corfu-mode)
   (use-package cape
     :config
+    (add-to-list 'completion-at-point-functions #'cape-abbrev)
     (add-to-list 'completion-at-point-functions #'cape-file)
-    (add-to-list 'completion-at-point-functions #'cape-keyword)))
+    (add-to-list 'completion-at-point-functions #'cape-keyword)
+    (add-to-list 'completion-at-point-functions #'cape-tex)))
 
 
 ;; -------------------------------------------------------------------
@@ -639,17 +642,18 @@ The site configuration is defined in index.org."
   :custom (symon-delay 33)
   :config (symon-mode))
 
+;; tempel
+(use-package tempel
+  ;; User-defined templates are put in `~/.emacs.d/templates'.
+  :init (global-tempel-abbrev-mode)
+  :config (use-package tempel-collection)
+  :bind (:map tempel-map
+              ("<tab>" . tempel-next)
+              ("<S-tab" . tempel-previous)))
+
 ;; which-key
 (use-package which-key
   :config (which-key-mode))
-
-;; yasnippet
-(use-package yasnippet
-  :defer 1
-  :commands yas-define-snippets
-  :config
-  (use-package yasnippet-snippets)
-  (yas-global-mode t))
 
 
 ;; -------------------------------------------------------------------
@@ -680,6 +684,7 @@ The site configuration is defined in index.org."
   ;; python
   (setq python-shell-interpreter "python3")
   (setq org-babel-python-command "python3")
+  (setq python-shell-completion-native-disabled-interpreters '("python3"))
   (setq python-indent-guess-indent-offset-verbose nil))
 
 

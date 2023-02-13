@@ -1,0 +1,24 @@
+;; ~/.emacs.d/templates
+
+;; --------------------
+fundamental-mode
+
+(today (format-time-string "%F"))
+(now (format-time-string "%H:%M"))
+(lorem "Lorem ipsum dolor sit amet, consetetur sadipscing elitr, sed diam nonumy eirmod tempor invidunt ut labore et dolore magna aliquyam erat, sed diam voluptua. At vero eos et accusam et justo duo dolores et ea rebum. Stet clita kasd gubergren, no sea takimata sanctus est Lorem ipsum dolor sit amet.")
+
+;; --------------------
+makefile-mode
+
+(check "check-syntax:" n "\tCC -Wall -Wextra -pedantic -std=c++14 -fsyntax-only $(CHK_SOURCES)")
+
+;; --------------------
+org-mode
+
+(bib "#+BIBLIOGRAPHY: " (p "main") " plain limit:t option:-nobibsource option:-nokeywords")
+(doc "#+TITLE: " p n "#+OPTIONS: toc:nil num:nil html-style:nil html-scripts:nil html-postamble:t" n "#+HTML_HEAD: <link rel=\"stylesheet\" type=\"text/css\" href=\"https://isaac.ttm.sh/org/css/org.css\" />" n n q)
+
+;; Local Variables:
+;; mode: lisp-data
+;; outline-regexp: "[a-z]"
+;; End:
