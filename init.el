@@ -523,8 +523,7 @@ The site configuration is defined in index.org."
     :config
     (add-to-list 'completion-at-point-functions #'cape-abbrev)
     (add-to-list 'completion-at-point-functions #'cape-file)
-    (add-to-list 'completion-at-point-functions #'cape-keyword)
-    (add-to-list 'completion-at-point-functions #'cape-tex)))
+    (add-to-list 'completion-at-point-functions #'cape-keyword)))
 
 
 ;; -------------------------------------------------------------------
