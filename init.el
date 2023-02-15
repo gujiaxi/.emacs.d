@@ -242,8 +242,7 @@ The site configuration is defined in index.org."
 ;; package repository
 (setq package-archives
       '(("gnu" . "https://mirrors.163.com/elpa/gnu/")
-        ("melpa" . "https://mirrors.163.com/elpa/melpa/")
-        ("org" . "https://mirrors.163.com/elpa/org/")))
+        ("melpa" . "https://mirrors.163.com/elpa/melpa/")))
 (package-initialize)
 
 ;; bootstrap `use-package'
