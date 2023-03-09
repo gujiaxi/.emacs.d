@@ -662,9 +662,7 @@ The site configuration is defined in index.org."
 
 (when (eq system-type 'darwin)
   ;; environment path
-  (let ((envpath (list "/usr/local/bin/"
-                       "/Library/TeX/texbin/"
-                       "~/Library/Python/3.7/bin/")))
+  (let ((envpath '("/usr/local/bin/" "/Library/TeX/texbin/" "~/Library/Python/3.11/bin/")))
     (setenv "PATH" (mapconcat 'identity (add-to-list 'envpath (getenv "PATH") t) ":"))
     (setq exec-path (append envpath exec-path)))
   ;; keys
