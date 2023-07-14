@@ -391,6 +391,9 @@ The site configuration is defined in index.org."
 
 ;; ----- mode-line -----
 
+;; nyan-mode
+(use-package nyan-mode)
+
 ;; Crafted for battery-mode, vc-mode and evil-mode
 (setq-default mode-line-format
               (list '(:eval (when (boundp 'evil-mode)
@@ -404,13 +407,14 @@ The site configuration is defined in index.org."
                                        '(:background "#d33682" :foreground "#fdf6e3" :weight bold)
                                      '(:background "#268bd2" :foreground "#fdf6e3" :weight light))
                              'help-echo (buffer-file-name)))
+                    '(:eval (when (boundp 'nyan-mode) (nyan-create)))
                     '(:propertize
                       " %p L%l "
                       face (:background "gray30" :foreground "#fdf6e3"))
                     '(:propertize
                       " (%m)"
                       face (:inherit font-lock-function-name-face :weight bold))
-                    '(:eval (when (> (window-width) 65)
+                    '(:eval (when (> (window-width) 64)
                               (concat
                                (when vc-mode
                                  (propertize
