@@ -4,7 +4,7 @@
 
 ;; Author: Isaac Gu <imjiaxi@gmail.com>
 ;; URL: https://github.com/gujiaxi/.emacs.d
-;; Package-Requires: ((emacs "27.1"))
+;; Package-Requires: ((emacs "29.1"))
 
 ;;; Commentary:
 
@@ -216,6 +216,9 @@ The site configuration is defined in index.org."
 ;; tramp [built-in]
 (setq tramp-backup-directory-alist backup-directory-alist)
 
+;; use-package [built-in]
+(setq use-package-always-ensure t)
+
 ;; windmove [built-in]
 (windmove-default-keybindings)
 
@@ -244,13 +247,6 @@ The site configuration is defined in index.org."
       '(("gnu" . "https://mirrors.163.com/elpa/gnu/")
         ("melpa" . "https://mirrors.163.com/elpa/melpa/")))
 (package-initialize)
-
-;; bootstrap `use-package'
-(unless (package-installed-p 'use-package)
-  (package-refresh-contents)
-  (package-install 'use-package))
-(eval-when-compile (require 'use-package))
-(setq use-package-always-ensure t)
 
 
 ;; -------------------------------------------------------------------
