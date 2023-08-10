@@ -255,7 +255,6 @@ The site configuration is defined in index.org."
 
 ;; flymake [built]
 (use-package flymake
-  :ensure nil
   :hook (prog-mode . flymake-mode))
 
 
@@ -265,7 +264,7 @@ The site configuration is defined in index.org."
 
 ;; org [built-in]
 (use-package org
-  :ensure nil
+  :defer t
   :custom
   ;; general
   (org-hide-leading-stars t)
@@ -607,7 +606,8 @@ The site configuration is defined in index.org."
   :bind ("C-c l" . bing-dict-brief))
 
 ;; magit
-(use-package magit)
+(use-package magit
+  :bind ("C-x g" . magit-status))
 
 ;; quickrun
 (use-package quickrun
