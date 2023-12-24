@@ -219,9 +219,6 @@ The site configuration is defined in index.org."
 ;; use-package [built-in]
 (setq use-package-always-ensure t)
 
-;; windmove [built-in]
-(windmove-default-keybindings)
-
 ;; winner [built-in]
 (winner-mode t)
 
