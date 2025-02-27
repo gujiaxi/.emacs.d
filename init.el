@@ -193,7 +193,7 @@ The site configuration is defined in index.org."
   (let ((index-file (expand-file-name "index.org" org-directory)))
     (find-file index-file)
     (org-babel-load-file index-file)
-    (kill-this-buffer)))
+    (kill-current-buffer)))
 (global-set-key (kbd "C-c p") 'org-publish-site)
 
 ;; savehist [built-in]
@@ -230,7 +230,7 @@ The site configuration is defined in index.org."
 
 (when (display-graphic-p)
   (define-key key-translation-map (kbd "ESC") (kbd "C-g")))
-(global-set-key (kbd "C-x k") 'kill-this-buffer)
+(global-set-key (kbd "C-x k") 'kill-current-buffer)
 (global-set-key (kbd "C-c m") 'compile)
 (global-set-key (kbd "C-c t") 'toggle-truncate-lines)
 
